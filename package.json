@@ -1,0 +1,43 @@
+{
+  "name": "hex",
+  "version": "0.0.0",
+  "description": "Custom Hex Color Role",
+  "main": "src/index.js",
+  "author": {
+    "name": "Shayne Hartford (ShayBox)",
+    "email": "ShayneEHartford@Gmail.Com"
+  },
+  "dependencies": {
+    "discord-akairo": "github:1Computer1/discord-akairo",
+    "discord.js": "github:hydrabolt/discord.js",
+    "randomcolor": "^0.5.3"
+  },
+  "devDependencies": {
+    "eslint": "^4.15.0",
+    "eslint-config-aqua": "^2.0.1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Shays-Bots/Hex.git"
+  },
+  "license": "MIT",
+  "eslintConfig": {
+    "extends": "aqua",
+    "rules": {
+      "id-length": "off",
+      "max-len": "off",
+      "no-console": "off",
+      "no-inline-comments": "off",
+      "no-process-env": "off",
+      "no-shadow": "off",
+      "operator-linebreak": [
+        "error",
+        "after"
+      ],
+      "quotes": [
+        "error",
+        "backtick"
+      ]
+    }
+  }
+}
