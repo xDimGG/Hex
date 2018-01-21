@@ -7,7 +7,7 @@ class This extends Listener {
 	}
 
 	async exec() {
-		this.client.user.setActivity(`${this.client.botName.charAt(0)}! help`);
+		this.client.user.setActivity(`${this.client.botName.charAt(0).toLowerCase()}!help`);
 	}
 }
 
