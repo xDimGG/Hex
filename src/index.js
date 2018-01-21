@@ -13,12 +13,3 @@ const client = new AkairoClient({
 client.botName = botName;
 
 client.login(process.env.Token).then(() => console.log(client.user.tag));
-
-process.on(`uncaughtException`, error => {
-	console.error(error.stack.replace(new RegExp(`${__dirname}/`, `g`), `./`));
-	process.exit();
-});
-
-process.on(`unhandledRejection`, error => {
-	console.error(error.stack.replace(new RegExp(`${__dirname}/`, `g`), `./`));
-});
