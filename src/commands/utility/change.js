@@ -20,7 +20,7 @@ class This extends Command {
 	}
 
 	async exec(message, { color }) {
-		if (color.toLowerCase().includes(`random`)) color = randomColor();
+		if (!color || color.toLowerCase().includes(`random`)) color = randomColor();
 		if (!this.regex.test(color)) {
 			return this.error(this.client, message,
 				`Invalid hex value\n` +
