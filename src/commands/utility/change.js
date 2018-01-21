@@ -12,34 +12,26 @@ class This extends Command {
 			args: [
 				{
 					id: `color`,
-					type: `string`
+					type: `color`
 				}
 			]
 		});
-		this.regex = /^(|#|0x)[0-9A-F]+$/i;
 	}
 
 	async exec(message, { color }) {
-		if (!color || color.toLowerCase().includes(`random`)) color = randomColor();
-		if (!this.regex.test(color)) {
-			return this.error(this.client, message,
-				`Invalid hex value\n` +
-				`Please input a value, "#000000", "0x000000", "000000", or "RANDOM"`
-			);
-		}
+		if (!color) color = randomColor();
 
 		const roleName = `USER-${message.author.id}`;
-		const roleColor = parseInt(color.match(this.regex)[0].replace(`#`, ``).replace(`0x`, ``), 16);
 		const { colorRole } = message.member;
 
 		if (!colorRole) {
 			message.guild.roles.create({
 				name: roleName,
-				color: roleColor,
+				color,
 				permissions: []
 			}).then(role => {
 				message.member.addRole(role).catch(error => this.error(this.client, message, error));
-				return this.success(this.client, message, roleColor);
+				return this.success(this.client, message, color);
 			}).catch(error => this.error(this.client, message, error));
 		} else if (colorRole.position > message.guild.me.highestRole.position) {
 			return this.error(this.client, message,
@@ -48,8 +40,8 @@ class This extends Command {
 				`Please move the role below Hex's role.`
 			);
 		} else if (colorRole.name === roleName) {
-			message.member.colorRole.setColor(roleColor)
-				.then(() => this.success(this.client, message, roleColor))
+			message.member.colorRole.setColor(color)
+				.then(() => this.success(this.client, message, color))
 				.catch(error => this.error(this.client, message, error));
 		} else if (colorRole.name !== roleName) {
 			return this.error(this.client, message,
@@ -62,9 +54,8 @@ class This extends Command {
 
 	success(client, message, roleColor) {
 		message.channel.send(new MessageEmbed()
-			.setTitle(`✅ **Changed to #${roleColor}**`)
+			.setTitle(`✅ **Changed to ${roleColor}**`)
 			.setColor(roleColor)
-			.setTimestamp()
 		).catch(() => message.react(`✅`).catch(() => null));
 	}
 
@@ -73,7 +64,6 @@ class This extends Command {
 			.setTitle(`❌ **ERROR**`)
 			.setDescription(`\`\`\`js\n${error}\n\`\`\``)
 			.setColor(0xFF0000)
-			.setTimestamp()
 		).catch(() => message.react(`❌`).catch(() => null));
 	}
 }
