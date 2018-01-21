@@ -1,6 +1,7 @@
 const { Command } = require(`discord-akairo`);
-const { inspect } = require(`util`);
+const { post } = require(`snekfetch`);
 const { basename } = require(`path`);
+const { inspect } = require(`util`);
 
 class This extends Command {
 	constructor() {
@@ -34,7 +35,15 @@ class This extends Command {
 	}
 
 	async addToContent(input, type) {
-		return `${type === `Input` ? `📥` : type === `Output` ? `📤` : `❌`} ${type}\n${String(input).length < 1024 ? `\`\`\`js\n${input}\n\`\`\`\n` : `${await this.client.haste(input)}.js`}`;
+		return `${type === `Input` ? `📥` : type === `Output` ? `📤` : `❌`} ${type}\n${String(this.haste(input)).length < 1024 ? `\`\`\`js\n${input}\n\`\`\`\n` : `${await this.client.haste(this.haste(input))}.js`}`;
+	}
+
+	haste(input) {
+		return post(`https://www.hastebin.com/documents`)
+			.send(String(input))
+			.end()
+			.then(data => `https://www.hastebin.com/${data.body.key}`)
+			.catch(error => `\`\`\`js\n${error}\n\`\`\`\n`);
 	}
 }
 

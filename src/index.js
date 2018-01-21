@@ -10,8 +10,7 @@ const client = new AkairoClient({
 	inhibitorDirectory: `./src/inhibitors/`,
 	listenerDirectory: `./src/listeners/`
 });
-
-client.temporary = [];
+client.botName = botName;
 
 client.login(process.env.Token).then(() => console.log(client.user.tag));
 
