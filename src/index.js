@@ -13,7 +13,7 @@ const client = new AkairoClient({
 
 client.temporary = [];
 
-client.login(process.env[botName]).then(() => console.log(client.user.tag));
+client.login(process.env.Token).then(() => console.log(client.user.tag));
 
 process.on(`uncaughtException`, error => {
 	console.error(error.stack.replace(new RegExp(`${__dirname}/`, `g`), `./`));
