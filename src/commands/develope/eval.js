@@ -25,23 +25,23 @@ class This extends Command {
 
 	async exec(message, { code }) {
 		const { client } = this; // eslint-disable-line no-unused-vars
-		let content = await this.addToContent(code, `Input`);
+		let content = await this.addToContent(code, `Input`, 0);
 		try {
 			let evaled = eval(code);
 
 			if (evaled instanceof Promise) evaled = await evaled;
 			if (evaled instanceof Object || evaled instanceof Function) evaled = inspect(evaled, { showHidden: true, showProxy: true, depth: 1 });
 
-			content += await this.addToContent(evaled, `Output`);
+			content += await this.addToContent(evaled, `Output`, content.length);
 		} catch (error) {
-			content += await this.addToContent(error, `Error`);
+			content += await this.addToContent(error, `Error`, content.length);
 		}
 		message.channel.send(content);
 		return undefined;
 	}
 
-	async addToContent(input, type) {
-		return `${type === `Input` ? `📥` : type === `Output` ? `📤` : `❌`} ${type}\n${String(this.haste(input)).length < 1024 ? `\`\`\`js\n${input}\n\`\`\`\n` : `${await this.haste(input)}.js`}`;
+	async addToContent(input, type, length) {
+		return `${type === `Input` ? `📥` : type === `Output` ? `📤` : `❌`} ${type}\n${String(input).length < 1024 - length ? `\`\`\`js\n${input}\n\`\`\`\n` : `${await this.haste(input)}.js`}`;
 	}
 
 	haste(input) {

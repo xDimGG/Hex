@@ -24,22 +24,22 @@ class This extends Command {
 	}
 
 	async exec(message, { code }) {
-		let content = await this.addToContent(this.client, code, `Input`);
+		let content = await this.addToContent(this.client, code, `Input`, 0);
 		exec(code, { cwd: `../../../../` }, async (error, stdout, stderr) => {
 			if (stderr) {
-				content += await this.addToContent(this.client, stderr, `Error`);
+				content += await this.addToContent(this.client, stderr, `Error`, content.length);
 			} else if (error) {
-				content += await this.addToContent(this.client, error, `Error`);
+				content += await this.addToContent(this.client, error, `Error`, content.length);
 			} else {
-				content += await this.addToContent(this.client, stdout, `Output`);
+				content += await this.addToContent(this.client, stdout, `Output`, content.length);
 			}
 			message.channel.send(content);
 		});
 		return true;
 	}
 
-	async addToContent(input, type) {
-		return `${type === `Input` ? `📥` : type === `Output` ? `📤` : `❌`} ${type}\n${String(this.haste(input)).length < 1024 ? `\`\`\`js\n${input}\n\`\`\`\n` : `${await this.haste(input)}.js`}`;
+	async addToContent(input, type, length) {
+		return `${type === `Input` ? `📥` : type === `Output` ? `📤` : `❌`} ${type}\n${String(input).length < 1024 - length ? `\`\`\`js\n${input}\n\`\`\`\n` : `${await this.haste(input)}.js`}`;
 	}
 
 	haste(input) {
