@@ -7,7 +7,7 @@ class This extends Listener {
 	}
 
 	async exec() {
-		this.client.user.setActivity(`${this.client.options.prefix}help`);
+		this.client.user.setActivity(`${this.client.guilds.size} ${this.client.guilds.size > 1 ? `Guilds` : `Guild`}`);
 	}
 }
 

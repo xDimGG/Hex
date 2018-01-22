@@ -1,17 +1,22 @@
 const { Command } = require(`discord-akairo`);
+const { basename, sep } = require(`path`);
 const { post } = require(`snekfetch`);
-const { basename } = require(`path`);
 const { inspect } = require(`util`);
 
 class This extends Command {
 	constructor() {
 		super(basename(__filename).split(`.`)[0], {
 			aliases: [basename(__filename).split(`.`)[0]],
+			category: String(basename(__dirname).split(sep).slice(-1)),
+			description: `Eval javascript code`,
+			typing: true,
+			hide: true,
 			ownerOnly: true,
 			args: [
 				{
 					id: `code`,
 					type: `string`,
+					match: `text`,
 					prompt: {
 						start: `What would you like to eval?`,
 						timeout: `You did not respond in time`,
