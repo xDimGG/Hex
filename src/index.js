@@ -16,29 +16,17 @@ const client = new AkairoClient({
 
 client.log = input => {
 	console.log(input);
-	if (process.env.DEV) return;
-	client.guilds.get(`361532026354139156`).channels.find(`name`, `console`).send(new MessageEmbed()
-		.setDescription(`\`\`\`\n${input}\n\`\`\``)
-		.setColor(0x00FF00)
-	);
+	if (!process.env.DEV) client.guilds.get(`361532026354139156`).channels.find(`name`, `console`).send(input, { code: `js` });
 };
 
 client.warn = input => {
 	console.warn(input);
-	if (process.env.DEV) return;
-	client.guilds.get(`361532026354139156`).channels.find(`name`, `console`).send(new MessageEmbed()
-		.setDescription(`\`\`\`\n${input}\n\`\`\``)
-		.setColor(0xFFFF00)
-	);
+	if (!process.env.DEV) client.guilds.get(`361532026354139156`).channels.find(`name`, `console`).send(input, { code: `js` });
 };
 
 client.error = input => {
 	console.error(input);
-	if (process.env.DEV) return;
-	client.guilds.get(`361532026354139156`).channels.find(`name`, `console`).send(new MessageEmbed()
-		.setDescription(`\`\`\`\n${input}\n\`\`\``)
-		.setColor(0xFF0000)
-	);
+	if (!process.env.DEV) client.guilds.get(`361532026354139156`).channels.find(`name`, `console`).send(input, { code: `js` });
 };
 
 client.login(process.env.Token).then(() => console.log(client.user.tag));
