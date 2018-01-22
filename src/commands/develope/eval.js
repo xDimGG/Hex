@@ -11,7 +11,13 @@ class This extends Command {
 			args: [
 				{
 					id: `code`,
-					type: `string`
+					type: `string`,
+					prompt: {
+						start: `What would you like to eval?`,
+						timeout: `You did not respond in time`,
+						ended: `You did not respond with a valid response, Please re-run the command`,
+						cancel: `Command canceled`
+					}
 				}
 			]
 		});
@@ -35,7 +41,7 @@ class This extends Command {
 	}
 
 	async addToContent(input, type) {
-		return `${type === `Input` ? `📥` : type === `Output` ? `📤` : `❌`} ${type}\n${String(this.haste(input)).length < 1024 ? `\`\`\`js\n${input}\n\`\`\`\n` : `${await this.client.haste(this.haste(input))}.js`}`;
+		return `${type === `Input` ? `📥` : type === `Output` ? `📤` : `❌`} ${type}\n${String(this.haste(input)).length < 1024 ? `\`\`\`js\n${input}\n\`\`\`\n` : `${await this.haste(input)}.js`}`;
 	}
 
 	haste(input) {
