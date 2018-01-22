@@ -12,7 +12,7 @@ class This extends Command {
 	}
 
 	async exec(message) {
-		message.channel.send(`https://discordapp.com/oauth2/authorize?client_id=${this.client.user.id}&scope=bot&permissions=8`);
+		message.channel.send(`<https://discordapp.com/oauth2/authorize?client_id=${this.client.user.id}&scope=bot&permissions=8>`);
 	}
 }
 
