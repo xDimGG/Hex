@@ -41,7 +41,7 @@ class This extends Command {
 	}
 
 	async addToContent(input, type, length) {
-		return `${type === `Input` ? `📥` : type === `Output` ? `📤` : `❌`} ${type}\n${String(input).length < 1024 - length ? `\`\`\`js\n${input}\n\`\`\`\n` : `${await this.haste(input)}.js`}`;
+		return `${type === `Input` ? `📥` : type === `Output` ? `📤` : `❌`} ${type}\n${String(input).length < 1024 - length ? `\`\`\`js\n${this.clean(input)}\n\`\`\`\n` : `${await this.haste(this.clean(input))}.js`}`;
 	}
 
 	haste(input) {
@@ -50,6 +50,20 @@ class This extends Command {
 			.end()
 			.then(data => `https://www.hastebin.com/${data.body.key}`)
 			.catch(error => `\`\`\`js\n${error}\n\`\`\`\n`);
+	}
+
+	clean(input) {
+		const SECRET = `[SECRET!]`;
+		if (typeof input !== `string`) { input = inspect(input, { depth: 0 }); }
+		input = input
+			.replace(/`/g, `\`${String.fromCharCode(8203)}`)
+			.replace(/@/g, `@${String.fromCharCode(8203)}`)
+			.replace(process.env.Token, SECRET);
+
+		for (const env in process.env) {
+			if (env.includes(`_API`)) input = input.replace(process.env[env], SECRET);
+		}
+		return input;
 	}
 }
 

@@ -24,6 +24,7 @@
   "eslintConfig": {
     "extends": "aqua",
     "rules": {
+      "capitalized-comments": "off",
       "id-length": "off",
       "max-len": "off",
       "no-console": "off",
