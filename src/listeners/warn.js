@@ -5,12 +5,12 @@ class This extends Listener {
 	constructor() {
 		super(basename(__filename).split(`.`)[0], {
 			eventName: basename(__filename).split(`.`)[0],
-			emitter: `process`
+			emitter: `client`
 		});
 	}
 
 	exec(info) {
-		this.client.warn(info);
+		this.client.error(info);
 	}
 }
 

@@ -9,8 +9,9 @@ class This extends Listener {
 		});
 	}
 
-	exec(error) {
-		console.error(error);
+	exec(info) {
+		this.client.error(info);
+		process.exit();
 	}
 }
 
