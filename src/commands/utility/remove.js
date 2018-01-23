@@ -6,6 +6,8 @@ class This extends Command {
 	constructor() {
 		super(basename(__filename).split(`.`)[0], {
 			aliases: [basename(__filename).split(`.`)[0], `undo`],
+			description: `Removes custom hex role`,
+			typing: true,
 			channel: `guild`,
 			clientPermissions: [`MANAGE_ROLES`]
 		});
