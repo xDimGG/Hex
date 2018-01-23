@@ -9,9 +9,9 @@ class This extends Listener {
 		});
 	}
 
-	exec(info) {
-		this.client.log(info);
-		process.exit();
+	exec(error) {
+		this.client.log(error.stack.replace(new RegExp(`${__dirname}/`, `g`), `./`));
+		return process.exit();
 	}
 }
 
