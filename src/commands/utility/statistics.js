@@ -8,7 +8,7 @@ const { basename, sep } = require(`path`);
 class This extends Command {
 	constructor() {
 		super(basename(__filename).split(`.`)[0], {
-			aliases: [basename(__filename).split(`.`)[0]],
+			aliases: [basename(__filename).split(`.`)[0], `stats`],
 			category: String(basename(__dirname).split(sep).slice(-1)),
 			clientPermissions: [`SEND_MESSAGES`],
 			description: `Shows statistics`,
@@ -42,12 +42,12 @@ class This extends Command {
 				`• Bot RAM Usage     :: ${Math.round((process.memoryUsage().heapUsed / 1024 / 1024 * 100) / 100)} MB\n` +
 				`\n` +
 				`Bot Stats\n` +
-				`• Guilds            :: ${this.formatNumbers(this.guilds.size)}\n` +
-				`• Members           :: ${this.formatNumbers(this.guilds.reduce((a, b) => a + b.memberCount, 0))}\n` +
-				`• Emojis            :: ${this.formatNumbers(this.emojis.size)}\n` +
-				`• Categories        :: ${this.formatNumbers(this.channels.filter(channel => channel.type === `category`).size)}\n` +
-				`• Text Channels     :: ${this.formatNumbers(this.channels.filter(channel => channel.type === `text`).size)}\n` +
-				`• Voice Channels    :: ${this.formatNumbers(this.channels.filter(channel => channel.type === `voice`).size)}`,
+				`• Guilds            :: ${this.formatNumbers(this.client.guilds.size)}\n` +
+				`• Members           :: ${this.formatNumbers(this.client.guilds.reduce((a, b) => a + b.memberCount, 0))}\n` +
+				`• Emojis            :: ${this.formatNumbers(this.client.emojis.size)}\n` +
+				`• Categories        :: ${this.formatNumbers(this.client.channels.filter(channel => channel.type === `category`).size)}\n` +
+				`• Text Channels     :: ${this.formatNumbers(this.client.channels.filter(channel => channel.type === `text`).size)}\n` +
+				`• Voice Channels    :: ${this.formatNumbers(this.client.channels.filter(channel => channel.type === `voice`).size)}`,
 				{ code: `asciidoc` }
 			);
 		});
