@@ -7,8 +7,8 @@ class This extends Command {
 	constructor() {
 		super(basename(__filename).split(`.`)[0], {
 			aliases: [basename(__filename).split(`.`)[0], `check`],
+			clientPermissions: [`SEND_MESSAGES`, `MANAGE_ROLES`],
 			channel: `guild`,
-			clientPermissions: [`MANAGE_ROLES`],
 			args: [
 				{
 					id: `color`,

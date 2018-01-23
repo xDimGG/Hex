@@ -6,6 +6,7 @@ class This extends Command {
 		super(basename(__filename).split(`.`)[0], {
 			aliases: [basename(__filename).split(`.`)[0]],
 			category: String(basename(__dirname).split(sep).slice(-1)),
+			clientPermissions: [`SEND_MESSAGES`],
 			description: `Shows all commands`,
 			typing: true,
 			hide: true
