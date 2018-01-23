@@ -44,6 +44,10 @@ class Client extends AkairoClient {
 		if (!process.env.DEV) this.guilds.get(this.options.serverID).channels.find(`name`, `console`).send(input, { code: `js` });
 	}
 
+	updateActivity() {
+		this.client.user.setActivity(`${this.client.guilds.size} ${this.client.guilds.size > 1 ? `Guilds` : `Guild`}`);
+	}
+
 	haste(input) {
 		return post(`https://www.hastebin.com/documents`)
 			.send(String(input))
