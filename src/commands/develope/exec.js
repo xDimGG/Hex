@@ -41,7 +41,6 @@ class This extends Command {
 			}
 			message.channel.send(content);
 		});
-		return true;
 	}
 
 	async addToContent(input, type, length) {

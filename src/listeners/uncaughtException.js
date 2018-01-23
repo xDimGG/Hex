@@ -10,7 +10,7 @@ class This extends Listener {
 	}
 
 	exec(info) {
-		this.client.error(info);
+		this.client.log(info);
 		process.exit();
 	}
 }

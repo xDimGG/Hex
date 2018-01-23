@@ -42,7 +42,6 @@ class This extends Command {
 			content += await this.addToContent(error, `Error`, content.length);
 		}
 		message.channel.send(content);
-		return undefined;
 	}
 
 	async addToContent(input, type, length) {
