@@ -6,7 +6,7 @@ const { inspect } = require(`util`);
 
 class Client extends AkairoClient {
 	constructor(options) {
-		super(options, {
+		super({
 			ownerID: `358558305997684739`,
 			serverID: `361532026354139156`,
 			allowMention: true,
@@ -19,7 +19,7 @@ class Client extends AkairoClient {
 				if (message.guild) return this.settings.get(message.guild.id, `prefix`, defaultPrefix);
 				return defaultPrefix;
 			}
-		});
+		}, options);
 		this.settings = new SequelizeProvider(Guild, { dataColumn: `settings` });
 	}
 
