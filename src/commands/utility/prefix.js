@@ -7,6 +7,7 @@ class This extends Command {
 			aliases: [basename(__filename).split(`.`)[0]],
 			category: String(basename(__dirname).split(sep).slice(-1)),
 			clientPermissions: [`SEND_MESSAGES`],
+			userPermissions: [`ADMINISTRATOR`],
 			description: `Changes guild prefix`,
 			typing: true,
 			channel: `guild`,
