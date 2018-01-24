@@ -45,7 +45,7 @@ class Client extends AkairoClient {
 	}
 
 	updateActivity() {
-		this.client.user.setActivity(`${this.client.guilds.size} ${this.client.guilds.size > 1 ? `Guilds` : `Guild`}`);
+		return this.user.setActivity(`${this.guilds.size} ${this.guilds.size > 1 ? `Guilds` : `Guild`}`);
 	}
 
 	haste(input) {
