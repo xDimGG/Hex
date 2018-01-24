@@ -5,8 +5,8 @@ const { post } = require(`snekfetch`);
 const { inspect } = require(`util`);
 
 class Client extends AkairoClient {
-	constructor() {
-		super({
+	constructor(options) {
+		super(options, {
 			ownerID: `358558305997684739`,
 			serverID: `361532026354139156`,
 			allowMention: true,
