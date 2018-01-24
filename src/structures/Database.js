@@ -8,7 +8,7 @@ const readdir = util.promisify(fs.readdir);
 const db = new Sequelize({
 	dialect: `sqlite`,
 	logging: false,
-	storage: path.join(__dirname, `../../../database.sqlite`)
+	storage: path.join(__dirname, `../../database.sqlite`)
 });
 
 class Database {
