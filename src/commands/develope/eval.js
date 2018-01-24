@@ -10,7 +10,6 @@ class This extends Command {
 			clientPermissions: [`SEND_MESSAGES`],
 			description: `Eval javascript code`,
 			typing: true,
-			hide: true,
 			ownerOnly: true,
 			args: [
 				{

@@ -8,13 +8,12 @@ class This extends Command {
 			category: String(basename(__dirname).split(sep).slice(-1)),
 			clientPermissions: [`SEND_MESSAGES`],
 			description: `Shows all commands`,
-			typing: true,
-			hide: true
+			typing: true
 		});
 	}
 
 	async exec(message) {
-		const commandNames = this.handler.modules.filter(c => !c.hide).sort();
+		const commandNames = this.handler.modules.filter(c => !c.ownerOnly).sort();
 		const longest = commandNames.keyArray().reduce((long, str) => Math.max(long, str.length), 0);
 		return message.channel.send(
 			`= Command List =\n` +

@@ -25,29 +25,30 @@ class This extends Command {
 				`= STATISTICS =\n` +
 				`\n` +
 				`Versions\n` +
-				`• Discord.js(Akairo):: ${discordjsVersion} (${akairoVersion})\n` +
-				`• Node              :: ${process.version}\n` +
-				`• NPM               :: ${String(execSync(`npm -v`)).replace(`\n`, ``)}\n` +
+				`• Discord.js       :: ${discordjsVersion}\n` +
+				`• Akairo           :: ${akairoVersion}\n` +
+				`• Node             :: ${process.version}\n` +
+				`• NPM              :: ${String(execSync(`npm -v`)).replace(`\n`, ``)}\n` +
 				`\n` +
 				`System\n` +
-				`• Uptime            :: ${this.formatTime(uptime)}\n` +
-				`• OS Type           :: ${String(type).replace(`_`, ` `)} v${release}\n` +
-				`• System CPU Usage  :: ${await cpuLoad()}%\n` +
-				`• System RAM Usage  :: ${usedMemory}% (${Math.round((usedMemory / 100) * maxMemory)} MB / ${process.env.DEV ? `8 GB` : `1 GB`})\n` +
+				`• Uptime           :: ${this.formatTime(uptime)}\n` +
+				`• OS Type          :: ${String(type).replace(`_`, ` `)} v${release}\n` +
+				`• System CPU Usage :: ${await cpuLoad()}%\n` +
+				`• System RAM Usage :: ${usedMemory}% (${Math.round((usedMemory / 100) * maxMemory)} MB / ${process.env.DEV ? `8 GB` : `1 GB`})\n` +
 				`\n` +
 				`Bot\n` +
-				`• Uptime            :: ${this.formatTime(process.uptime())}\n` +
-				`• Heartbeat Ping    :: ${Math.round(this.client.ping)}ms\n` +
-				`• Message Ping      :: ${Math.round(m.createdTimestamp - message.createdTimestamp)}ms\n` +
-				`• Bot RAM Usage     :: ${Math.round((process.memoryUsage().heapUsed / 1024 / 1024 * 100) / 100)} MB\n` +
+				`• Uptime           :: ${this.formatTime(process.uptime())}\n` +
+				`• Heartbeat Ping   :: ${Math.round(this.client.ping)}ms\n` +
+				`• Message Ping     :: ${Math.round(m.createdTimestamp - message.createdTimestamp)}ms\n` +
+				`• Bot RAM Usage    :: ${Math.round((process.memoryUsage().heapUsed / 1024 / 1024 * 100) / 100)} MB\n` +
 				`\n` +
 				`Bot Stats\n` +
-				`• Guilds            :: ${this.formatNumbers(this.client.guilds.size)}\n` +
-				`• Members           :: ${this.formatNumbers(this.client.guilds.reduce((a, b) => a + b.memberCount, 0))}\n` +
-				`• Emojis            :: ${this.formatNumbers(this.client.emojis.size)}\n` +
-				`• Categories        :: ${this.formatNumbers(this.client.channels.filter(channel => channel.type === `category`).size)}\n` +
-				`• Text Channels     :: ${this.formatNumbers(this.client.channels.filter(channel => channel.type === `text`).size)}\n` +
-				`• Voice Channels    :: ${this.formatNumbers(this.client.channels.filter(channel => channel.type === `voice`).size)}`,
+				`• Guilds           :: ${this.formatNumbers(this.client.guilds.size)}\n` +
+				`• Members          :: ${this.formatNumbers(this.client.guilds.reduce((a, b) => a + b.memberCount, 0))}\n` +
+				`• Emojis           :: ${this.formatNumbers(this.client.emojis.size)}\n` +
+				`• Categories       :: ${this.formatNumbers(this.client.channels.filter(channel => channel.type === `category`).size)}\n` +
+				`• Text Channels    :: ${this.formatNumbers(this.client.channels.filter(channel => channel.type === `text`).size)}\n` +
+				`• Voice Channels   :: ${this.formatNumbers(this.client.channels.filter(channel => channel.type === `voice`).size)}`,
 				{ code: `asciidoc` }
 			);
 		});

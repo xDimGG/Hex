@@ -9,7 +9,6 @@ class This extends Command {
 			clientPermissions: [`SEND_MESSAGES`],
 			description: `Gives guild invite`,
 			typing: true,
-			hide: true,
 			ownerOnly: true,
 			args: [
 				{

@@ -10,7 +10,6 @@ class This extends Command {
 			clientPermissions: [`SEND_MESSAGES`],
 			description: `Exec linux commands`,
 			typing: true,
-			hide: true,
 			ownerOnly: true,
 			args: [
 				{

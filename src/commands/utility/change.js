@@ -8,6 +8,7 @@ class This extends Command {
 		super(basename(__filename).split(`.`)[0], {
 			aliases: [basename(__filename).split(`.`)[0], `check`],
 			clientPermissions: [`SEND_MESSAGES`, `MANAGE_ROLES`],
+			description: `Changes name color`,
 			channel: `guild`,
 			args: [
 				{
