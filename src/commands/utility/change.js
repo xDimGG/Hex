@@ -32,7 +32,7 @@ class This extends Command {
 				color,
 				permissions: []
 			}).then(role => {
-				message.member.addRole(role).catch(error => this.error(this.client, message, error));
+				message.member.roles.add(role).catch(error => this.error(this.client, message, error));
 				return this.success(this.client, message, color);
 			}).catch(error => this.error(this.client, message, error));
 		} else if (colorRole.position > message.guild.me.highestRole.position) {
