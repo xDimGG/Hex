@@ -30,9 +30,9 @@ class This extends Command {
 			message.guild.roles.create({
 				data: {
 					name: roleName,
-					color
-				},
-				permissions: []
+					color,
+					permissions: []
+				}
 			}).then(role => {
 				message.member.roles.add(role).catch(error => this.error(this.client, message, error));
 				return this.success(this.client, message, color);
