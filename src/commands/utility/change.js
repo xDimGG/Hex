@@ -28,8 +28,10 @@ class This extends Command {
 
 		if (!colorRole) {
 			message.guild.roles.create({
-				name: roleName,
-				color,
+				data: {
+					name: roleName,
+					color
+				},
 				permissions: []
 			}).then(role => {
 				message.member.roles.add(role).catch(error => this.error(this.client, message, error));
