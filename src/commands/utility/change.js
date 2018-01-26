@@ -14,15 +14,14 @@ class This extends Command {
 			args: [
 				{
 					id: `color`,
-					type: `color`
+					type: `color`,
+					default: () => randomColor()
 				}
 			]
 		});
 	}
 
 	async exec(message, { color }) {
-		if (!color) color = randomColor();
-
 		const roleName = `USER-${message.author.id}`;
 		const { color: colorRole } = message.member.roles;
 

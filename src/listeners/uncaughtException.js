@@ -11,7 +11,6 @@ class This extends Listener {
 
 	exec(error) {
 		this.client.log(error.stack.replace(new RegExp(`${__dirname}/`, `g`), `./`));
-		return process.exit();
 	}
 }
 
