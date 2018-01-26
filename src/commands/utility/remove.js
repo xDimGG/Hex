@@ -32,7 +32,9 @@ class This extends Command {
 				.setTimestamp()
 			);
 		}
-		if (role.position > message.guild.me.highestRole.position) {
+
+		console.log(role.position);
+		if (role.position > message.guild.me.roles.highest.position) {
 			message.channel.send(new MessageEmbed()
 				.setTitle(`❌ **ERROR**`)
 				.setDescription(
@@ -44,7 +46,6 @@ class This extends Command {
 			);
 			return;
 		}
-
 		role.delete().then(role => {
 			message.channel.send(new MessageEmbed()
 				.setTitle(`✅ **Removed ${role.hexColor.toUpperCase().replace(`#`, ``)}**`)
