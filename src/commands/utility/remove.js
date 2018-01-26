@@ -22,7 +22,7 @@ class This extends Command {
 	}
 
 	async exec(message, { member }) {
-		const role = member.roles.find(`name`, `USER-${message.member.id}`);
+		const role = member.roles.find(`name`, `USER-${member.id}`);
 
 		if (!role) {
 			message.channel.send(new MessageEmbed()
