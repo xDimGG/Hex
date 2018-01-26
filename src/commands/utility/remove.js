@@ -9,12 +9,20 @@ class This extends Command {
 			clientPermissions: [`SEND_MESSAGES`, `MANAGE_ROLES`],
 			description: `Removes custom hex role`,
 			typing: true,
-			channel: `guild`
+			channel: `guild`,
+			args: [
+				{
+					id: `member`,
+					type: `member`,
+					default: message => message.member,
+					allow: message => message.member.hasPermission(`MANAGE_ROLES`)
+				}
+			]
 		});
 	}
 
-	async exec(message) {
-		const role = message.member.roles.find(`name`, `USER-${message.member.id}`);
+	async exec(message, { member }) {
+		const role = member.roles.find(`name`, `USER-${message.member.id}`);
 
 		if (!role) {
 			message.channel.send(new MessageEmbed()
