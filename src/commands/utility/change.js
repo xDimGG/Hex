@@ -24,7 +24,7 @@ class This extends Command {
 		if (!color) color = randomColor();
 
 		const roleName = `USER-${message.author.id}`;
-		const { colorRole } = message.member;
+		const { color: colorRole } = message.member.roles;
 
 		if (!colorRole) {
 			message.guild.roles.create({
@@ -38,7 +38,7 @@ class This extends Command {
 				return this.success(this.client, message, color);
 			}).catch(error => this.error(this.client, message, error));
 		} else if (colorRole.name === roleName) {
-			message.member.colorRole.setColor(color)
+			colorRole.setColor(color)
 				.then(() => this.success(this.client, message, color))
 				.catch(error => this.error(this.client, message, error));
 		} else if (colorRole.name !== roleName) {
