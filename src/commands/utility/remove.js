@@ -29,12 +29,10 @@ class This extends Command {
 				.setTitle(`❌ **ERROR**`)
 				.setDescription(`You dont have one!`)
 				.setColor(0xFF0000)
-				.setTimestamp()
 			);
 		}
 
-		console.log(role.position);
-		if (role.position > message.guild.me.roles.highest.position) {
+		if (role.position < message.guild.me.roles.highest.position) {
 			message.channel.send(new MessageEmbed()
 				.setTitle(`❌ **ERROR**`)
 				.setDescription(
@@ -42,7 +40,6 @@ class This extends Command {
 					`Cannot delete role \`\`\`\n${role.name}\n\`\`\``
 				)
 				.setColor(0xFF0000)
-				.setTimestamp()
 			);
 			return;
 		}
@@ -50,14 +47,12 @@ class This extends Command {
 			message.channel.send(new MessageEmbed()
 				.setTitle(`✅ **Removed ${role.hexColor.toUpperCase().replace(`#`, ``)}**`)
 				.setColor(role.color)
-				.setTimestamp()
 			);
 		}).catch(error => {
 			message.channel.send(new MessageEmbed()
 				.setTitle(`❌ **ERROR**`)
 				.setDescription(`\`\`\`\n${error}\n\`\`\``)
 				.setColor(0xFF0000)
-				.setTimestamp()
 			);
 		});
 	}

@@ -35,7 +35,7 @@ class This extends Command {
 				message.member.roles.add(role).catch(error => this.error(this.client, message, error));
 				return this.success(this.client, message, color);
 			}).catch(error => this.error(this.client, message, error));
-		} else if (colorRole.position > message.guild.me.roles.highest.position) {
+		} else if (colorRole.position < message.guild.me.roles.highest.position) {
 			return this.error(this.client, message,
 				`Invalid permissions\n` +
 				`Cannot edit role "${colorRole.name}"\n` +
