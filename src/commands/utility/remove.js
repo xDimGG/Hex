@@ -25,7 +25,7 @@ class This extends Command {
 		const role = member.roles.find(`name`, `USER-${member.id}`);
 
 		if (!role) {
-			message.channel.send(new MessageEmbed()
+			return message.channel.send(new MessageEmbed()
 				.setTitle(`❌ **ERROR**`)
 				.setDescription(`You dont have one!`)
 				.setColor(0xFF0000)
@@ -44,6 +44,7 @@ class This extends Command {
 				.setColor(0xFF0000)
 			);
 		});
+		return undefined;
 	}
 }
 
