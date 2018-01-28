@@ -19,10 +19,10 @@ class This extends Command {
 						start: `What prefix would you like to set?`,
 						timeout: `You did not respond in time`,
 						ended: `You did not respond with a valid response, Please re-run the command`,
-						cancel: `Command canceled`
-					}
-				}
-			]
+						cancel: `Command canceled`,
+					},
+				},
+			],
 		});
 	}
 
@@ -30,6 +30,7 @@ class This extends Command {
 		const oldPrefix = this.client.settings.get(message.guild.id, `prefix`, `${this.client.user.username.toLowerCase()[0]}!`);
 
 		await this.client.settings.set(message.guild.id, `prefix`, args.prefix);
+
 		return message.channel.send(`Prefix changed from ${oldPrefix} to ${args.prefix}`);
 	}
 }

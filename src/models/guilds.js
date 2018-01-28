@@ -6,13 +6,13 @@ const Guild = Database.db.define(`guilds`, {
 		type: Sequelize.STRING,
 		primaryKey: true,
 		unique: true,
-		allowNull: false
+		allowNull: false,
 	},
 	settings: {
 		type: Sequelize.JSONB,
 		allowNull: false,
-		defaultValue: {}
-	}
+		defaultValue: {},
+	},
 });
 
 module.exports = Guild;

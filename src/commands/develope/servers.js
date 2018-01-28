@@ -9,7 +9,7 @@ class This extends Command {
 			clientPermissions: [`SEND_MESSAGES`],
 			description: `Shows bots guilds`,
 			typing: true,
-			ownerOnly: true
+			ownerOnly: true,
 		});
 	}
 

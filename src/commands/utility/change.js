@@ -15,9 +15,9 @@ class This extends Command {
 				{
 					id: `color`,
 					type: `color`,
-					default: () => randomColor()
-				}
-			]
+					default: () => randomColor(),
+				},
+			],
 		});
 	}
 
@@ -25,38 +25,39 @@ class This extends Command {
 		const roleName = `USER-${message.author.id}`;
 		const { color: colorRole } = message.member.roles;
 
-		if (!colorRole) {
+		if (!colorRole)
 			message.guild.roles.create({
 				data: {
 					name: roleName,
 					color,
-					permissions: []
-				}
+					permissions: [],
+				},
 			}).then(role => {
-				message.member.roles.add(role).catch(error => this.error(this.client, message, error));
-				return this.success(this.client, message, color);
-			}).catch(error => this.error(this.client, message, error));
-		} else if (colorRole.name === roleName) {
+				message.member.roles.add(role).catch(error => this.error(message, error));
+
+				return this.success(message, color);
+			}).catch(error => this.error(message, error));
+		else if (colorRole.name === roleName)
 			colorRole.setColor(color)
-				.then(() => this.success(this.client, message, color))
-				.catch(error => this.error(this.client, message, error));
-		} else if (colorRole.name !== roleName) {
-			return this.error(this.client, message,
+				.then(() => this.success(message, color))
+				.catch(error => this.error(message, error));
+		else if (colorRole.name !== roleName)
+			return this.error(message,
 				`The role ${colorRole.name} is not set to DEFAULT\n` +
 				`Please change the color of that role and try again.`
 			);
-		}
+
 		return undefined;
 	}
 
-	success(client, message, roleColor) {
+	success(message, roleColor) {
 		message.channel.send(new MessageEmbed()
 			.setTitle(`✅ **Changed to ${roleColor}**`)
 			.setColor(roleColor)
 		).catch(() => message.react(`✅`).catch(() => null));
 	}
 
-	error(client, message, error) {
+	error(message, error) {
 		message.channel.send(new MessageEmbed()
 			.setTitle(`❌ **ERROR**`)
 			.setDescription(`\`\`\`js\n${error}\n\`\`\``)

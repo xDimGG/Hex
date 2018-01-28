@@ -1,6 +1,5 @@
 const { Command } = require(`discord-akairo`);
 const { basename, sep } = require(`path`);
-const { inspect } = require(`util`);
 
 class This extends Command {
 	constructor() {
@@ -18,10 +17,10 @@ class This extends Command {
 						start: `What would you like to submit?`,
 						timeout: `You did not respond in time`,
 						ended: `You did not respond with a valid response, Please re-run the command`,
-						cancel: `Command canceled`
-					}
-				}
-			]
+						cancel: `Command canceled`,
+					},
+				},
+			],
 		});
 	}
 

@@ -10,6 +10,7 @@
   "dependencies": {
     "discord-akairo": "github:1Computer1/discord-akairo",
     "discord.js": "github:hydrabolt/discord.js",
+    "eslint-config-dim": "gist:3c110280de2a056495623585b6d5d87e",
     "os": "^0.1.1",
     "os-toolbox": "^0.2.9",
     "randomcolor": "^0.5.3",
@@ -26,25 +27,13 @@
   },
   "license": "MIT",
   "eslintConfig": {
-    "extends": "aqua",
+    "extends": "eslint-config-dim",
     "rules": {
-      "capitalized-comments": "off",
-      "id-length": "off",
-      "max-len": "off",
-      "newline-per-chained-call": "off",
-      "no-await-in-loop": "off",
-      "no-console": "off",
-      "no-inline-comments": "off",
-      "no-process-env": "off",
-      "no-shadow": "off",
-      "operator-linebreak": [
-        "error",
-        "after"
-      ],
       "quotes": [
         "error",
         "backtick"
-      ]
+      ],
+      "linebreak-style": "off"
     }
   }
 }

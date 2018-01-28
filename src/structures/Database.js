@@ -8,7 +8,7 @@ const readdir = util.promisify(fs.readdir);
 const db = new Sequelize({
 	dialect: `sqlite`,
 	logging: false,
-	storage: path.join(__dirname, `../../database.sqlite`)
+	storage: path.join(__dirname, `../../database.sqlite`),
 });
 
 class Database {
@@ -25,7 +25,7 @@ class Database {
 		const files = await readdir(filepath);
 		for (const file of files) {
 			if (!/.js$/.test(file)) continue;
-			await require(path.join(filepath, file)).sync(); // eslint-disable-line no-await-in-loop
+			await require(path.join(filepath, file)).sync(); // eslint-disable-line global-require
 		}
 	}
 }

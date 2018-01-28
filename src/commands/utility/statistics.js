@@ -12,7 +12,7 @@ class This extends Command {
 			category: String(basename(__dirname).split(sep).slice(-1)),
 			clientPermissions: [`SEND_MESSAGES`],
 			description: `Shows statistics`,
-			typing: true
+			typing: true,
 		});
 	}
 

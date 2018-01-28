@@ -4,5 +4,5 @@ new Client({
 	messageCacheLifetime: 1,
 	messageSweepInterval: 1,
 	disableEveryone: true,
-	disabledEvents: [`TYPING_START`]
+	disabledEvents: [`TYPING_START`],
 }).start();

@@ -18,10 +18,10 @@ class This extends Command {
 						start: `What guild?`,
 						timeout: `You did not respond in time`,
 						ended: `You did not respond with a valid response, Please re-run the command`,
-						cancel: `Command canceled`
-					}
-				}
-			]
+						cancel: `Command canceled`,
+					},
+				},
+			],
 		});
 	}
 

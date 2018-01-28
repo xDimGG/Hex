@@ -16,8 +16,9 @@ class Client extends AkairoClient {
 			prefix: message => {
 				const defaultPrefix = `${this.user.username.toLowerCase()[0]}!`;
 				if (message.guild) return this.settings.get(message.guild.id, `prefix`, defaultPrefix);
+
 				return defaultPrefix;
-			}
+			},
 		}, options);
 		this.settings = new SequelizeProvider(Guild, { dataColumn: `settings` });
 	}
@@ -25,6 +26,7 @@ class Client extends AkairoClient {
 	async start() {
 		await Database.authenticate();
 		await this.settings.init();
+
 		return super.login(process.env.Token).then(() => console.log(this.user.tag));
 	}
 
@@ -57,15 +59,15 @@ class Client extends AkairoClient {
 
 	clean(input) {
 		const SECRET = `[SECRET!]`;
-		if (typeof input !== `string`) { input = inspect(input, { depth: 0 }); }
+		if (typeof input !== `string`) input = inspect(input, { depth: 0 });
 		input = input
 			.replace(/`/g, `\`${String.fromCharCode(8203)}`)
 			.replace(/@/g, `@${String.fromCharCode(8203)}`)
 			.replace(process.env.Token, SECRET);
 
-		for (const env in process.env) {
+		for (const env in process.env)
 			if (env.includes(`_API`)) input = input.replace(process.env[env], SECRET);
-		}
+
 		return input;
 	}
 }

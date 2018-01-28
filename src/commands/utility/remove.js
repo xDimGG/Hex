@@ -15,24 +15,23 @@ class This extends Command {
 					id: `member`,
 					type: `member`,
 					default: message => message.member,
-					allow: message => message.member.hasPermission(`MANAGE_ROLES`)
-				}
-			]
+					allow: message => message.member.hasPermission(`MANAGE_ROLES`),
+				},
+			],
 		});
 	}
 
 	async exec(message, { member }) {
-		const role = member.roles.find(`name`, `USER-${member.id}`);
+		const colorRole = member.roles.find(`name`, `USER-${member.id}`);
 
-		if (!role) {
+		if (!colorRole)
 			return message.channel.send(new MessageEmbed()
 				.setTitle(`❌ **ERROR**`)
 				.setDescription(`You dont have one!`)
 				.setColor(0xFF0000)
 			);
-		}
 
-		role.delete().then(role => {
+		colorRole.delete().then(role => {
 			message.channel.send(new MessageEmbed()
 				.setTitle(`✅ **Removed ${role.hexColor.toUpperCase().replace(`#`, ``)}**`)
 				.setColor(role.color)
@@ -44,6 +43,7 @@ class This extends Command {
 				.setColor(0xFF0000)
 			);
 		});
+
 		return undefined;
 	}
 }

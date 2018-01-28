@@ -20,10 +20,10 @@ class This extends Command {
 						start: `What would you like to eval?`,
 						timeout: `You did not respond in time`,
 						ended: `You did not respond with a valid response, Please re-run the command`,
-						cancel: `Command canceled`
-					}
-				}
-			]
+						cancel: `Command canceled`,
+					},
+				},
+			],
 		});
 	}
 

@@ -20,23 +20,23 @@ class This extends Command {
 						start: `What would you like to exec?`,
 						timeout: `You did not respond in time`,
 						ended: `You did not respond with a valid response, Please re-run the command`,
-						cancel: `Command canceled`
-					}
-				}
-			]
+						cancel: `Command canceled`,
+					},
+				},
+			],
 		});
 	}
 
 	async exec(message, { code }) {
 		let content = await this.addToContent(this.client, code, `Input`, 0);
 		exec(code, { cwd: `../../../../` }, async (error, stdout, stderr) => {
-			if (stderr) {
+			if (stderr)
 				content += await this.addToContent(this.client, stderr, `Error`, content.length);
-			} else if (error) {
+			else if (error)
 				content += await this.addToContent(this.client, error, `Error`, content.length);
-			} else {
+			else
 				content += await this.addToContent(this.client, stdout, `Output`, content.length);
-			}
+
 			message.channel.send(content);
 		});
 	}
