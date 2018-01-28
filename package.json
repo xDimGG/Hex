@@ -19,7 +19,7 @@
   },
   "devDependencies": {
     "eslint": "^4.16.0",
-    "eslint-config-aqua": "^2.0.1"
+    "eslint-config-lloti": "github:lloti/eslint-config-lloti"
   },
   "repository": {
     "type": "git",
@@ -27,13 +27,12 @@
   },
   "license": "MIT",
   "eslintConfig": {
-    "extends": "eslint-config-dim",
+    "extends": "eslint-config-lloti",
     "rules": {
       "quotes": [
         "error",
         "backtick"
-      ],
-      "linebreak-style": "off"
+      ]
     }
   }
 }
