@@ -31,7 +31,7 @@ class This extends Command {
 
 		await this.client.settings.set(message.guild.id, `prefix`, args.prefix);
 
-		return message.channel.send(`Prefix changed from ${oldPrefix} to ${args.prefix}`);
+		message.channel.send(`Prefix changed from \`${oldPrefix}\` to \`${args.prefix}\``);
 	}
 }
 
