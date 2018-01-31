@@ -1,6 +1,6 @@
-const { Command } = require(`discord-akairo`);
-const { basename, sep } = require(`path`);
-const { inspect } = require(`util`);
+const { Command } = require(`discord-akairo`)
+const { basename, sep } = require(`path`)
+const { inspect } = require(`util`)
 
 class This extends Command {
 	constructor() {
@@ -24,28 +24,28 @@ class This extends Command {
 					},
 				},
 			],
-		});
+		})
 	}
 
 	async exec(message, { code }) {
-		const { client } = this; // eslint-disable-line no-unused-vars
-		let content = await this.addToContent(code, `Input`, 0);
+		const { client } = this // eslint-disable-line no-unused-vars
+		let content = await this.addToContent(code, `Input`, 0)
 		try {
-			let evaled = eval(code);
+			let evaled = eval(code)
 
-			if (evaled instanceof Promise) evaled = await evaled;
-			if (evaled instanceof Object || evaled instanceof Function) evaled = inspect(evaled, { showHidden: true, showProxy: true, depth: 1 });
+			if (evaled instanceof Promise) evaled = await evaled
+			if (evaled instanceof Object || evaled instanceof Function) evaled = inspect(evaled, { showHidden: true, showProxy: true, depth: 1 })
 
-			content += await this.addToContent(evaled, `Output`, content.length);
+			content += await this.addToContent(evaled, `Output`, content.length)
 		} catch (error) {
-			content += await this.addToContent(error, `Error`, content.length);
+			content += await this.addToContent(error, `Error`, content.length)
 		}
-		message.channel.send(content);
+		message.channel.send(content)
 	}
 
 	async addToContent(input, type, length) {
-		return `${type === `Input` ? `📥` : type === `Output` ? `📤` : `❌`} ${type}\n${String(input).length < 1024 - length ? `\`\`\`js\n${this.client.clean(input)}\n\`\`\`\n` : `${await this.client.haste(this.client.clean(input))}.js`}`;
+		return `${type === `Input` ? `📥` : type === `Output` ? `📤` : `❌`} ${type}\n${String(input).length < 1024 - length ? `\`\`\`js\n${this.client.clean(input)}\n\`\`\`\n` : `${await this.client.haste(this.client.clean(input))}.js`}`
 	}
 }
 
-module.exports = This;
+module.exports = This

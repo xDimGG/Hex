@@ -1,6 +1,6 @@
-const { Command } = require(`discord-akairo`);
-const { MessageEmbed } = require(`discord.js`);
-const { basename } = require(`path`);
+const { Command } = require(`discord-akairo`)
+const { MessageEmbed } = require(`discord.js`)
+const { basename } = require(`path`)
 
 class This extends Command {
 	constructor() {
@@ -18,34 +18,35 @@ class This extends Command {
 					allow: message => message.member.hasPermission(`MANAGE_ROLES`),
 				},
 			],
-		});
+		})
 	}
 
 	async exec(message, { member }) {
-		const colorRole = member.roles.find(`name`, `USER-${member.id}`);
+		if (!member) member = message.member
+		const colorRole = member.roles.find(`name`, `USER-${member.id}`)
 
 		if (!colorRole)
 			return message.channel.send(new MessageEmbed()
 				.setTitle(`❌ **ERROR**`)
 				.setDescription(`You dont have one!`)
 				.setColor(0xFF0000)
-			);
+			)
 
 		colorRole.delete().then(role => {
 			message.channel.send(new MessageEmbed()
 				.setTitle(`✅ **Removed ${role.hexColor.toUpperCase().replace(`#`, ``)}**`)
 				.setColor(role.color)
-			);
+			)
 		}).catch(error => {
 			message.channel.send(new MessageEmbed()
 				.setTitle(`❌ **ERROR**`)
 				.setDescription(`\`\`\`\n${error}\n\`\`\``)
 				.setColor(0xFF0000)
-			);
-		});
+			)
+		})
 
-		return undefined;
+		return undefined
 	}
 }
 
-module.exports = This;
+module.exports = This

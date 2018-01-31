@@ -32,6 +32,11 @@
       "quotes": [
         "error",
         "backtick"
+      ],
+      "require-await": "off",
+      "semi": [
+        "error",
+        "never"
       ]
     }
   }

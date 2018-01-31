@@ -1,5 +1,5 @@
-const { Command } = require(`discord-akairo`);
-const { basename, sep } = require(`path`);
+const { Command } = require(`discord-akairo`)
+const { basename, sep } = require(`path`)
 
 class This extends Command {
 	constructor() {
@@ -9,12 +9,12 @@ class This extends Command {
 			clientPermissions: [`SEND_MESSAGES`],
 			description: `Shows all commands`,
 			typing: true,
-		});
+		})
 	}
 
 	async exec(message) {
-		const commandNames = this.handler.modules.filter(c => !c.ownerOnly).sort();
-		const longest = commandNames.keyArray().reduce((long, str) => Math.max(long, str.length), 0);
+		const commandNames = this.handler.modules.filter(c => !c.ownerOnly).sort()
+		const longest = commandNames.keyArray().reduce((long, str) => Math.max(long, str.length), 0)
 
 		return message.channel.send(
 			`= Command List =\n` +
@@ -24,12 +24,12 @@ class This extends Command {
 				code: `asciidoc`,
 				split: { prepend: `\`\`\`asciidoc\n`, append: `\`\`\`` },
 			}
-		);
+		)
 	}
 
 	upperCase(input) {
-		return input[0].toUpperCase() + input.slice(1);
+		return input[0].toUpperCase() + input.slice(1)
 	}
 }
 
-module.exports = This;
+module.exports = This

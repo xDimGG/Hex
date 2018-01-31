@@ -1,9 +1,9 @@
-const { Command, version: akairoVersion } = require(`discord-akairo`);
-const { version: discordjsVersion } = require(`discord.js`);
-const { cpuLoad, memoryUsage } = require(`os-toolbox`);
-const { type, release, uptime } = require(`os`);
-const { execSync } = require(`child_process`);
-const { basename, sep } = require(`path`);
+const { Command, version: akairoVersion } = require(`discord-akairo`)
+const { version: discordjsVersion } = require(`discord.js`)
+const { cpuLoad, memoryUsage } = require(`os-toolbox`)
+const { type, release, uptime } = require(`os`)
+const { execSync } = require(`child_process`)
+const { basename, sep } = require(`path`)
 
 class This extends Command {
 	constructor() {
@@ -13,13 +13,13 @@ class This extends Command {
 			clientPermissions: [`SEND_MESSAGES`],
 			description: `Shows statistics`,
 			typing: true,
-		});
+		})
 	}
 
 	async exec(message) {
 		message.channel.send(`Loading...`).then(async m => {
-			const usedMemory = await memoryUsage();
-			const maxMemory = process.env.DEV ? 8096 : 1024;
+			const usedMemory = await memoryUsage()
+			const maxMemory = process.env.DEV ? 8096 : 1024
 
 			m.edit(
 				`= STATISTICS =\n` +
@@ -50,41 +50,41 @@ class This extends Command {
 				`• Text Channels    :: ${this.formatNumbers(this.client.channels.filter(channel => channel.type === `text`).size)}\n` +
 				`• Voice Channels   :: ${this.formatNumbers(this.client.channels.filter(channel => channel.type === `voice`).size)}`,
 				{ code: `asciidoc` }
-			);
-		});
+			)
+		})
 	}
 
 	formatTime(input, toggle) {
-		const days = Math.floor(input / 86400);
-		const hours = Math.floor((input % 86400) / 3600);
-		const minutes = Math.floor(((input % 86400) % 3600) / 60);
-		const seconds = Math.floor(((input % 86400) % 3600) % 60);
+		const days = Math.floor(input / 86400)
+		const hours = Math.floor((input % 86400) / 3600)
+		const minutes = Math.floor(((input % 86400) % 3600) / 60)
+		const seconds = Math.floor(((input % 86400) % 3600) % 60)
 
-		const output = [];
+		const output = []
 
-		let dayStr = `d`;
-		let hourStr = `h`;
-		let minuteStr = `m`;
-		let secondStr = `s`;
+		let dayStr = `d`
+		let hourStr = `h`
+		let minuteStr = `m`
+		let secondStr = `s`
 
 		if (toggle) {
-			dayStr = ` days`;
-			hourStr = ` hours`;
-			minuteStr = ` minutes`;
-			secondStr = ` seconds`;
+			dayStr = ` days`
+			hourStr = ` hours`
+			minuteStr = ` minutes`
+			secondStr = ` seconds`
 		}
 
-		if (days > 0) output.push(`${days}${dayStr}`);
-		if (hours > 0) output.push(`${hours}${hourStr}`);
-		if (minutes > 0) output.push(`${minutes}${minuteStr}`);
-		if (seconds > 0) output.push(`${seconds}${secondStr}`);
+		if (days > 0) output.push(`${days}${dayStr}`)
+		if (hours > 0) output.push(`${hours}${hourStr}`)
+		if (minutes > 0) output.push(`${minutes}${minuteStr}`)
+		if (seconds > 0) output.push(`${seconds}${secondStr}`)
 
-		return output.join(` `);
+		return output.join(` `)
 	}
 
 	formatNumbers(input) {
-		return input.toString().replace(/\B(?=(\d{3})+(?!\d))/g, `,`);
+		return input.toString().replace(/\B(?=(\d{3})+(?!\d))/g, `,`)
 	}
 }
 
-module.exports = This;
+module.exports = This

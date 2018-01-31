@@ -1,7 +1,7 @@
-const { Command } = require(`discord-akairo`);
-const { MessageEmbed } = require(`discord.js`);
-const { basename } = require(`path`);
-const randomColor = require(`randomcolor`);
+const { Command } = require(`discord-akairo`)
+const { MessageEmbed } = require(`discord.js`)
+const { basename } = require(`path`)
+const randomColor = require(`randomcolor`)
 
 class This extends Command {
 	constructor() {
@@ -20,12 +20,12 @@ class This extends Command {
 					default: () => randomColor(),
 				},
 			],
-		});
+		})
 	}
 
 	async exec(message, { color }) {
-		const roleName = `USER-${message.author.id}`;
-		const { color: colorRole } = message.member.roles;
+		const roleName = `USER-${message.author.id}`
+		const { color: colorRole } = message.member.roles
 
 		if (!colorRole)
 			message.guild.roles.create({
@@ -35,28 +35,28 @@ class This extends Command {
 					permissions: [],
 				},
 			}).then(role => {
-				message.member.roles.add(role).catch(error => this.error(message, error));
+				message.member.roles.add(role).catch(error => this.error(message, error))
 
-				return this.success(message, color);
-			}).catch(error => this.error(message, error));
+				return this.success(message, color)
+			}).catch(error => this.error(message, error))
 		else if (colorRole.name === roleName)
 			colorRole.setColor(color)
 				.then(() => this.success(message, color))
-				.catch(error => this.error(message, error));
+				.catch(error => this.error(message, error))
 		else if (colorRole.name !== roleName)
 			return this.error(message,
 				`The role ${colorRole.name} is not set to DEFAULT\n` +
 				`Please change the color of that role and try again.`
-			);
+			)
 
-		return undefined;
+		return undefined
 	}
 
 	success(message, roleColor) {
 		message.channel.send(new MessageEmbed()
 			.setTitle(`✅ **Changed to ${roleColor}**`)
 			.setColor(roleColor)
-		).catch(() => message.react(`✅`).catch(() => null));
+		).catch(() => message.react(`✅`).catch(() => null))
 	}
 
 	error(message, error) {
@@ -64,8 +64,8 @@ class This extends Command {
 			.setTitle(`❌ **ERROR**`)
 			.setDescription(`\`\`\`js\n${error}\n\`\`\``)
 			.setColor(0xFF0000)
-		).catch(() => message.react(`❌`).catch(() => null));
+		).catch(() => message.react(`❌`).catch(() => null))
 	}
 }
 
-module.exports = This;
+module.exports = This

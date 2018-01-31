@@ -1,5 +1,5 @@
-const { Command } = require(`discord-akairo`);
-const { basename, sep } = require(`path`);
+const { Command } = require(`discord-akairo`)
+const { basename, sep } = require(`path`)
 
 class This extends Command {
 	constructor() {
@@ -9,12 +9,12 @@ class This extends Command {
 			clientPermissions: [`SEND_MESSAGES`],
 			description: `Gives bot invite`,
 			typing: true,
-		});
+		})
 	}
 
 	async exec(message) {
-		message.channel.send(`<https://discordapp.com/oauth2/authorize?client_id=${this.client.user.id}&scope=bot&permissions=8>`);
+		message.channel.send(`<https://discordapp.com/oauth2/authorize?client_id=${this.client.user.id}&scope=bot&permissions=8>`)
 	}
 }
 
-module.exports = This;
+module.exports = This

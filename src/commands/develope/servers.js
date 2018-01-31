@@ -1,5 +1,5 @@
-const { Command } = require(`discord-akairo`);
-const { basename, sep } = require(`path`);
+const { Command } = require(`discord-akairo`)
+const { basename, sep } = require(`path`)
 
 class This extends Command {
 	constructor() {
@@ -10,14 +10,14 @@ class This extends Command {
 			description: `Shows bots guilds`,
 			typing: true,
 			ownerOnly: true,
-		});
+		})
 	}
 
 	async exec(message) {
-		const longestCount = this.client.guilds.map(g => g.memberCount.toString().length).reduce((long, str) => Math.max(long, str), 0);
-		const longestID = this.client.guilds.map(g => g.id.toString().length).reduce((long, str) => Math.max(long, str), 0);
-		message.channel.send(this.client.guilds.sort((a, b) => b.memberCount - a.memberCount).map(g => `${g.memberCount}${` `.repeat(longestCount - g.memberCount.toString().length)} | ${g.id}${` `.repeat(longestID - g.id.toString().length)} | ${g.name}`).join(`\n`), { code: true, split: true });
+		const longestCount = this.client.guilds.map(g => g.memberCount.toString().length).reduce((long, str) => Math.max(long, str), 0)
+		const longestID = this.client.guilds.map(g => g.id.toString().length).reduce((long, str) => Math.max(long, str), 0)
+		message.channel.send(this.client.guilds.sort((a, b) => b.memberCount - a.memberCount).map(g => `${g.memberCount}${` `.repeat(longestCount - g.memberCount.toString().length)} | ${g.id}${` `.repeat(longestID - g.id.toString().length)} | ${g.name}`).join(`\n`), { code: true, split: true })
 	}
 }
 
-module.exports = This;
+module.exports = This

@@ -1,5 +1,5 @@
-const { Command } = require(`discord-akairo`);
-const { basename, sep } = require(`path`);
+const { Command } = require(`discord-akairo`)
+const { basename, sep } = require(`path`)
 
 class This extends Command {
 	constructor() {
@@ -23,16 +23,16 @@ class This extends Command {
 					},
 				},
 			],
-		});
+		})
 	}
 
 	async exec(message, args) {
-		const oldPrefix = this.client.settings.get(message.guild.id, `prefix`, `${this.client.user.username.toLowerCase()[0]}!`);
+		const oldPrefix = this.client.settings.get(message.guild.id, `prefix`, `${this.client.user.username.toLowerCase()[0]}!`)
 
-		await this.client.settings.set(message.guild.id, `prefix`, args.prefix);
+		await this.client.settings.set(message.guild.id, `prefix`, args.prefix)
 
-		message.channel.send(`Prefix changed from \`${oldPrefix}\` to \`${args.prefix}\``);
+		message.channel.send(`Prefix changed from \`${oldPrefix}\` to \`${args.prefix}\``)
 	}
 }
 
-module.exports = This;
+module.exports = This

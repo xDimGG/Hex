@@ -1,5 +1,5 @@
-const Sequelize = require(`sequelize`);
-const Database = require(`../structures/Database`);
+const Sequelize = require(`sequelize`)
+const Database = require(`../structures/Database`)
 
 const Guild = Database.db.define(`guilds`, {
 	id: {
@@ -13,6 +13,6 @@ const Guild = Database.db.define(`guilds`, {
 		allowNull: false,
 		defaultValue: {},
 	},
-});
+})
 
-module.exports = Guild;
+module.exports = Guild

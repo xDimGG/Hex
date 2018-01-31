@@ -1,5 +1,5 @@
-const { Command } = require(`discord-akairo`);
-const { basename, sep } = require(`path`);
+const { Command } = require(`discord-akairo`)
+const { basename, sep } = require(`path`)
 
 class This extends Command {
 	constructor() {
@@ -21,7 +21,7 @@ class This extends Command {
 					},
 				},
 			],
-		});
+		})
 	}
 
 	async exec(message, { string }) {
@@ -30,16 +30,16 @@ class This extends Command {
 			`\`${message.channel.name}\` (${message.channel.id}) in \`${message.guild.name}\` (${message.guild.id})\n` +
 			`\`\`\`\n${this.client.clean(string)}\n\`\`\``
 		).then(async m => {
-			await m.react(`👍`);
-			await m.react(`👎`);
-		});
+			await m.react(`👍`)
+			await m.react(`👎`)
+		})
 
 		message.channel.send(
 			`Thank you for your feedback!\n` +
 			`This command can be used to suggest ideas, or ask for help.\n` +
 			`Please note: If you spam this, you will be blacklisted from using the bot.`
-		);
+		)
 	}
 }
 
-module.exports = This;
+module.exports = This

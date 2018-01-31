@@ -1,6 +1,6 @@
-const { Command } = require(`discord-akairo`);
-const { exec } = require(`child_process`);
-const { basename, sep } = require(`path`);
+const { Command } = require(`discord-akairo`)
+const { exec } = require(`child_process`)
+const { basename, sep } = require(`path`)
 
 class This extends Command {
 	constructor() {
@@ -24,26 +24,26 @@ class This extends Command {
 					},
 				},
 			],
-		});
+		})
 	}
 
 	async exec(message, { code }) {
-		let content = await this.addToContent(this.client, code, `Input`, 0);
+		let content = await this.addToContent(this.client, code, `Input`, 0)
 		exec(code, { cwd: `../../../../` }, async (error, stdout, stderr) => {
 			if (stderr)
-				content += await this.addToContent(this.client, stderr, `Error`, content.length);
+				content += await this.addToContent(this.client, stderr, `Error`, content.length)
 			else if (error)
-				content += await this.addToContent(this.client, error, `Error`, content.length);
+				content += await this.addToContent(this.client, error, `Error`, content.length)
 			else
-				content += await this.addToContent(this.client, stdout, `Output`, content.length);
+				content += await this.addToContent(this.client, stdout, `Output`, content.length)
 
-			message.channel.send(content);
-		});
+			message.channel.send(content)
+		})
 	}
 
 	async addToContent(input, type, length) {
-		return `${type === `Input` ? `📥` : type === `Output` ? `📤` : `❌`} ${type}\n${String(input).length < 1024 - length ? `\`\`\`js\n${this.client.clean(input)}\n\`\`\`\n` : `${await this.client.haste(this.client.clean(input))}.js`}`;
+		return `${type === `Input` ? `📥` : type === `Output` ? `📤` : `❌`} ${type}\n${String(input).length < 1024 - length ? `\`\`\`js\n${this.client.clean(input)}\n\`\`\`\n` : `${await this.client.haste(this.client.clean(input))}.js`}`
 	}
 }
 
-module.exports = This;
+module.exports = This

@@ -1,5 +1,5 @@
-const { Command } = require(`discord-akairo`);
-const { basename, sep } = require(`path`);
+const { Command } = require(`discord-akairo`)
+const { basename, sep } = require(`path`)
 
 class This extends Command {
 	constructor() {
@@ -22,14 +22,14 @@ class This extends Command {
 					},
 				},
 			],
-		});
+		})
 	}
 
 	async exec(message, { guild }) {
 		this.client.defaultChannel(this.client.guilds.get(guild)).createInvite({ maxAge: 1 })
 			.then(invite => message.channel.send(invite.url))
-			.catch(error => message.channel.send(error, { code: true }));
+			.catch(error => message.channel.send(error, { code: true }))
 	}
 }
 
-module.exports = This;
+module.exports = This
