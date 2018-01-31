@@ -10,6 +10,8 @@ class This extends Command {
 			clientPermissions: [`SEND_MESSAGES`, `MANAGE_ROLES`],
 			description: `Changes name color`,
 			typing: true,
+			cooldown: 30000,
+			ratelimit: 10,
 			channel: `guild`,
 			args: [
 				{
