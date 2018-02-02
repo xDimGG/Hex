@@ -53,7 +53,7 @@ class Client extends AkairoClient {
 		return post(`https://www.hastebin.com/documents`)
 			.send(String(input))
 			.end()
-			.then(data => `https://www.hastebin.com/${data.body.key}`)
+			.then(({ body }) => `https://www.hastebin.com/${body.key}`)
 			.catch(error => `\`\`\`js\n${error}\n\`\`\`\n`)
 	}
 
