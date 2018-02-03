@@ -1,7 +1,8 @@
-const Sequelize = require(`sequelize`)
 const Database = require(`../structures/Database`)
+const Sequelize = require(`sequelize`)
+const { basename } = require(`path`)
 
-const Guild = Database.db.define(`guilds`, {
+const Guild = Database.db.define(basename(__filename).split(`.`)[0], {
 	id: {
 		type: Sequelize.STRING,
 		primaryKey: true,
@@ -9,7 +10,7 @@ const Guild = Database.db.define(`guilds`, {
 		allowNull: false,
 	},
 	settings: {
-		type: Sequelize.JSONB,
+		type: Sequelize.JSON,
 		allowNull: false,
 		defaultValue: {},
 	},
