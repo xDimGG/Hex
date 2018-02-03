@@ -28,14 +28,14 @@ class This extends Command {
 	}
 
 	async exec(message, { code }) {
-		let content = await this.addToContent(this.client, code, `Input`, 0)
+		let content = await this.addToContent(code, `Input`, 0)
 		exec(code, { cwd: `../../../../` }, async (error, stdout, stderr) => {
 			if (stderr)
-				content += await this.addToContent(this.client, stderr, `Error`, content.length)
+				content += await this.addToContent(stderr, `Error`, content.length)
 			else if (error)
-				content += await this.addToContent(this.client, error, `Error`, content.length)
+				content += await this.addToContent(error, `Error`, content.length)
 			else
-				content += await this.addToContent(this.client, stdout, `Output`, content.length)
+				content += await this.addToContent(stdout, `Output`, content.length)
 
 			message.channel.send(content)
 		})
