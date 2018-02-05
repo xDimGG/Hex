@@ -8,6 +8,7 @@ class Database extends Sequelize {
 			dialect: `sqlite`,
 			logging: false,
 			storage: join(__dirname, `../../../database.sqlite`),
+			define: { freezeTableName: true },
 		})
 		this.model = this.define(basename(resolve(`.`)), {
 			id: {
