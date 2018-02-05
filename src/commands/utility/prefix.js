@@ -27,9 +27,9 @@ class This extends Command {
 	}
 
 	async exec(message, args) {
-		const oldPrefix = this.client.settings.get(message.guild.id, `prefix`, `${this.client.user.username.toLowerCase()[0]}!`)
+		const oldPrefix = this.client.settings.get(`G-${message.guild.id}`, `prefix`, `${this.client.user.username.toLowerCase()[0]}!`)
 
-		await this.client.settings.set(message.guild.id, `prefix`, args.prefix)
+		await this.client.settings.set(`G-${message.guild.id}`, `prefix`, args.prefix)
 
 		message.channel.send(`Prefix changed from \`${oldPrefix}\` to \`${args.prefix}\``)
 	}

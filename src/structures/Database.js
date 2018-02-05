@@ -1,32 +1,34 @@
+const { SequelizeProvider } = require(`discord-akairo`)
+const { basename, resolve, join } = require(`path`)
 const Sequelize = require(`sequelize`)
-const path = require(`path`)
-const util = require(`util`)
-const fs = require(`fs`)
 
-const readdir = util.promisify(fs.readdir)
-
-const db = new Sequelize({
-	dialect: `sqlite`,
-	logging: false,
-	storage: path.join(__dirname, `../../database.sqlite`),
-})
-
-class Database {
-	static get db() {
-		return db
+class Database extends Sequelize {
+	constructor() {
+		super({
+			dialect: `sqlite`,
+			logging: false,
+			storage: join(__dirname, `../../../database.sqlite`),
+		})
+		this.model = this.define(basename(resolve(`.`)), {
+			id: {
+				type: Sequelize.STRING,
+				primaryKey: true,
+				unique: true,
+				allowNull: false,
+			},
+			settings: {
+				type: Sequelize.JSON,
+				allowNull: false,
+				defaultValue: {},
+			},
+		})
+		this.provider = new SequelizeProvider(this.model, { dataColumn: `settings` })
 	}
 
-	static async authenticate() {
-		await db.authenticate()
-		await this.loadModels(path.join(__dirname, `../models`))
-	}
-
-	static async loadModels(filepath) {
-		const files = await readdir(filepath)
-		for (const file of files) {
-			if (!/.js$/.test(file)) continue
-			await require(path.join(filepath, file)).sync() // eslint-disable-line global-require
-		}
+	async auth() {
+		await this.authenticate()
+		await this.model.sync()
+		await this.provider.init()
 	}
 }
 

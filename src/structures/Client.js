@@ -1,5 +1,4 @@
-const { AkairoClient, SequelizeProvider } = require(`discord-akairo`)
-const Guild = require(`../models/guilds`)
+const { AkairoClient } = require(`discord-akairo`)
 const Database = require(`./Database`)
 const { post } = require(`snekfetch`)
 const { inspect } = require(`util`)
@@ -15,34 +14,35 @@ class Client extends AkairoClient {
 			listenerDirectory: `./src/listeners/`,
 			prefix: message => {
 				const defaultPrefix = `${this.user.username.toLowerCase()[0]}!`
-				if (message.guild) return this.settings.get(message.guild.id, `prefix`, defaultPrefix)
+				if (message.guild) return this.settings.get(`G-${message.guild.id}`, `prefix`, defaultPrefix)
 
 				return defaultPrefix
 			},
 		}, options)
-		this.settings = new SequelizeProvider(Guild, { dataColumn: `settings` })
+		this.database = new Database()
+		this.settings = this.database.provider
+		this.servers = { MAIN: `361532026354139156` }
 	}
 
 	async start() {
-		await Database.authenticate()
-		await this.settings.init()
+		await this.database.auth()
 
 		return super.login(process.env.Token).then(() => console.log(this.user.tag))
 	}
 
 	log(input) {
 		console.log(input)
-		if (!process.env.DEV) this.guilds.get(`361532026354139156`).channels.find(`name`, `console`).send(input, { code: `js` })
+		if (!process.env.DEV) this.guilds.get(this.servers.MAIN).find(`name`, `console`).send(input, { code: `js` })
 	}
 
 	warn(input) {
 		console.warn(input)
-		if (!process.env.DEV) this.guilds.get(`361532026354139156`).channels.find(`name`, `console`).send(input, { code: `js` })
+		if (!process.env.DEV) this.guilds.get(this.servers.MAIN).find(`name`, `console`).send(input, { code: `js` })
 	}
 
 	error(input) {
 		console.error(input)
-		if (!process.env.DEV) this.guilds.get(`361532026354139156`).channels.find(`name`, `console`).send(input, { code: `js` })
+		if (!process.env.DEV) this.guilds.get(this.servers.MAIN).find(`name`, `console`).send(input, { code: `js` })
 	}
 
 	updateActivity() {
