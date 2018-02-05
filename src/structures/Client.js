@@ -21,7 +21,6 @@ class Client extends AkairoClient {
 		}, options)
 		this.database = new Database()
 		this.settings = this.database.provider
-		this.servers = { MAIN: `361532026354139156` }
 	}
 
 	async start() {
@@ -32,17 +31,17 @@ class Client extends AkairoClient {
 
 	log(input) {
 		console.log(input)
-		if (!process.env.DEV) this.guilds.get(this.servers.MAIN).find(`name`, `console`).send(input, { code: `js` })
+		if (!process.env.DEV) this.guilds.get(`361532026354139156`).find(`name`, `console`).send(input, { code: `js` })
 	}
 
 	warn(input) {
 		console.warn(input)
-		if (!process.env.DEV) this.guilds.get(this.servers.MAIN).find(`name`, `console`).send(input, { code: `js` })
+		if (!process.env.DEV) this.guilds.get(`361532026354139156`).find(`name`, `console`).send(input, { code: `js` })
 	}
 
 	error(input) {
 		console.error(input)
-		if (!process.env.DEV) this.guilds.get(this.servers.MAIN).find(`name`, `console`).send(input, { code: `js` })
+		if (!process.env.DEV) this.guilds.get(`361532026354139156`).find(`name`, `console`).send(input, { code: `js` })
 	}
 
 	updateActivity() {
