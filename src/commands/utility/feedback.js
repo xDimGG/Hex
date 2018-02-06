@@ -25,7 +25,7 @@ class This extends Command {
 	}
 
 	async exec(message, { string }) {
-		this.client.channels.get(this.client.channels.FEEDBACK).send(
+		this.client.channels.get(`368572194667888646`).send(
 			`\`${message.author.tag}\` (${message.author.id})\n` +
 			`\`${message.channel.name}\` (${message.channel.id}) in \`${message.guild.name}\` (${message.guild.id})\n` +
 			`\`\`\`\n${this.client.clean(string)}\n\`\`\``
