@@ -1,36 +1,34 @@
-const { SequelizeProvider } = require(`discord-akairo`)
-const { basename, resolve, join } = require(`path`)
+const { DATABASE_USER, DATABASE_PASSWORD, DEV } = process.env
 const Sequelize = require(`sequelize`)
+const { basename, resolve } = require(`path`)
 
-class Database extends Sequelize {
-	constructor() {
-		super({
-			dialect: `sqlite`,
-			logging: false,
-			storage: join(__dirname, `../../../database.sqlite`),
-			define: { freezeTableName: true },
-		})
-		this.model = this.define(basename(resolve(`.`)), {
-			id: {
-				type: Sequelize.STRING,
-				primaryKey: true,
-				unique: true,
-				allowNull: false,
-			},
-			settings: {
-				type: Sequelize.JSON,
-				allowNull: false,
-				defaultValue: {},
-			},
-		})
-		this.provider = new SequelizeProvider(this.model, { dataColumn: `settings` })
-	}
+module.exports = {
+	Database: class Database extends Sequelize {
+		constructor() {
+			super(basename(resolve(`.`)).toLowerCase(), DATABASE_USER, DATABASE_PASSWORD, {
+				host: DEV ? `192.168.1.4` : `localhost`,
+				define: { freezeTableName: true },
+				dialect: `postgres`,
+				logging: false,
+			})
 
-	async auth() {
-		await this.authenticate()
-		await this.model.sync()
-		await this.provider.init()
-	}
+			this.serverconfig = this.define(`guilds`, {
+				id: {
+					type: Sequelize.STRING,
+					primaryKey: true,
+					allowNull: false,
+					unique: true,
+				},
+				prefix: {
+					type: Sequelize.STRING,
+					defaultValue: `${basename(resolve(`.`)).charAt(0)}!`,
+					allowNull: false,
+				},
+			})
+		}
+
+		init() {
+			this.sync()
+		}
+	},
 }
-
-module.exports = Database

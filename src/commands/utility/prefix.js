@@ -1,7 +1,7 @@
 const { Command } = require(`discord-akairo`)
 const { basename, sep } = require(`path`)
 
-class This extends Command {
+module.exports = class This extends Command {
 	constructor() {
 		super(basename(__filename).split(`.`)[0], {
 			aliases: [basename(__filename).split(`.`)[0]],
@@ -13,7 +13,7 @@ class This extends Command {
 			channel: `guild`,
 			args: [
 				{
-					id: `prefix`,
+					id: `newPrefix`,
 					type: `string`,
 					prompt: {
 						start: `What prefix would you like to set?`,
@@ -26,13 +26,11 @@ class This extends Command {
 		})
 	}
 
-	async exec(message, args) {
-		const oldPrefix = this.client.settings.get(`G-${message.guild.id}`, `prefix`, `${this.client.user.username.toLowerCase()[0]}!`)
+	async exec(message, { newPrefix }) {
+		const { prefix: oldPrefix } = await message.guild.get()
 
-		await this.client.settings.set(`G-${message.guild.id}`, `prefix`, args.prefix)
+		await message.guild.set({ prefix: newPrefix })
 
-		message.channel.send(`Prefix changed from \`${oldPrefix}\` to \`${args.prefix}\``)
+		message.channel.send(`Prefix changed from \`${oldPrefix}\` to \`${newPrefix}\``)
 	}
 }
-
-module.exports = This

@@ -1,7 +1,7 @@
 const { Command } = require(`discord-akairo`)
 const { basename, sep } = require(`path`)
 
-class This extends Command {
+module.exports = class This extends Command {
 	constructor() {
 		super(basename(__filename).split(`.`)[0], {
 			aliases: [basename(__filename).split(`.`)[0]],
@@ -53,5 +53,3 @@ class This extends Command {
 		return strs
 	}
 }
-
-module.exports = This

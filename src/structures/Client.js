@@ -1,32 +1,41 @@
 const { AkairoClient } = require(`discord-akairo`)
-const Database = require(`./Database`)
+const { GuildExtension } = require(`./Guild`)
+const { sync } = require(`promise-synchronizer`)
+const { Database } = require(`./Database`)
+const { Guild } = require(`discord.js`)
 const { post } = require(`snekfetch`)
 const { inspect } = require(`util`)
 
-class Client extends AkairoClient {
+GuildExtension.extend(Guild)
+
+module.exports = class Client extends AkairoClient {
 	constructor(options) {
 		super({
 			ownerID: `358558305997684739`,
-			allowMention: true,
+			allowMention: false,
 			emitters: { process },
 			commandDirectory: `./src/commands/`,
 			inhibitorDirectory: `./src/inhibitors/`,
 			listenerDirectory: `./src/listeners/`,
 			prefix: message => {
-				const defaultPrefix = `${this.user.username.toLowerCase()[0]}!`
-				if (message.guild) return this.settings.get(`G-${message.guild.id}`, `prefix`, defaultPrefix)
+				let prefix = `${this.user.username.charAt(0)}!`
+				if (message.guild)
+					try {
+						prefix = sync(message.guild.get()).prefix
+					} catch (error) {
+						console.error(error)
+					}
 
-				return defaultPrefix
+				return prefix
 			},
 		}, options)
-		this.database = new Database()
-		this.settings = this.database.provider
+		this.db = new Database()
 	}
 
 	async start() {
-		await this.database.auth()
+		this.db.init()
 
-		return super.login(process.env.Token).then(() => console.log(this.user.tag))
+		return this.login(process.env.TOKEN).then(() => console.log(this.user.tag))
 	}
 
 	log(input) {
@@ -70,5 +79,3 @@ class Client extends AkairoClient {
 		return input
 	}
 }
-
-module.exports = Client

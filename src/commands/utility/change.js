@@ -3,7 +3,7 @@ const { MessageEmbed } = require(`discord.js`)
 const { basename } = require(`path`)
 const randomColor = require(`randomcolor`)
 
-class This extends Command {
+module.exports = class This extends Command {
 	constructor() {
 		super(basename(__filename).split(`.`)[0], {
 			aliases: [basename(__filename).split(`.`)[0], `check`],
@@ -67,5 +67,3 @@ class This extends Command {
 		).catch(() => message.react(`❌`).catch(() => null))
 	}
 }
-
-module.exports = This

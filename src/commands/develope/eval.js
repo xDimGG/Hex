@@ -2,7 +2,7 @@ const { Command } = require(`discord-akairo`)
 const { basename, sep } = require(`path`)
 const { inspect } = require(`util`)
 
-class This extends Command {
+module.exports = class This extends Command {
 	constructor() {
 		super(basename(__filename).split(`.`)[0], {
 			aliases: [basename(__filename).split(`.`)[0]],
@@ -47,5 +47,3 @@ class This extends Command {
 		return `${type === `Input` ? `📥` : type === `Output` ? `📤` : `❌`} ${type}\n${String(input).length < 1024 - length ? `\`\`\`js\n${this.client.clean(input)}\n\`\`\`\n` : `${await this.client.haste(this.client.clean(input))}.js`}`
 	}
 }
-
-module.exports = This

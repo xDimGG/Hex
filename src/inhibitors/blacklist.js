@@ -1,7 +1,7 @@
 const { Inhibitor } = require(`discord-akairo`)
 const { basename } = require(`path`)
 
-class BlacklistInhibitor extends Inhibitor {
+module.exports = class This extends Inhibitor {
 	constructor() {
 		super(basename(__filename).split(`.`)[0], {
 			reason: basename(__filename).split(`.`)[0],
@@ -15,5 +15,3 @@ class BlacklistInhibitor extends Inhibitor {
 		return blacklist.includes(message.author.id)
 	}
 }
-
-module.exports = BlacklistInhibitor

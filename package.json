@@ -13,9 +13,11 @@
     "eslint-config-dim": "gist:3c110280de2a056495623585b6d5d87e",
     "os": "^0.1.1",
     "os-toolbox": "^0.2.9",
+    "pg": "^7.4.1",
+    "pg-hstore": "^2.3.2",
+    "promise-synchronizer": "ShayBox/promise-synchronizer",
     "randomcolor": "^0.5.3",
-    "sequelize": "^4.32.2",
-    "sqlite3": "^3.1.13"
+    "sequelize": "^4.32.3"
   },
   "devDependencies": {
     "eslint": "^4.16.0",

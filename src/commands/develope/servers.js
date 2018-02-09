@@ -1,7 +1,7 @@
 const { Command } = require(`discord-akairo`)
 const { basename, sep } = require(`path`)
 
-class This extends Command {
+module.exports = class This extends Command {
 	constructor() {
 		super(basename(__filename).split(`.`)[0], {
 			aliases: [basename(__filename).split(`.`)[0]],
@@ -19,5 +19,3 @@ class This extends Command {
 		message.channel.send(this.client.guilds.sort((a, b) => b.memberCount - a.memberCount).map(g => `${g.memberCount}${` `.repeat(longestCount - g.memberCount.toString().length)} | ${g.id}${` `.repeat(longestID - g.id.toString().length)} | ${g.name}`).join(`\n`), { code: true, split: true })
 	}
 }
-
-module.exports = This

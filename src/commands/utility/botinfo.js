@@ -5,7 +5,7 @@ const { type, release, uptime } = require(`os`)
 const { execSync } = require(`child_process`)
 const { basename, sep } = require(`path`)
 
-class This extends Command {
+module.exports = class This extends Command {
 	constructor() {
 		super(basename(__filename).split(`.`)[0], {
 			aliases: [basename(__filename).split(`.`)[0], `statistics`, `stats`, `bot`, `information`, `info`],
@@ -86,5 +86,3 @@ class This extends Command {
 		return input.toString().replace(/\B(?=(\d{3})+(?!\d))/g, `,`)
 	}
 }
-
-module.exports = This
