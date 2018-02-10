@@ -12,7 +12,7 @@ module.exports = {
 				logging: false,
 			})
 
-			this.serverconfig = this.define(`guilds`, {
+			this.guildConfig = this.define(`guilds`, {
 				id: {
 					type: Sequelize.STRING,
 					primaryKey: true,

@@ -1,5 +1,5 @@
 const { AkairoClient } = require(`discord-akairo`)
-const { GuildExtension } = require(`./Guild`)
+const { GuildExtension } = require(`./models/Guild`)
 const { sync } = require(`promise-synchronizer`)
 const { Database } = require(`./Database`)
 const { Guild } = require(`discord.js`)

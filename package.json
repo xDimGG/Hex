@@ -10,6 +10,7 @@
   "dependencies": {
     "discord-akairo": "github:1Computer1/discord-akairo",
     "discord.js": "github:hydrabolt/discord.js",
+    "discord.js-typings": "discordjs/discord.js-typings",
     "eslint-config-dim": "gist:3c110280de2a056495623585b6d5d87e",
     "os": "^0.1.1",
     "os-toolbox": "^0.2.9",
