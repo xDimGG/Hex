@@ -40,7 +40,8 @@ module.exports = class This extends Command {
 			)
 		}
 
-		if (Object.keys(config).includes(option)) await message.guild.set({ [option]: value })
+		if (!Object.keys(config).includes(option)) return message.channel.send(`Unknown option`)
+		await message.guild.set({ [option]: value })
 		message.channel.send(`Updated \`${option}\` from \`${config[option]}\` to \`${value}\``)
 	}
 }
