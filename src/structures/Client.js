@@ -74,7 +74,7 @@ module.exports = class Client extends AkairoClient {
 			.replace(process.env.TOKEN, SECRET)
 
 		for (const env in process.env)
-			if (env.includes(`_API`)) input = input.replace(process.env[env], SECRET)
+			if (env.includes(`_API`) || env.includes(`DATABASE`)) input = input.replace(process.env[env], SECRET)
 
 		return input
 	}
