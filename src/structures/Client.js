@@ -71,7 +71,7 @@ module.exports = class Client extends AkairoClient {
 		input = input
 			.replace(/`/g, `\`${String.fromCharCode(8203)}`)
 			.replace(/@/g, `@${String.fromCharCode(8203)}`)
-			.replace(process.env.Token, SECRET)
+			.replace(process.env.TOKEN, SECRET)
 
 		for (const env in process.env)
 			if (env.includes(`_API`)) input = input.replace(process.env[env], SECRET)
