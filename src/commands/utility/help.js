@@ -13,18 +13,7 @@ module.exports = class This extends Command {
 	}
 
 	async exec(message) {
-		const commandNames = this.handler.modules.filter(c => !c.ownerOnly).sort()
-		const longest = commandNames.keyArray().reduce((long, str) => Math.max(long, str.length), 0)
-
-		return message.channel.send(
-			`= Command List =\n` +
-			`\n` +
-			`${commandNames.map(c => `${this.upperCase(c.id)}${` `.repeat(longest - c.id.length)} :: ${c.description}`).sort().join(`\n`)}`,
-			{
-				code: `asciidoc`,
-				split: { prepend: `\`\`\`asciidoc\n`, append: `\`\`\`` },
-			}
-		)
+		return message.channel.send(this.handler.modules.filter(c => !c.ownerOnly).sort().map(c => `**${this.upperCase(c.id)}** - ${c.description}`).join(`\n`))
 	}
 
 	upperCase(input) {
