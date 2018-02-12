@@ -21,8 +21,7 @@
   "devDependencies": {
     "discord.js-typings": "discordjs/discord.js-typings",
     "eslint": "^4.16.0",
-    "eslint-config-lloti": "github:lloti/eslint-config-lloti",
-    "eslint-plugin-import": "^2.8.0"
+    "eslint-config-lloti": "github:lloti/eslint-config-lloti"
   },
   "repository": {
     "type": "git",
@@ -31,8 +30,7 @@
   "license": "MIT",
   "eslintConfig": {
     "extends": [
-      "eslint-config-lloti",
-      "plugin:import/errors"
+      "eslint-config-lloti"
     ],
     "parserOptions": {
       "sourceType": "module"

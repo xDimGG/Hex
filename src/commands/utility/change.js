@@ -1,7 +1,5 @@
-import { isBoolean } from 'util'
-
 const { Command } = require(`discord-akairo`)
-const { basename, sep } = require(`path`i)
+const { basename, sep } = require(`path`)
 
 module.exports = class This extends Command {
 	constructor() {
