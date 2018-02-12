@@ -25,19 +25,25 @@ module.exports = class This extends Command {
 
 	async exec(message, { option, value }) {
 		const config = await message.guild.get()
-		if (!option || !Object.keys(config).includes(option))
-			return message.channel.send(
-				`${Object.keys(config).filter(k => k !== `createdAt` && k !== `updatedAt` && k !== `id`).sort().map(c => `**${c}** - \`${config[c]}\``).join(`\n`)}\n` +
-				`\n` +
-				`To set option use "${this.client.akairoOptions.prefix(message)}config (option) (value)"`
-			)
+		if (!option || !Object.keys(config).includes(option)) return this.fallback(message, config)
 
-		if (option === `mode`)
-			if (value !== `whitelist` && value !== `blacklist`) return message.channel.send(`Value must be \`whitelist\` or \`blacklist\``)
+		switch (option.toLowerCase()) {
+		case `prefix`:
+			await message.guild.set({ prefix: value })
 
-		if (option === `characters`) value = value.replace(` `, ``).toLowerCase()
+		default:
+			this.fallback(message, config)
+		}
 
-		await message.guild.set({ [option]: value })
-		message.channel.send(`Updated \`${option}\` from \`${config[option]}\` to \`${value}\``)
+		message.channel.send(`Updated \`${option}\` to \`${config[option]}\` from \`${value}\``)
+	}
+
+	fallback(message, config) {
+		return message.channel.send(
+			`Prefix :: ${config.prefix}\n` +
+			`\n` +
+			`[ To set any of the above, "${this.client.akairoOptions.prefix(message)}config (option) (value)" ]`
+			, { code: `asciidoc` }
+		)
 	}
 }
