@@ -10,8 +10,6 @@
   "dependencies": {
     "discord-akairo": "github:1Computer1/discord-akairo",
     "discord.js": "github:hydrabolt/discord.js",
-    "discord.js-typings": "discordjs/discord.js-typings",
-    "eslint-config-dim": "gist:3c110280de2a056495623585b6d5d87e",
     "os": "^0.1.1",
     "os-toolbox": "^0.2.9",
     "pg": "^7.4.1",
@@ -21,8 +19,10 @@
     "sequelize": "^4.32.3"
   },
   "devDependencies": {
+    "discord.js-typings": "discordjs/discord.js-typings",
     "eslint": "^4.16.0",
-    "eslint-config-lloti": "github:lloti/eslint-config-lloti"
+    "eslint-config-lloti": "github:lloti/eslint-config-lloti",
+    "eslint-plugin-import": "^2.8.0"
   },
   "repository": {
     "type": "git",
@@ -30,7 +30,13 @@
   },
   "license": "MIT",
   "eslintConfig": {
-    "extends": "eslint-config-lloti",
+    "extends": [
+      "eslint-config-lloti",
+      "plugin:import/errors"
+    ],
+    "parserOptions": {
+      "sourceType": "module"
+    },
     "rules": {
       "quotes": [
         "error",

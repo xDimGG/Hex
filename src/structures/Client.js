@@ -12,7 +12,7 @@ module.exports = class Client extends AkairoClient {
 	constructor(options) {
 		super({
 			ownerID: `358558305997684739`,
-			allowMention: false,
+			allowMention: true,
 			emitters: { process },
 			commandDirectory: `./src/commands/`,
 			inhibitorDirectory: `./src/inhibitors/`,

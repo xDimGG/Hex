@@ -1,69 +1,51 @@
+import { isBoolean } from 'util'
+
 const { Command } = require(`discord-akairo`)
-const { MessageEmbed } = require(`discord.js`)
-const { basename } = require(`path`)
-const randomColor = require(`randomcolor`)
+const { basename, sep } = require(`path`i)
 
 module.exports = class This extends Command {
 	constructor() {
 		super(basename(__filename).split(`.`)[0], {
-			aliases: [basename(__filename).split(`.`)[0], `check`],
-			clientPermissions: [`SEND_MESSAGES`, `MANAGE_ROLES`],
-			description: `Changes name color`,
+			aliases: [basename(__filename).split(`.`)[0]],
+			category: String(basename(__dirname).split(sep).slice(-1)),
+			clientPermissions: [`SEND_MESSAGES`],
+			userPermissions: [`ADMINISTRATOR`],
+			description: `Shows/Changes config settings`,
 			typing: true,
-			cooldown: 30000,
-			ratelimit: 10,
-			channel: `guild`,
 			args: [
 				{
-					id: `color`,
-					type: `color`,
-					default: () => randomColor(),
+					id: `option`,
+					type: `string`,
+				},
+				{
+					id: `value`,
+					type: `string`,
 				},
 			],
 		})
 	}
 
-	async exec(message, { color }) {
-		const roleName = `USER-${message.author.id}`
-		const { color: colorRole } = message.member.roles
+	async exec(message, { option, value }) {
+		const config = await message.guild.get()
+		if (!option || !Object.keys(config).includes(option)) return this.fallback(message, config)
 
-		if (!colorRole)
-			message.guild.roles.create({
-				data: {
-					name: roleName,
-					color,
-					permissions: [],
-				},
-			}).then(role => {
-				message.member.roles.add(role).catch(error => this.error(message, error))
+		switch (option.toLowerCase()) {
+		case `prefix`:
+			await message.guild.set({ prefix: value })
 
-				return this.success(message, color)
-			}).catch(error => this.error(message, error))
-		else if (colorRole.name === roleName)
-			colorRole.setColor(color)
-				.then(() => this.success(message, color))
-				.catch(error => this.error(message, error))
-		else if (colorRole.name !== roleName)
-			return this.error(message,
-				`The role ${colorRole.name} is not set to DEFAULT\n` +
-				`Please change the color of that role and try again.`
-			)
+		default:
+			this.fallback(message, config)
+		}
 
-		return undefined
+		message.channel.send(`Updated \`${option}\` to \`${config[option]}\` from \`${value}\``)
 	}
 
-	success(message, roleColor) {
-		message.channel.send(new MessageEmbed()
-			.setTitle(`✅ **Changed to ${roleColor}**`)
-			.setColor(roleColor)
-		).catch(() => message.react(`✅`).catch(() => null))
-	}
-
-	error(message, error) {
-		message.channel.send(new MessageEmbed()
-			.setTitle(`❌ **ERROR**`)
-			.setDescription(`\`\`\`js\n${error}\n\`\`\``)
-			.setColor(0xFF0000)
-		).catch(() => message.react(`❌`).catch(() => null))
+	fallback(message, config) {
+		return message.channel.send(
+			`Prefix :: ${config.prefix}\n` +
+			`\n` +
+			`[ To set any of the above, "${this.client.akairoOptions.prefix(message)}config (option) (value)" ]`
+			, { code: `asciidoc` }
+		)
 	}
 }
