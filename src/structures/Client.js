@@ -40,17 +40,17 @@ module.exports = class Client extends AkairoClient {
 
 	log(input) {
 		console.log(input)
-		if (!process.env.DEV) this.guilds.get(`361532026354139156`).find(`name`, `console`).send(input, { code: `js` })
+		if (!process.env.DEV) this.guilds.get(`361532026354139156`).channels.find(`name`, `console`).send(input, { code: `js` })
 	}
 
 	warn(input) {
 		console.warn(input)
-		if (!process.env.DEV) this.guilds.get(`361532026354139156`).find(`name`, `console`).send(input, { code: `js` })
+		if (!process.env.DEV) this.guilds.get(`361532026354139156`).channels.find(`name`, `console`).send(input, { code: `js` })
 	}
 
 	error(input) {
 		console.error(input)
-		if (!process.env.DEV) this.guilds.get(`361532026354139156`).find(`name`, `console`).send(input, { code: `js` })
+		if (!process.env.DEV) this.guilds.get(`361532026354139156`).channels.find(`name`, `console`).send(input, { code: `js` })
 	}
 
 	updateActivity() {
