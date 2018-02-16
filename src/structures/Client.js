@@ -1,5 +1,5 @@
-const { AkairoClient } = require(`discord-akairo`)
 const { GuildExtension } = require(`./models/Guild`)
+const { AkairoClient } = require(`discord-akairo`)
 const { sync } = require(`promise-synchronizer`)
 const { Database } = require(`./Database`)
 const { Guild } = require(`discord.js`)
@@ -40,23 +40,13 @@ module.exports = class Client extends AkairoClient {
 
 	log(input) {
 		console.log(input)
-		if (!process.env.DEV) this.guilds.get(`361532026354139156`).channels.find(`name`, `console`).send(input, { code: `js` })
-	}
-
-	warn(input) {
-		console.warn(input)
-		if (!process.env.DEV) this.guilds.get(`361532026354139156`).channels.find(`name`, `console`).send(input, { code: `js` })
-	}
-
-	error(input) {
-		console.error(input)
-		if (!process.env.DEV) this.guilds.get(`361532026354139156`).channels.find(`name`, `console`).send(input, { code: `js` })
+		if (!process.env.DEV) this.guilds.get(`361532026354139156`).channels.find(`name`, `console`).send(input)
 	}
 
 	updateActivity() {
 		if (!process.env.DEV)	{
-			post(`https://discordbots.org/api/bots/${this.user.id}/stats`, { headers: { Authorization: process.env.DBL_API } }).send({ server_count: this.guilds.size }).end()
-			post(`https://bots.discord.pw/api/bots/${this.user.id}/stats`, { headers: { Authorization: process.env.DBO_API } }).send({ server_count: this.guilds.size }).end()
+			if (process.env.DBL_API) post(`https://discordbots.org/api/bots/${this.user.id}/stats`, { headers: { Authorization: process.env.DBL_API } }).send({ server_count: this.guilds.size }).end()
+			if (process.env.DBO_API) post(`https://bots.discord.pw/api/bots/${this.user.id}/stats`, { headers: { Authorization: process.env.DBO_API } }).send({ server_count: this.guilds.size }).end()
 		}
 
 		return this.user.setActivity(`${this.guilds.size} ${this.guilds.size > 1 ? `Guilds` : `Guild`}`)
