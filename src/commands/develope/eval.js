@@ -34,7 +34,7 @@ module.exports = class This extends Command {
 			let evaled = eval(code)
 
 			if (evaled instanceof Promise) evaled = await evaled
-			if (evaled instanceof Object || evaled instanceof Function) evaled = inspect(evaled, { showHidden: true, showProxy: true, depth: 1 })
+			if (evaled instanceof Object || evaled instanceof Function) evaled = inspect(evaled, { showHidden: true, showProxy: true, depth: null })
 
 			content += await this.addToContent(evaled, `Output`, content.length)
 		} catch (error) {

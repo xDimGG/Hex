@@ -49,7 +49,7 @@ module.exports = class Client extends AkairoClient {
 			if (process.env.DBO_API) post(`https://bots.discord.pw/api/bots/${this.user.id}/stats`, { headers: { Authorization: process.env.DBO_API } }).send({ server_count: this.guilds.size }).end()
 		}
 
-		return this.user.setActivity(`${this.guilds.size} ${this.guilds.size > 1 ? `Guilds` : `Guild`}`)
+		return this.user.setActivity(`${this.guilds.size} ${this.guilds.size > 1 ? `Guilds` : `Guild`} | ${this.client.guilds.reduce((a, b) => a + b.memberCount, 0)}`)
 	}
 
 	haste(input) {
@@ -62,14 +62,12 @@ module.exports = class Client extends AkairoClient {
 
 	clean(input) {
 		const SECRET = `[SECRET!]`
-		if (typeof input !== `string`) input = inspect(input, { depth: 0 })
+		if (typeof input !== `string`) input = inspect(input, { showHidden: true, showProxy: true, depth: null })
 		input = input
 			.replace(/`/g, `\`${String.fromCharCode(8203)}`)
 			.replace(/@/g, `@${String.fromCharCode(8203)}`)
-			.replace(process.env.TOKEN, SECRET)
 
-		for (const env in process.env)
-			if (env.includes(`_API`) || env.includes(`DATABASE`)) input = input.replace(process.env[env], SECRET)
+		process.env.filter(e => e.includes(`_API`) || e.includes(`DATABASE`) || e.includes(`TOKEN`)).forEach(e => input = input.replace(process.env[e], SECRET))
 
 		return input
 	}
