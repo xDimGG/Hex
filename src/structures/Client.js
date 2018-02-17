@@ -62,7 +62,7 @@ module.exports = class Client extends AkairoClient {
 
 	clean(input) {
 		const SECRET = `[SECRET!]`
-		if (typeof input !== `string`) input = inspect(input, { showHidden: true, showProxy: true, depth: null })
+		if (typeof input !== `string`) input = inspect(input, { showHidden: true, showProxy: true, depth: 1 })
 		input = input
 			.replace(/`/g, `\`${String.fromCharCode(8203)}`)
 			.replace(/@/g, `@${String.fromCharCode(8203)}`)
