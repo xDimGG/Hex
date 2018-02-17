@@ -38,9 +38,9 @@ module.exports = class Client extends AkairoClient {
 		return this.login(process.env.TOKEN).then(() => console.log(this.user.tag))
 	}
 
-	log(input) {
+	log(input, ...options) {
 		console.log(input)
-		if (!process.env.DEV) this.guilds.get(`361532026354139156`).channels.find(`name`, `console`).send(input)
+		if (!process.env.DEV) this.guilds.get(`361532026354139156`).channels.find(`name`, `console`).send(input, ...options)
 	}
 
 	updateActivity() {
@@ -49,7 +49,7 @@ module.exports = class Client extends AkairoClient {
 			if (process.env.DBO_API) post(`https://bots.discord.pw/api/bots/${this.user.id}/stats`, { headers: { Authorization: process.env.DBO_API } }).send({ server_count: this.guilds.size }).end()
 		}
 
-		return this.user.setActivity(`${this.guilds.size} ${this.guilds.size > 1 ? `Guilds` : `Guild`} | ${this.guilds.reduce((a, b) => a + b.memberCount, 0)}`)
+		return this.user.setActivity(`${this.guilds.size} ${this.guilds.size > 1 ? `Guilds` : `Guild`} | ${this.guilds.reduce((a, b) => a + b.memberCount, 0)} Members`)
 	}
 
 	haste(input) {
@@ -67,7 +67,8 @@ module.exports = class Client extends AkairoClient {
 			.replace(/`/g, `\`${String.fromCharCode(8203)}`)
 			.replace(/@/g, `@${String.fromCharCode(8203)}`)
 
-		process.env.filter(e => e.includes(`_API`) || e.includes(`DATABASE`) || e.includes(`TOKEN`)).forEach(e => input = input.replace(process.env[e], SECRET))
+		for (const env in process.env)
+			if (env.includes(`TOKEN`) || env.includes(`_API`) || env.includes(`DATABASE`)) input = input.replace(process.env[env], SECRET)
 
 		return input
 	}

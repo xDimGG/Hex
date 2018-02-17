@@ -10,6 +10,6 @@ module.exports = class This extends Listener {
 	}
 
 	exec(error) {
-		this.client.log(`\`\`\`js\n${error.stack.replace(new RegExp(`${__dirname}/`, `g`), `./`)}\n\`\`\``)
+		this.client.log(error.stack.replace(new RegExp(`${__dirname}/`, `g`), `./`), { code: `js` })
 	}
 }
