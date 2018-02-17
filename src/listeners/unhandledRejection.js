@@ -10,6 +10,6 @@ module.exports = class This extends Listener {
 	}
 
 	exec(reason, promise) {
-		this.client.log(`${reason instanceof Error ? `\`\`\`js\n${reason.stack.replace(new RegExp(`${__dirname}/`, `g`), `./`)}\n\`\`\`` : reason}\n\`\`\`js\n${promise}\n\`\`\``)
+		this.client.log(`${reason instanceof Error ? `\`\`\`js\n${reason.stack.replace(new RegExp(`${__dirname}/`, `g`), `./`)}`)
 	}
 }
