@@ -8,7 +8,7 @@ const { basename, sep } = require(`path`)
 module.exports = class This extends Command {
 	constructor() {
 		super(basename(__filename).split(`.`)[0], {
-			aliases: [basename(__filename).split(`.`)[0], `statistics`, `stats`, `bot`, `information`, `info`],
+			aliases: [basename(__filename).split(`.`)[0], `statistics`, `bot`, `information`, `info`],
 			category: String(basename(__dirname).split(sep).slice(-1)),
 			clientPermissions: [`SEND_MESSAGES`],
 			description: `Shows statistics`,
