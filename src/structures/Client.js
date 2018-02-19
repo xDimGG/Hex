@@ -44,9 +44,16 @@ module.exports = class Client extends AkairoClient {
 	}
 
 	updateActivity() {
-		if (!process.env.DEV)	{
-			if (process.env.DBL_API) post(`https://discordbots.org/api/bots/${this.user.id}/stats`, { headers: { Authorization: process.env.DBL_API } }).send({ server_count: this.guilds.size }).end()
-			if (process.env.DBO_API) post(`https://bots.discord.pw/api/bots/${this.user.id}/stats`, { headers: { Authorization: process.env.DBO_API } }).send({ server_count: this.guilds.size }).end()
+		if (!process.env.DEV && process.env.DBL_API) {
+			post(`https://discordbots.org/api/bots/${this.user.id}/stats`, { headers: { Authorization: process.env.DBL_API } })
+				.send({ server_count: this.guilds.size })
+				.end()
+				.catch(() => null)
+
+			post(`https://bots.discord.pw/api/bots/${this.user.id}/stats`, { headers: { Authorization: process.env.DBO_API } })
+				.send({ server_count: this.guilds.size })
+				.end()
+				.catch(() => null)
 		}
 
 		return this.user.setActivity(`${this.guilds.size} ${this.guilds.size > 1 ? `Guilds` : `Guild`} | ${this.guilds.reduce((a, b) => a + b.memberCount, 0)} Members`)
