@@ -30,9 +30,11 @@ module.exports = class This extends Command {
 		switch (option.toLowerCase()) {
 		case `prefix`:
 			await message.guild.set({ prefix: value })
+			break
 
 		default:
 			this.fallback(message, config)
+			break
 		}
 
 		message.channel.send(`Updated \`${option}\` to \`${config[option]}\` from \`${value}\``)
