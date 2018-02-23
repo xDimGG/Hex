@@ -27,15 +27,8 @@ module.exports = class This extends Command {
 		const config = await message.guild.get()
 		if (!option || !Object.keys(config).includes(option)) return this.fallback(message, config)
 
-		switch (option.toLowerCase()) {
-		case `prefix`:
-			await message.guild.set({ prefix: value })
-			break
-
-		default:
-			this.fallback(message, config)
-			break
-		}
+		if (option.toLowerCase() === `prefix`)
+			message.guild.set({ prefix: value })
 
 		message.channel.send(`Updated \`${option}\` to \`${config[option]}\` from \`${value}\``)
 	}
