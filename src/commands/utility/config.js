@@ -29,8 +29,8 @@ module.exports = class This extends Command {
 		let oldValue = value
 
 		if (option.toLowerCase() === `prefix`) {
-			await message.guild.set({ prefix: value })
 			oldValue = config.prefix
+			await message.guild.set({ prefix: value })
 		} else return this.fallback(message, config)
 
 		message.channel.send(`Updated \`${option}\` to \`${oldValue}\` from \`${value}\``)
