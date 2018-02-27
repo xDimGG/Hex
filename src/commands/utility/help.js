@@ -13,7 +13,7 @@ module.exports = class This extends Command {
 	}
 
 	async exec(message) {
-		return message.channel.send(this.handler.modules.filter(c => !c.ownerOnly).sort().map(c => `**${this.upperCase(c.id)}** - ${c.description}`).join(`\n`))
+		return message.channel.send(this.handler.modules.filter(c => !c.ownerOnly && c.id !== `help`).sort().map(c => `**${this.upperCase(c.id)}** - ${c.description}`).join(`\n`))
 	}
 
 	upperCase(input) {
