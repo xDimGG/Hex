@@ -10,8 +10,8 @@ module.exports = class This extends Command {
 			clientPermissions: [`SEND_MESSAGES`, `MANAGE_ROLES`],
 			description: `Changes name color`,
 			typing: true,
-			cooldown: 30000,
-			ratelimit: 10,
+			cooldown: 10000,
+			ratelimit: 1,
 			channel: `guild`,
 			args: [
 				{
