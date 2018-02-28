@@ -31,7 +31,7 @@ module.exports = class This extends Command {
 		const { client } = this // eslint-disable-line no-unused-vars
 		let content = await this.addToContent(code, `Input`, 0)
 		try {
-			let evaled = (async () => eval(code))()
+			let evaled = eval(code)
 
 			if (evaled instanceof Promise) evaled = await evaled
 			if (evaled instanceof Object || evaled instanceof Function) evaled = inspect(evaled, { showHidden: true, showProxy: true, depth: null })
