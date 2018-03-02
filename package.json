@@ -3,6 +3,11 @@
   "version": "0.0.0",
   "description": "Custom Hex Color Role",
   "main": "src/index.js",
+  "scripts": {
+    "start": "node .",
+    "test": "nodemon .",
+    "debug": "node --nolazy --inspect-brk=9229 ."
+  },
   "author": {
     "name": "Shayne Hartford (ShayBox)",
     "email": "ShayneEHartford@Gmail.Com"
@@ -20,8 +25,8 @@
   },
   "devDependencies": {
     "discord.js-typings": "discordjs/discord.js-typings",
-    "eslint": "^4.16.0",
-    "eslint-config-lloti": "github:lloti/eslint-config-lloti"
+    "eslint": "^4.18.1",
+    "eslint-config-lloti": "lloti/eslint-config-lloti"
   },
   "repository": {
     "type": "git",
