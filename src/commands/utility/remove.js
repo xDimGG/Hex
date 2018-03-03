@@ -21,7 +21,7 @@ module.exports = class This extends Command {
 		})
 	}
 
-	async exec(message, { member }) {
+	exec(message, { member }) {
 		if (!member) member = message.member
 		const colorRole = member.roles.find(`name`, `USER-${member.id}`)
 

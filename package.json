@@ -13,13 +13,12 @@
     "email": "ShayneEHartford@Gmail.Com"
   },
   "dependencies": {
-    "discord-akairo": "github:1Computer1/discord-akairo",
+    "discord-akairo": "github:ShayBox/discord-akairo",
     "discord.js": "github:hydrabolt/discord.js",
     "os": "^0.1.1",
     "os-toolbox": "^0.2.9",
     "pg": "^7.4.1",
     "pg-hstore": "^2.3.2",
-    "promise-synchronizer": "promise-synchronizer",
     "randomcolor": "^0.5.3",
     "sequelize": "^4.32.3"
   },
@@ -45,7 +44,6 @@
         "error",
         "backtick"
       ],
-      "require-await": "off",
       "semi": [
         "error",
         "never"

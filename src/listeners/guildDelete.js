@@ -6,7 +6,7 @@ module.exports = class This extends Listener {
 		super(basename(__filename).split(`.`)[0], { event: [basename(__filename).split(`.`)[0]] })
 	}
 
-	async exec() {
+	exec() {
 		this.client.updateActivity()
 	}
 }

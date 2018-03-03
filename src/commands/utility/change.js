@@ -23,7 +23,7 @@ module.exports = class This extends Command {
 		})
 	}
 
-	async exec(message, { color }) {
+	exec(message, { color }) {
 		const roleName = `USER-${message.author.id}`
 		const { color: colorRole } = message.member.roles
 

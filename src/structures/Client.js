@@ -1,6 +1,5 @@
 const { GuildExtension } = require(`./models/Guild`)
 const { AkairoClient } = require(`discord-akairo`)
-const sync = require(`promise-synchronizer`)
 const { Database } = require(`./Database`)
 const { Guild } = require(`discord.js`)
 const { post } = require(`snekfetch`)
@@ -17,14 +16,9 @@ module.exports = class Client extends AkairoClient {
 			commandDirectory: `./src/commands/`,
 			inhibitorDirectory: `./src/inhibitors/`,
 			listenerDirectory: `./src/listeners/`,
-			prefix: message => {
+			prefix: async message => {
 				let prefix = `${this.user.username.charAt(0)}!`
-				if (message.guild)
-					try {
-						prefix = sync(message.guild.get()).prefix
-					} catch (error) {
-						console.error(error)
-					}
+				if (message.guild) prefix = (await message.guild.get()).prefix
 
 				return prefix
 			},
@@ -32,7 +26,7 @@ module.exports = class Client extends AkairoClient {
 		this.db = new Database()
 	}
 
-	async start() {
+	start() {
 		this.db.init()
 
 		return this.login(process.env.TOKEN).then(() => console.log(this.user.tag))
