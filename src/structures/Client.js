@@ -1,6 +1,6 @@
 const { GuildExtension } = require(`./models/Guild`)
 const { AkairoClient } = require(`discord-akairo`)
-const { sync } = require(`promise-synchronizer`)
+const sync = require(`promise-synchronizer`)
 const { Database } = require(`./Database`)
 const { Guild } = require(`discord.js`)
 const { post } = require(`snekfetch`)

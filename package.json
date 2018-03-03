@@ -19,7 +19,7 @@
     "os-toolbox": "^0.2.9",
     "pg": "^7.4.1",
     "pg-hstore": "^2.3.2",
-    "promise-synchronizer": "ShayBox/promise-synchronizer",
+    "promise-synchronizer": "promise-synchronizer",
     "randomcolor": "^0.5.3",
     "sequelize": "^4.32.3"
   },
