@@ -1,4 +1,4 @@
-const { GuildExtension } = require(`./models/Guild`)
+const GuildExtension = require(`./extensions/GuildExtension`)
 const { AkairoClient } = require(`discord-akairo`)
 const { Database } = require(`./Database`)
 const { Guild } = require(`discord.js`)
