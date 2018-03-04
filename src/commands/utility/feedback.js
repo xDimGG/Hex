@@ -1,3 +1,4 @@
+const { clean } = require(`../structures/Utils`)
 const { Command } = require(`discord-akairo`)
 const { basename, sep } = require(`path`)
 
@@ -28,7 +29,7 @@ module.exports = class This extends Command {
 		this.client.channels.get(`368572194667888646`).send(
 			`\`${message.author.tag}\` (${message.author.id})\n` +
 			`\`${message.channel.name}\` (${message.channel.id}) in \`${message.guild.name}\` (${message.guild.id})\n` +
-			`\`\`\`\n${this.client.clean(string)}\n\`\`\``
+			`\`\`\`\n${clean(string)}\n\`\`\``
 		).then(async m => {
 			await m.react(`👍`)
 			await m.react(`👎`)

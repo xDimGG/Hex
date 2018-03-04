@@ -1,5 +1,6 @@
+const { clean, haste } = require(`../../structures/Utils`)
 const { Command } = require(`discord-akairo`)
-const { basename, sep, resolve } = require(`path`)
+const { basename, sep } = require(`path`)
 const { inspect } = require(`util`)
 
 module.exports = class This extends Command {
@@ -45,8 +46,8 @@ module.exports = class This extends Command {
 	}
 
 	async addToContent(input, type, length) {
-		input = this.client.clean(input)
+		input = clean(input)
 
-		return `${type === 1 ? `📥 Input` : type === 2 ? `📤 Output` : type === 3 ? `❌ Error` : `❔ Unknown`}\n${String(input).length + length < 2000 ? `\`\`\`js\n${input}\n\`\`\`\n` : `${await this.client.haste(input)}.js`}`
+		return `${type === 1 ? `📥 Input` : type === 2 ? `📤 Output` : type === 3 ? `❌ Error` : `❔ Unknown`}\n${String(input).length + length < 2000 ? `\`\`\`js\n${input}\n\`\`\`\n` : `${await haste(input)}.js`}`
 	}
 }

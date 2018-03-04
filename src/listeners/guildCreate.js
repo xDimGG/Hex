@@ -1,3 +1,4 @@
+const { updateActivity } = require(`../structures/Utils`)
 const { Listener } = require(`discord-akairo`)
 const { basename } = require(`path`)
 
@@ -7,6 +8,6 @@ module.exports = class This extends Listener {
 	}
 
 	exec() {
-		this.client.updateActivity()
+		updateActivity()
 	}
 }
