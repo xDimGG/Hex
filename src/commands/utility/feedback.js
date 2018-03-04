@@ -1,4 +1,4 @@
-const { clean } = require(`../structures/Utils`)
+const { clean } = require(`../../structures/Utils`)
 const { Command } = require(`discord-akairo`)
 const { basename, sep } = require(`path`)
 
