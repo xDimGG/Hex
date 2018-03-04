@@ -5,21 +5,28 @@ const { Guild } = require(`discord.js`)
 require(`./extensions/GuildExtension`).extend(Guild)
 
 module.exports = class Client extends AkairoClient {
-	constructor(options) {
+	constructor() {
 		super({
 			ownerID: `358558305997684739`,
+			handleEdits: true,
 			allowMention: true,
+			automateCategories: true,
 			emitters: { process },
 			commandDirectory: `./src/commands/`,
 			inhibitorDirectory: `./src/inhibitors/`,
 			listenerDirectory: `./src/listeners/`,
 			prefix: async message => {
-				let prefix = `${this.user.username.charAt(0)}!`
-				if (message.guild) prefix = (await message.guild.get()).prefix
+				if (message.guild) return (await message.guild.get()).prefix
 
-				return prefix
+				return `${this.user.username.charAt(0)}!`
 			},
-		}, options)
+		}, {
+			messageCacheMaxSize: 0,
+			messageCacheLifetime: 1,
+			messageSweepInterval: 1,
+			disableEveryone: true,
+			disabledEvents: [`TYPING_START`],
+		})
 		this.db = new Database()
 	}
 
@@ -31,6 +38,6 @@ module.exports = class Client extends AkairoClient {
 
 	log(input, ...options) {
 		console.log(input)
-		if (!process.env.DEV) this.guilds.get(`361532026354139156`).channels.find(`name`, `console`).send(input, ...options)
+		if (!process.env.DEV) this.channels.get(`361533828520476684`).send(input, ...options)
 	}
 }
