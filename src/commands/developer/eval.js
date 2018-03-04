@@ -1,13 +1,12 @@
 const { clean, haste } = require(`../../structures/Utils`)
 const { Command } = require(`discord-akairo`)
-const { basename, sep } = require(`path`)
+const { basename } = require(`path`)
 const { inspect } = require(`util`)
 
 module.exports = class This extends Command {
 	constructor() {
 		super(basename(__filename).split(`.`)[0], {
 			aliases: [basename(__filename).split(`.`)[0]],
-			category: String(basename(__dirname).split(sep).slice(-1)),
 			clientPermissions: [`SEND_MESSAGES`],
 			description: `Eval javascript code`,
 			typing: true,

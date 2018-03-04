@@ -3,13 +3,12 @@ const { version: discordjsVersion } = require(`discord.js`)
 const { cpuLoad, memoryUsage } = require(`os-toolbox`)
 const { type, release, uptime } = require(`os`)
 const { execSync } = require(`child_process`)
-const { basename, sep } = require(`path`)
+const { basename } = require(`path`)
 
 module.exports = class This extends Command {
 	constructor() {
 		super(basename(__filename).split(`.`)[0], {
 			aliases: [basename(__filename).split(`.`)[0], `statistics`, `bot`, `information`, `info`],
-			category: String(basename(__dirname).split(sep).slice(-1)),
 			clientPermissions: [`SEND_MESSAGES`],
 			description: `Shows statistics`,
 			typing: true,
