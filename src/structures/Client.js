@@ -40,4 +40,4 @@ new class Client extends AkairoClient {
 		console.log(input)
 		if (!process.env.DEV) this.channels.get(`361533828520476684`).send(input, ...options)
 	}
-}()
+}().start()

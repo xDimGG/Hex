@@ -8,6 +8,6 @@ module.exports = class This extends Listener {
 	}
 
 	exec() {
-		updateActivity()
+		updateActivity(this.client)
 	}
 }
