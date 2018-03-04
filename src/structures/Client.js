@@ -4,7 +4,7 @@ const { Guild } = require(`discord.js`)
 
 require(`./extensions/GuildExtension`).extend(Guild)
 
-module.exports = class Client extends AkairoClient {
+new class Client extends AkairoClient {
 	constructor() {
 		super({
 			ownerID: `358558305997684739`,
@@ -40,4 +40,4 @@ module.exports = class Client extends AkairoClient {
 		console.log(input)
 		if (!process.env.DEV) this.channels.get(`361533828520476684`).send(input, ...options)
 	}
-}
+}()
