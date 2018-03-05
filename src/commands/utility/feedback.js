@@ -37,8 +37,7 @@ module.exports = class This extends Command {
 		message.channel.send(
 			`Thank you for your feedback!\n` +
 			`This command can be used to suggest ideas, or ask for help.\n` +
-			`Please note: If you spam this, you will be blacklisted from using the bot.\n` +
-			`If you would like to join our support server, <https://discord.gg/muHFgQd>`
+			`Please note: If you spam this, you will be blacklisted from using the bot.`
 		)
 	}
 }
