@@ -11,6 +11,6 @@ module.exports = class This extends Command {
 	}
 
 	exec(message) {
-		message.channel.send(`If you would like support, join my support server <https://discord.shaybox.com/>`)
+		message.channel.send(`If you would like support, join my support server <http://discord.shaybox.com/>`)
 	}
 }
