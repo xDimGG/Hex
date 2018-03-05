@@ -28,20 +28,20 @@ module.exports = class This extends Command {
 	}
 
 	async exec(message, { code }) {
-		let content = await this.addToContent(code, `Input`, 0)
+		let content = await this.addToContent(code, 1, 0)
 		exec(code, { cwd: `../../../../` }, async (error, stdout, stderr) => {
-			if (stderr)
-				content += await this.addToContent(stderr, `Error`, content.length)
-			else if (error)
-				content += await this.addToContent(error, `Error`, content.length)
+			if (stderr || error)
+				content += await this.addToContent(stderr || error.stack, 3, content.length)
 			else
-				content += await this.addToContent(stdout, `Output`, content.length)
+				content += await this.addToContent(stdout, 2, content.length)
 
 			message.channel.send(content)
 		})
 	}
 
 	async addToContent(input, type, length) {
-		return `${type === `Input` ? `📥` : type === `Output` ? `📤` : `❌`} ${type}\n${String(input).length < 1024 - length ? `\`\`\`js\n${this.client.clean(input)}\n\`\`\`\n` : `${await this.client.haste(this.client.clean(input))}.js`}`
+		input = this.client.clean(input)
+
+		return `${type === 1 ? `📥 Input` : type === 2 ? `📤 Output` : type === 3 ? `❌ Error` : `❔ Unknown`}\n${String(input).length + length < 2000 ? `\`\`\`\n${input}\n\`\`\`\n` : `${await this.client.haste(input)}`}`
 	}
 }

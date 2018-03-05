@@ -1,5 +1,5 @@
 const { Command } = require(`discord-akairo`)
-const { basename, sep } = require(`path`)
+const { basename, sep, resolve } = require(`path`)
 const { inspect } = require(`util`)
 
 module.exports = class This extends Command {
@@ -29,21 +29,24 @@ module.exports = class This extends Command {
 
 	async exec(message, { code }) {
 		const { client } = this // eslint-disable-line no-unused-vars
-		let content = await this.addToContent(code, `Input`, 0)
+		const msg = message // eslint-disable-line no-unused-vars
+
+		let content = await this.addToContent(code, 1, 0)
 		try {
 			let evaled = eval(code)
 
 			if (evaled instanceof Promise) evaled = await evaled
-			if (evaled instanceof Object || evaled instanceof Function) evaled = inspect(evaled, { showHidden: true, showProxy: true, depth: null })
 
-			content += await this.addToContent(evaled, `Output`, content.length)
+			content += await this.addToContent(inspect(evaled, { showHidden: true, showProxy: true, depth: null }), 2, content.length)
 		} catch (error) {
-			content += await this.addToContent(error, `Error`, content.length)
+			content += await this.addToContent(error.stack, 3, content.length)
 		}
 		message.channel.send(content)
 	}
 
 	async addToContent(input, type, length) {
-		return `${type === `Input` ? `📥` : type === `Output` ? `📤` : `❌`} ${type}\n${String(input).length < 1024 - length ? `\`\`\`js\n${this.client.clean(input)}\n\`\`\`\n` : `${await this.client.haste(this.client.clean(input))}.js`}`
+		input = this.client.clean(input)
+
+		return `${type === 1 ? `📥 Input` : type === 2 ? `📤 Output` : type === 3 ? `❌ Error` : `❔ Unknown`}\n${String(input).length + length < 2000 ? `\`\`\`js\n${input}\n\`\`\`\n` : `${await this.client.haste(input)}.js`}`
 	}
 }

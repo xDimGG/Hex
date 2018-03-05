@@ -1,11 +1,9 @@
-const GuildExtension = require(`./extensions/GuildExtension`)
 const { AkairoClient } = require(`discord-akairo`)
 const { Database } = require(`./Database`)
 const { Guild } = require(`discord.js`)
 const { post } = require(`snekfetch`)
-const { inspect } = require(`util`)
 
-GuildExtension.extend(Guild)
+require(`./extensions/GuildExtension`).extend(Guild)
 
 module.exports = class Client extends AkairoClient {
 	constructor(options) {
@@ -57,14 +55,12 @@ module.exports = class Client extends AkairoClient {
 
 	clean(input) {
 		const SECRET = `[SECRET!]`
-		if (typeof input !== `string`) input = inspect(input, { showHidden: true, showProxy: true, depth: 1 })
-		input = input
-			.replace(/`/g, `\`${String.fromCharCode(8203)}`)
-			.replace(/@/g, `@${String.fromCharCode(8203)}`)
 
 		for (const env in process.env)
-			if (env.includes(`TOKEN`) || env.includes(`_API`) || env.includes(`DATABASE`)) input = input.replace(process.env[env], SECRET)
+			if (env.includes(`TOKEN`) || env.includes(`_API`) || env.includes(`DATABASE`)) input = String(input).replace(process.env[env], SECRET)
 
-		return input
+		return String(input)
+			.replace(/`/g, `\`${String.fromCharCode(8203)}`)
+			.replace(/@/g, `@${String.fromCharCode(8203)}`)
 	}
 }
