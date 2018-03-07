@@ -9,6 +9,7 @@ module.exports = class This extends Command {
 			userPermissions: [`ADMINISTRATOR`],
 			description: `Shows/Changes config settings`,
 			typing: true,
+			channel: `guild`,
 			args: [
 				{
 					id: `option`,
