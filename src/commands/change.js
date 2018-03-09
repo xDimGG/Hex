@@ -5,13 +5,13 @@ const { Command } = require(`klasa`)
 module.exports = class extends Command {
 	constructor(...args) {
 		super(...args, {
-			usage: `[color:regex/#?([\\da-f]{6})/i]`,
+			usage: `[Hex:regex/#?([\\da-f]{6})/i]`,
 			description: `Change name color`,
 			extendedDescription: `Lets you randomly pick a color to change your name to, or optionally a hex value`,
 		})
 	}
 
-	run(message, [color = randomColor()]) {
+	run(message, [hex = randomColor()]) {
 		const roleName = `USER-${message.author.id}`
 		const { color: colorRole } = message.member.roles
 
@@ -19,17 +19,17 @@ module.exports = class extends Command {
 			message.guild.roles.create({
 				data: {
 					name: roleName,
-					color,
+					color: hex,
 					permissions: [],
 				},
 			}).then(role => {
 				message.member.roles.add(role).catch(error => this.error(message, error))
 
-				return this.success(message, color)
+				return this.success(message, hex)
 			}).catch(error => this.error(message, error))
 		else if (colorRole.name === roleName)
-			colorRole.setColor(color)
-				.then(() => this.success(message, color))
+			colorRole.setColor(hex)
+				.then(() => this.success(message, hex))
 				.catch(error => this.error(message, error))
 		else if (colorRole.name !== roleName)
 			return this.error(message,
