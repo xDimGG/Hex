@@ -1,14 +1,6 @@
 const { post } = require(`snekfetch`)
 
 module.exports = {
-	haste(input) {
-		return post(`https://www.hastebin.com/documents`)
-			.send(String(input))
-			.end()
-			.then(({ body }) => `https://www.hastebin.com/${body.key}`)
-			.catch(error => `\`\`\`js\n${error}\n\`\`\`\n`)
-	},
-
 	clean(input) {
 		const SECRET = `[SECRET!]`
 
@@ -27,6 +19,6 @@ module.exports = {
 				.end()
 				.catch(() => null)
 
-		return client.user.setActivity(`${client.guilds.size} ${client.guilds.size > 1 ? `Guilds` : `Guild`} | ${client.guilds.reduce((a, b) => a + b.memberCount, 0)} Members`)
+		return client.user.setActivity(`${client.guilds.size} ${client.guilds.size > 1 ? `Guilds` : `Guild`} | ${client.guilds.reduce((a, b) => a + b.memberCount, 0)} Members`, { type: `WATCHING` })
 	},
 }

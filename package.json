@@ -13,14 +13,11 @@
     "email": "ShayneEHartford@Gmail.Com"
   },
   "dependencies": {
-    "discord-akairo": "github:ShayBox/discord-akairo",
-    "discord.js": "github:hydrabolt/discord.js",
+    "discord.js": "github:discordjs/discord.js",
+    "klasa": "github:dirigeants/klasa",
     "os": "^0.1.1",
     "os-toolbox": "^0.2.9",
-    "pg": "^7.4.1",
-    "pg-hstore": "^2.3.2",
-    "randomcolor": "^0.5.3",
-    "sequelize": "^4.32.3"
+    "randomcolor": "^0.5.3"
   },
   "devDependencies": {
     "discord.js-typings": "discordjs/discord.js-typings",

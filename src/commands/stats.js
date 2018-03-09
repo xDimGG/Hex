@@ -1,21 +1,15 @@
-const { Command, version: akairoVersion } = require(`discord-akairo`)
 const { version: discordjsVersion } = require(`discord.js`)
 const { cpuLoad, memoryUsage } = require(`os-toolbox`)
 const { type, release, uptime } = require(`os`)
 const { execSync } = require(`child_process`)
-const { basename } = require(`path`)
+const { Command, version: klasaVersion } = require(`klasa`)
 
-module.exports = class This extends Command {
-	constructor() {
-		super(basename(__filename).split(`.`)[0], {
-			aliases: [basename(__filename).split(`.`)[0], `statistics`, `bot`, `information`, `info`],
-			clientPermissions: [`SEND_MESSAGES`],
-			description: `Shows statistics`,
-			typing: true,
-		})
+module.exports = class extends Command {
+	constructor(...args) {
+		super(...args, { description: `System & Bot stats` })
 	}
 
-	exec(message) {
+	run(message) {
 		message.channel.send(`Loading...`).then(async m => {
 			const usedMemory = await memoryUsage()
 			const maxMemory = process.env.DEV ? 8096 : 1024
@@ -25,7 +19,7 @@ module.exports = class This extends Command {
 				`\n` +
 				`Versions\n` +
 				`• Discord.js       :: ${discordjsVersion}\n` +
-				`• Akairo           :: ${akairoVersion}\n` +
+				`• Klasa            :: ${klasaVersion}\n` +
 				`• Node             :: ${process.version}\n` +
 				`• NPM              :: ${String(execSync(`npm -v`)).replace(`\n`, ``)}\n` +
 				`\n` +

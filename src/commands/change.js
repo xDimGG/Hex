@@ -1,29 +1,17 @@
-const { Command } = require(`discord-akairo`)
 const { MessageEmbed } = require(`discord.js`)
-const { basename } = require(`path`)
 const randomColor = require(`randomcolor`)
+const { Command } = require(`klasa`)
 
-module.exports = class This extends Command {
-	constructor() {
-		super(basename(__filename).split(`.`)[0], {
-			aliases: [basename(__filename).split(`.`)[0], `check`],
-			clientPermissions: [`SEND_MESSAGES`, `MANAGE_ROLES`],
-			description: `Changes name color`,
-			typing: true,
-			cooldown: 10000,
-			ratelimit: 1,
-			channel: `guild`,
-			args: [
-				{
-					id: `color`,
-					type: `color`,
-					default: () => randomColor(),
-				},
-			],
+module.exports = class extends Command {
+	constructor(...args) {
+		super(...args, {
+			usage: `[color:regex/#?([\\da-f]{6})/i]`,
+			description: `Change name color`,
+			extendedDescription: `Lets you randomly pick a color to change your name to, or optionally a hex value`,
 		})
 	}
 
-	exec(message, { color }) {
+	run(message, [color = randomColor()]) {
 		const roleName = `USER-${message.author.id}`
 		const { color: colorRole } = message.member.roles
 

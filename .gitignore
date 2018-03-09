@@ -59,4 +59,4 @@ typings/
 
 # Custom
 .vscode
-*.sqlite
+src/bwd/provider
