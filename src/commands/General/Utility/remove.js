@@ -4,6 +4,7 @@ const { Command } = require(`klasa`)
 module.exports = class extends Command {
 	constructor(...args) {
 		super(...args, {
+			runIn: [`text`],
 			description: `Remove name color`,
 			extendedDescription: `Deletes the role that gives your name color, if you have one.`,
 		})

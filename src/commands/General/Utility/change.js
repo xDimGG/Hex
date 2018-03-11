@@ -5,6 +5,7 @@ const { Command } = require(`klasa`)
 module.exports = class extends Command {
 	constructor(...args) {
 		super(...args, {
+			runIn: [`text`],
 			usage: `[Hex:regex/#?([\\da-f]{6})/i]`,
 			description: `Change name color`,
 			extendedDescription: `Lets you randomly pick a color to change your name to, or optionally a hex value`,
