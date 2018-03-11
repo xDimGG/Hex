@@ -37,6 +37,7 @@
       "sourceType": "module"
     },
     "rules": {
+      "one-var": "off",
       "quotes": [
         "error",
         "backtick"

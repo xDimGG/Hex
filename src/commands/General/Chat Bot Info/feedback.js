@@ -12,7 +12,7 @@ module.exports = class extends Command {
 	run(message, [feedback]) {
 		(process.env.DEV ? message.channel : this.client.channels.get(`368572194667888646`)).send(
 			`\`${message.author.tag}\`\n` +
-			`\`#${message.channel.name}\` in \`${message.guild.name}\`\n` +
+			`${message.channel.type === `text` ? `\`#${message.channel.name}\` in \`${message.guild.name}\`\n` : `DMs / GroupDMs\n`}` +
 			`\`\`\`\n${feedback}\n\`\`\``
 		).then(async m => {
 			await m.react(`👍`)
