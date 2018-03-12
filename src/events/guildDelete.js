@@ -2,11 +2,9 @@ const { updateActivity } = require(`../structures/Utils`)
 const { Event } = require(`klasa`)
 
 module.exports = class extends Event {
-	constructor(...args) {
-		super(...args, {})
-	}
+	run(guild) {
+		if (guild.available && !this.client.configs.preserveConfigs) this.client.gateways.guilds.deleteEntry(guild.id).catch(() => null)
 
-	run() {
 		updateActivity(this.client)
 	}
 }
