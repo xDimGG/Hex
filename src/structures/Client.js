@@ -8,19 +8,17 @@ new class extends KlasaClient {
 			cmdEditing: true,
 			cmdPrompt: true,
 			typing: true,
-			commandMessageLifetime: 300,
 			ownerID: `358558305997684739`,
 			clientBaseDir: `./src/`,
 			prefix: `h!`,
 			readyMessage: client => client.user.tag,
 			console: { timestamps: false },
-			clientOptions: {
-				messageCacheMaxSize: -1,
-				messageCacheLifetime: 60,
-				messageSweepInterval: 1,
-				disableEveryone: true,
-				disabledEvents: [`TYPING_START`],
-			},
+			commandMessageLifetime: 300,
+			messageCacheMaxSize: -1,
+			messageCacheLifetime: 60,
+			messageSweepInterval: 1,
+			disableEveryone: true,
+			disabledEvents: [`TYPING_START`],
 		})
 	}
 
