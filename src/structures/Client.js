@@ -14,9 +14,9 @@ new class extends KlasaClient {
 			readyMessage: client => client.user.tag,
 			console: { timestamps: false },
 			commandMessageLifetime: 300,
-			messageCacheMaxSize: -1,
+			messageCacheMaxSize: 50,
 			messageCacheLifetime: 60,
-			messageSweepInterval: 1,
+			messageSweepInterval: 60,
 			disableEveryone: true,
 			disabledEvents: [`TYPING_START`],
 		})
