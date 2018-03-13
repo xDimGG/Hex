@@ -19,6 +19,6 @@ module.exports = class extends Command {
 			await m.react(`👎`)
 		})
 
-		message.channel.send(`Thank you for your feedback`)
+		message.send(`Thank you for your feedback`)
 	}
 }

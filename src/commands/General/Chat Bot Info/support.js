@@ -6,6 +6,6 @@ module.exports = class extends Command {
 	}
 
 	run(message) {
-		message.channel.send(`If you would like support, join my support server <https://discord.shaybox.com/>`)
+		message.send(`If you would like support, join my support server <https://discord.shaybox.com/>`)
 	}
 }

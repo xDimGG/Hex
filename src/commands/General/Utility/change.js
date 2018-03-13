@@ -42,14 +42,14 @@ module.exports = class extends Command {
 	}
 
 	success(message, roleColor) {
-		message.channel.send(new MessageEmbed()
+		message.send(new MessageEmbed()
 			.setTitle(`✅ **Changed to ${roleColor}**`)
 			.setColor(roleColor)
 		).catch(() => message.react(`✅`).catch(() => null))
 	}
 
 	error(message, error) {
-		message.channel.send(new MessageEmbed()
+		message.send(new MessageEmbed()
 			.setTitle(`❌ **ERROR**`)
 			.setDescription(`\`\`\`js\n${error}\n\`\`\``)
 			.setColor(0xFF0000)

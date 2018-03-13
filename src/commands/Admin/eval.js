@@ -13,28 +13,27 @@ module.exports = class extends Command {
 		})
 	}
 
-	async run(msg, [code]) {
-		const message = msg, client = this.client // eslint-disable-line no-unused-vars
-		const { success, result, time, type } = await this.eval(msg, code)
+	async run(message, [code]) {
+		const client = this.client // eslint-disable-line no-unused-vars
+		const { success, result, time, type } = await this.eval(message, code)
 		const footer = this.client.methods.util.codeBlock(`ts`, type)
-		const output = msg.language.get(success ? `COMMAND_EVAL_OUTPUT` : `COMMAND_EVAL_ERROR`,
-			time, this.client.methods.util.codeBlock(`js`, result instanceof Error ? result.stack : result), footer)
-		const silent = `silent` in msg.flags
+		const output = message.language.get(success ? `COMMAND_EVAL_OUTPUT` : `COMMAND_EVAL_ERROR`, time, this.client.methods.util.codeBlock(`js`, result instanceof Error ? result.stack : result), footer)
+		const silent = `silent` in message.flags
 
 		if (silent) return null
 
 		// Handle too-long-messages
 		if (output.length > 2000) {
-			if (msg.guild && msg.channel.attachable)
-				return msg.channel.sendFile(Buffer.from(result), `output.txt`, msg.language.get(`COMMAND_EVAL_SENDFILE`, time, footer))
+			if (message.guild && message.channel.attachable)
+				return message.channel.sendFile(Buffer.from(result), `output.txt`, message.language.get(`COMMAND_EVAL_SENDFILE`, time, footer))
 
 			this.client.emit(`log`, result)
 
-			return msg.sendMessage(msg.language.get(`COMMAND_EVAL_SENDCONSOLE`, time, footer))
+			return message.send(message.language.get(`COMMAND_EVAL_SENDCONSOLE`, time, footer))
 		}
 
 		// If it's a message that can be sent correctly, send it
-		return msg.sendMessage(output)
+		return message.send(output)
 	}
 
 	// Eval the input

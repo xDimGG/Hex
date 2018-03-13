@@ -10,7 +10,7 @@ module.exports = class extends Command {
 	}
 
 	run(message) {
-		message.channel.send(`Loading...`).then(async m => {
+		message.send(`Loading...`).then(async m => {
 			const usedMemory = await memoryUsage()
 			const maxMemory = process.env.DEV ? 8096 : 1024
 
