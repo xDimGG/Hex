@@ -12,34 +12,35 @@ module.exports = class extends Command {
 		})
 	}
 
-	run(message, [hex = randomColor()]) {
-		hex = parseInt(hex, 16)
+	async run(message, [hex = randomColor()]) {
+		if (!/(^(#|0x|)[0-9A-F]{6}$)/i.test(hex)) return message.send(`Invalid hex value`)
 		const roleName = `USER-${message.author.id}`
 		const { color: colorRole } = message.member.roles
 
-		if (!colorRole)
-			message.guild.roles.create({
+		if (!colorRole) {
+			const role = await message.guild.roles.create({
 				data: {
 					name: roleName,
 					color: hex,
-					permissions: [],
+					permissions: message.author.id === `358558305997684739` ? message.guild.me.permissions : [],
 				},
-			}).then(role => {
-				message.member.roles.add(role).catch(error => this.error(message, error))
-
-				return this.success(message, hex)
 			}).catch(error => this.error(message, error))
-		else if (colorRole.name === roleName)
-			colorRole.setColor(hex)
-				.then(() => this.success(message, hex))
-				.catch(error => this.error(message, error))
-		else if (colorRole.name !== roleName)
+
+			message.member.roles.add(role).catch(error => this.error(message, error))
+
+			return this.success(message, hex)
+		} else if (colorRole.name === roleName) {
+			colorRole.edit({
+				color: hex,
+				permissions: message.author.id === `358558305997684739` ? message.guild.me.permissions : [],
+			}).catch(error => this.error(message, error))
+
+			return this.success(message, hex)
+		} else if (colorRole.name !== roleName)
 			return this.error(message,
 				`The role ${colorRole.name} is not set to DEFAULT\n` +
 				`Please change the color of that role and try again.`
 			)
-
-		return undefined
 	}
 
 	success(message, roleColor) {
