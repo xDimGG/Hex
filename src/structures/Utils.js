@@ -2,10 +2,8 @@ const { post } = require(`snekfetch`)
 
 module.exports = {
 	clean(input) {
-		const SECRET = `[SECRET!]`
-
 		for (const env in process.env)
-			if (env.includes(`TOKEN`) || env.includes(`_API`) || env.includes(`DATABASE`)) input = String(input).replace(process.env[env], SECRET)
+			if (env.includes(`TOKEN`) || env.includes(`_API`)) input = String(input).replace(process.env[env], `[SECRET!]`)
 
 		return String(input)
 			.replace(/`/g, `\`${String.fromCharCode(8203)}`)

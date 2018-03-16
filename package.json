@@ -30,14 +30,12 @@
   },
   "license": "MIT",
   "eslintConfig": {
-    "extends": [
-      "eslint-config-lloti"
-    ],
+    "extends": "eslint-config-lloti",
     "parserOptions": {
+      "ecmaVersion": 9,
       "sourceType": "module"
     },
     "rules": {
-      "one-var": "off",
       "quotes": [
         "error",
         "backtick"

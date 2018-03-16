@@ -4,9 +4,10 @@ const { inspect } = require(`util`)
 module.exports = class extends Command {
 	constructor(...args) {
 		super(...args, {
+			enabled: true,
+			guarded: true,
 			aliases: [`ev`],
 			permLevel: 10,
-			guarded: true,
 			description: msg => msg.language.get(`COMMAND_EVAL_DESCRIPTION`),
 			extendedHelp: msg => msg.language.get(`COMMAND_EVAL_EXTENDEDHELP`),
 			usage: `<expression:str>`,

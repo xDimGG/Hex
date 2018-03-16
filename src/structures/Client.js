@@ -8,22 +8,22 @@ new class extends KlasaClient {
 			cmdEditing: true,
 			cmdPrompt: true,
 			typing: true,
-			ownerID: `358558305997684739`,
 			clientBaseDir: `./src/`,
 			prefix: `h!`,
 			readyMessage: client => client.user.tag,
-			console: { timestamps: false },
 			commandMessageLifetime: 300,
 			messageCacheMaxSize: 50,
 			messageCacheLifetime: 60,
 			messageSweepInterval: 60,
 			disableEveryone: true,
 			disabledEvents: [`TYPING_START`],
+			console: { timestamps: false },
+			pieceDefaults: { commands: { enabled: false } },
 		})
 	}
 
-	log(input, ...options) {
+	log(input, options = { code: `` }) {
 		console.log(input)
-		if (!process.env.DEV) this.channels.get(`361533828520476684`).send(input, ...options)
+		if (!process.env.DEV) this.channels.get(`361533828520476684`).send(input, options)
 	}
 }().login(process.env.TOKEN)

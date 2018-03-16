@@ -3,6 +3,7 @@ const { Command } = require(`klasa`)
 module.exports = class extends Command {
 	constructor(...args) {
 		super(...args, {
+			enabled: true,
 			usage: `<Feedback:string>`,
 			description: `Sends feedback to the bot creator`,
 			extendedDescription: `Sends your message to the bots support server to be voted upon by everyone else.`,

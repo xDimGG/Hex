@@ -5,6 +5,7 @@ const { Command } = require(`klasa`)
 module.exports = class extends Command {
 	constructor(...args) {
 		super(...args, {
+			enabled: true,
 			runIn: [`text`],
 			usage: `[Hex:string]`,
 			description: `Change name color`,
