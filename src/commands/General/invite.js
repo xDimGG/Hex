@@ -9,6 +9,6 @@ module.exports = class extends Command {
 	}
 
 	run(message) {
-		message.send(`<https://discordapp.com/oauth2/authorize?client_id=${this.client.user.id}&scope=bot&permissions=8>\nIf you would like support, join my support server <https://discord.shaybox.com/>`)
+		message.send(`<https://bot.shaybox.com/${this.client.user.id}>\nIf you would like support, join my support server <https://discord.shaybox.com/>`)
 	}
 }
