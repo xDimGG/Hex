@@ -18,7 +18,7 @@ new class extends KlasaClient {
 			disableEveryone: true,
 			disabledEvents: [`TYPING_START`],
 			console: { timestamps: false },
-			pieceDefaults: { commands: { enabled: false } },
+			pieceDefaults: { commands: { enabled: false, usageDelim: ` ` } },
 		})
 	}
 
