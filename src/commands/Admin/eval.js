@@ -15,7 +15,6 @@ module.exports = class extends Command {
 	}
 
 	async run(message, [code]) {
-		const client = this.client // eslint-disable-line no-unused-vars
 		const { success, result, time, type } = await this.eval(message, code)
 		const footer = this.client.methods.util.codeBlock(`ts`, type)
 		const output = message.language.get(success ? `COMMAND_EVAL_OUTPUT` : `COMMAND_EVAL_ERROR`, time, this.client.methods.util.codeBlock(`js`, result instanceof Error ? result.stack : result), footer)
@@ -39,6 +38,9 @@ module.exports = class extends Command {
 
 	// Eval the input
 	async eval(message, code) {
+		const client = this.client // eslint-disable-line no-unused-vars
+		const msg = message // eslint-disable-line no-unused-vars
+
 		const stopwatch = new Stopwatch()
 		let success
 		let syncTime
