@@ -38,13 +38,16 @@ module.exports = class extends Command {
 	}
 
 	// Eval the input
-	async eval(msg, code) {
+	async eval(message, code) {
 		const stopwatch = new Stopwatch()
-		let success, syncTime, asyncTime, result
+		let success
+		let syncTime
+		let asyncTime
+		let result
 		let thenable = false
 		let type = ``
 		try {
-			if (msg.flags.async) code = `(async () => {\n${code}\n})();`
+			if (message.flags.async) code = `(async () => {\n${code}\n})();`
 			result = eval(code)
 			syncTime = stopwatch.friendlyDuration
 			if (this.client.methods.util.isThenable(result)) {
@@ -66,8 +69,8 @@ module.exports = class extends Command {
 		type += thenable ? `<${this.client.methods.util.getDeepTypeName(result)}>` : this.client.methods.util.getDeepTypeName(result)
 		if (success && typeof result !== `string`)
 			result = inspect(result, {
-				depth: msg.flags.depth ? parseInt(msg.flags.depth) || 0 : 0,
-				showHidden: Boolean(msg.flags.showHidden),
+				depth: message.flags.depth ? parseInt(message.flags.depth) || 0 : 0,
+				showHidden: Boolean(message.flags.showHidden),
 			})
 
 		return { success, type, time: this.formatTime(syncTime, asyncTime), result: this.client.methods.util.clean(result) }
