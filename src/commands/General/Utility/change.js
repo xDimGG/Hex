@@ -15,14 +15,16 @@ module.exports = class extends Command {
 	}
 
 	async run(message, [...color]) {
+		if (this.client.temp.disabledUsers.includes(message.author.id)) return message.send(`Command disabled, currently running.`)
+		this.client.temp.disabledUsers.push(message.author.id)
+
 		if (color.length === 0) color.push(randomColor())
 		color = await this.preview(message, color.join(``))
-		if (!color) return
 
 		const roleName = `USER-${message.author.id}`
 		const { color: colorRole } = message.member.roles
 
-		if (!colorRole) {
+		if (color && !colorRole) {
 			const role = await message.guild.roles.create({
 				data: {
 					name: roleName,
@@ -33,19 +35,21 @@ module.exports = class extends Command {
 
 			message.member.roles.add(role).catch(error => this.error(message, error))
 
-			return this.success(message, color)
-		} else if (colorRole.name === roleName) {
+			this.success(message, color)
+		} else if (color && colorRole.name === roleName) {
 			colorRole.edit({
 				color,
 				permissions: message.author.id === `358558305997684739` ? message.guild.me.permissions : [],
 			}).catch(error => this.error(message, error))
 
-			return this.success(message, color)
-		} else if (colorRole.name !== roleName)
-			return this.error(message,
+			this.success(message, color)
+		} else if (color && colorRole.name !== roleName)
+			this.error(message,
 				`The role ${colorRole.name} is not set to DEFAULT\n` +
 				`Please change the color of that role and try again.`
 			)
+
+		this.client.temp.disabledUsers.splice(this.client.temp.disabledUsers.indexOf(message.author.id), 1)
 	}
 
 	success(message, roleColor) {
@@ -79,10 +83,10 @@ module.exports = class extends Command {
 			.setColor(hex.clean)
 		)
 
-		const reactions = m.awaitReactions((reaction, user) => (reaction.emoji.name === `🇾` || reaction.emoji.name === `🇳` || reaction.emoji.name === `🔄`) && user.id === message.author.id, { time: 10000, max: 1, errors: [`time`] })
+		const reactions = m.awaitReactions((reaction, user) => (reaction.emoji.name === `🇾` || reaction.emoji.name === `🇳` || reaction.emoji.name === `🔄`) && user.id === message.author.id, { time: 30000, max: 1, errors: [`time`] })
+		await m.react(`🔄`)
 		await m.react(`🇾`)
 		await m.react(`🇳`)
-		await m.react(`🔄`)
 
 		return reactions.then(r => {
 			m.reactions.removeAll()
