@@ -8,6 +8,5 @@ module.exports = class extends Event {
 
 	run() {
 		updateActivity(this.client)
-		this.client.temp = { disabledUsers: [] }
 	}
 }

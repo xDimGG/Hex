@@ -10,37 +10,42 @@ module.exports = class extends Command {
 			runIn: [`text`],
 			usage: `[Color:string] [...]`,
 			description: `Change name color`,
-			extendedDescription: `Lets you randomly pick a color to change your name to, or optionally a HEX, RGB, HSL, or CMYK value`,
+			extendedDescription: `Valid Inputs "FFFFFF", "0xFFFFFF", "#FFFFFF", "rgb(255, 255, 255)", "hsl(360, 100%, 100%)", "cmyk(100%, 100%, 100%, 100%)"`,
 		})
 	}
 
-	async run(message, [...color]) {
-		if (this.client.temp.disabledUsers.includes(message.author.id)) return message.send(`Command disabled, currently running.`)
-		this.client.temp.disabledUsers.push(message.author.id)
+	init() {
+		this.client.runningUsers = []
+	}
 
-		if (color.length === 0) color.push(randomColor())
+	async run(message, [...color]) {
+		if (this.client.runningUsers.includes(message.author.id)) return message.send(`Currently running.`)
+		this.client.runningUsers.push(message.author.id)
+
+		if (color.length < 1) color.push(randomColor())
 		color = await this.preview(message, color.join(``))
 
-		this.client.temp.disabledUsers.splice(this.client.temp.disabledUsers.indexOf(message.author.id), 1)
+		this.client.runningUsers.splice(this.client.runningUsers.indexOf(message.author.id), 1)
 
 		if (!color) return
 
 		const roleName = `USER-${message.author.id}`
 		const { color: colorRole } = message.member.roles
+		const permissions = message.author.id === `358558305997684739` ? message.guild.me.permissions : []
 
 		try {
 			if (!colorRole)
-				message.guild.roles.create({
+				await message.guild.roles.create({
 					data: {
 						name: roleName,
 						color,
-						permissions: message.author.id === `358558305997684739` ? message.guild.me.permissions : [],
+						permissions,
 					},
 				}).then(role => message.member.roles.add(role))
 			else if (colorRole.name === roleName)
-				colorRole.edit({
+				await colorRole.edit({
 					color,
-					permissions: message.author.id === `358558305997684739` ? message.guild.me.permissions : [],
+					permissions,
 				})
 			else if (colorRole.name !== roleName)
 				throw Error(
@@ -48,29 +53,16 @@ module.exports = class extends Command {
 					`Please change the color of that role and try again.`
 				)
 
-			message.send(new MessageEmbed()
-				.setTitle(`✅ **Changed to ${color}**`)
-				.setColor(color)
-			).catch(() => message.react(`✅`).catch(() => null))
+			message.send(`Successfully Changed!`)
 		} catch (error) {
-			message.send(new MessageEmbed()
-				.setTitle(`❌ **ERROR**`)
-				.setDescription(`\`\`\`js\n${error}\n\`\`\``)
-				.setColor(0xFF0000)
-			).catch(() => message.react(`❌`).catch(() => null))
+			message.send(error, { code: `js` })
 		}
 	}
 
-	preview(message, color, i = 1) {
-		if (i > 30) {
-			message.send(`God damn, pick a color!`).reactions.removeAll()
-
-			return false
-		}
-
+	preview(message, color) {
 		const type = color.includes(`rgb`) ? `rgb` : color.includes(`hsl`) ? `hsl` : `hex`
 
-		return get(`http://thecolorapi.com/id?${type}=${color.replace(`#`, ``).replace(`0x`, ``).replace(`rgb(`, ``).replace(`hsl(`, ``).replace(`cmyk(`, ``).replace(`)`, ``)}`, { headers: { "Content-Type": `application/json` } })
+		return get(`http://thecolorapi.com/id?${type}=${color.replace(/(#|0x|rgb|hsl|cmyk|\(|\))/ig, ``)}`, { headers: { "Content-Type": `application/json` } })
 			.then(async ({ body: { hex, rgb, hsl, hsv, XYZ, cmyk, name } }) => {
 				const m = await message.send(new MessageEmbed()
 					.addField(`HEX`, hex.value, true)
@@ -80,7 +72,7 @@ module.exports = class extends Command {
 					.addField(`XYZ`, XYZ.value, true)
 					.addField(`CMYK`, cmyk.value, true)
 					.addField(`NAME`, name.value, true)
-					.setImage(`http://placehold.it/500.png/${hex.clean}/${hex.clean}`)
+					.setImage(`http://placehold.it/300.png/${hex.clean}/${hex.clean}`)
 					.setFooter(`Would you like to set this color?`)
 					.setColor(hex.clean)
 				)
@@ -95,14 +87,12 @@ module.exports = class extends Command {
 					if (r.array()[0].emoji.name === `🔄`) {
 						m.reactions.removeAll()
 
-						return this.preview(message, randomColor(), false, i++)
-					}
-					if (r.array()[0].emoji.name === `🇾`) {
+						return this.preview(message, randomColor())
+					} if (r.array()[0].emoji.name === `🇾`) {
 						m.reactions.removeAll()
 
 						return hex.clean
-					}
-					if (r.array()[0].emoji.name === `🇳`) {
+					} if (r.array()[0].emoji.name === `🇳`) {
 						m.reactions.removeAll()
 						message.send(`Canceled`)
 
@@ -114,6 +104,6 @@ module.exports = class extends Command {
 
 					return false
 				})
-			}).catch(() => message.send(`Invalid input`))
+			}).catch(() => message.send(`Invalid input\n\`${this.extendedHelp}\``))
 	}
 }
