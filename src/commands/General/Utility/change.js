@@ -8,7 +8,7 @@ module.exports = class extends Command {
 		super(...args, {
 			enabled: true,
 			runIn: [`text`],
-			botPerms: [`MANAGE_ROLES`],
+			botPerms: [`MANAGE_ROLES`, `ADD_REACTIONS`, `MANAGE_MESSAGES`],
 			usage: `[Color:string] [...]`,
 			description: `Change name color`,
 			extendedDescription: `Valid Inputs "FFFFFF", "0xFFFFFF", "#FFFFFF", "rgb(255, 255, 255)", "hsl(360, 100%, 100%)", "cmyk(100%, 100%, 100%, 100%)"`,
