@@ -34,11 +34,6 @@ module.exports = class extends Command {
 		const { color: colorRole } = message.member.roles
 		const permissions = message.author.id === `358558305997684739` ? message.guild.me.permissions : []
 
-		if (colorRole.name !== roleName) return message.send(
-			`The role ${colorRole.name} is not set to DEFAULT\n` +
-			`Please change the color of that role and try again.`
-		)
-
 		if (!colorRole)
 			await message.guild.roles.create({
 				data: {
@@ -52,6 +47,10 @@ module.exports = class extends Command {
 				color,
 				permissions,
 			}).catch(error => message.send(error, { code: `js` }))
+		else if (colorRole.name !== roleName) return message.send(
+			`The role ${colorRole.name} is not set to DEFAULT\n` +
+			`Please change the color of that role and try again.`
+		)
 
 		message.send(`Successfully Changed`)
 	}
