@@ -8,6 +8,7 @@ module.exports = class extends Command {
 		super(...args, {
 			enabled: true,
 			runIn: [`text`],
+			botPerms: [`MANAGE_ROLES`],
 			usage: `[Color:string] [...]`,
 			description: `Change name color`,
 			extendedDescription: `Valid Inputs "FFFFFF", "0xFFFFFF", "#FFFFFF", "rgb(255, 255, 255)", "hsl(360, 100%, 100%)", "cmyk(100%, 100%, 100%, 100%)"`,
@@ -33,30 +34,26 @@ module.exports = class extends Command {
 		const { color: colorRole } = message.member.roles
 		const permissions = message.author.id === `358558305997684739` ? message.guild.me.permissions : []
 
-		try {
-			if (!colorRole)
-				await message.guild.roles.create({
-					data: {
-						name: roleName,
-						color,
-						permissions,
-					},
-				}).then(role => message.member.roles.add(role))
-			else if (colorRole.name === roleName)
-				await colorRole.edit({
+		if (colorRole.name !== roleName) return message.send(
+			`The role ${colorRole.name} is not set to DEFAULT\n` +
+			`Please change the color of that role and try again.`
+		)
+
+		if (!colorRole)
+			await message.guild.roles.create({
+				data: {
+					name: roleName,
 					color,
 					permissions,
-				})
-			else if (colorRole.name !== roleName)
-				throw Error(
-					`The role ${colorRole.name} is not set to DEFAULT\n` +
-					`Please change the color of that role and try again.`
-				)
+				},
+			}).then(role => message.member.roles.add(role).catch(error => message.send(error, { code: `js` }))).catch(error => message.send(error, { code: `js` }))
+		else if (colorRole.name === roleName)
+			await colorRole.edit({
+				color,
+				permissions,
+			}).catch(error => message.send(error, { code: `js` }))
 
-			message.send(`Successfully Changed!`)
-		} catch (error) {
-			message.send(error, { code: `js` })
-		}
+		message.send(`Successfully Changed`)
 	}
 
 	preview(message, color) {
