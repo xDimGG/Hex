@@ -68,7 +68,7 @@ module.exports = class extends Command {
 					.addField(`XYZ`, XYZ.value, true)
 					.addField(`CMYK`, cmyk.value, true)
 					.addField(`NAME`, name.value, true)
-					.setImage(`http://placehold.it/300.png/${hex.clean}/${hex.clean}`)
+					.setImage(`https://api.shaybox.com/${hex.clean}/300`)
 					.setFooter(`Would you like to set this color?`)
 					.setColor(hex.clean)
 				)
