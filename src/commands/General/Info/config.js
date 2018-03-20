@@ -28,7 +28,7 @@ module.exports = class extends Command {
 		if (!key) {
 			const content = [
 				`= Guild Settings =`,
-				`prefix :: ${config.prefix}`,
+				`Prefix :: ${config.prefix}`,
 			]
 
 			return message.send(content.join(`\n`), { code: `asciidoc` })
