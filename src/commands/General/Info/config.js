@@ -30,7 +30,7 @@ module.exports = class extends Command {
 				`= Guild Settings =`,
 				`prefix     :: ${config.prefix}`,
 			]
-			message.send(content.join(`\n`), { code: `asciidoc` })
+			return message.send(content.join(`\n`), { code: `asciidoc` })
 		}
 
 		await message.guild.configs.update(key, value)
