@@ -12,14 +12,14 @@ module.exports = class extends Command {
 
 		this
 			.createCustomResolver(`key`, arg => {
-				if (arg && ![`prefix`, `mode`, `characters`].includes(arg.toLowerCase())) throw `**Prefix**, **Mode**, or **Characters**` // eslint-disable-line no-throw-literal
+				if (arg && ![`prefix`].includes(arg.toLowerCase())) throw `Available Options: **Prefix**` // eslint-disable-line no-throw-literal
 
-				return arg.toLowerCase()
+				return arg ? arg.toLowerCase() : undefined
 			})
 			.createCustomResolver(`value`, (arg, _, __, params) => {
 				if (params[0] && !arg) throw `Please provide a value to set` // eslint-disable-line no-throw-literal
 
-				return arg.toLowerCase()
+				return arg ? arg.toLowerCase() : undefined
 			})
 	}
 
