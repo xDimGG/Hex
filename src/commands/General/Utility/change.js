@@ -68,7 +68,7 @@ module.exports = class extends Command {
 					.addField(`XYZ`, XYZ.value, true)
 					.addField(`CMYK`, cmyk.value, true)
 					.addField(`NAME`, name.value, true)
-					.setImage(`https://api.shaybox.com/color/${hex.clean}/300`)
+					.setImage(`https://api.shaybox.com/color/${hex.clean}`)
 					.setFooter(`Would you like to set this color?`)
 					.setColor(hex.clean)
 				)
@@ -93,7 +93,6 @@ module.exports = class extends Command {
 					message.send(`You didn't react in time`)
 
 					return false
-
 				}).finally(() => m.reactions.removeAll().catch(() => {}))
 			}).catch(() => message.send(`Invalid input\n\`${this.extendedHelp}\``))
 	}
