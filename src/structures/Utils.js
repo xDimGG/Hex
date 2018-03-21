@@ -15,7 +15,7 @@ module.exports = {
 			post(`https://discordbots.org/api/bots/${client.user.id}/stats`, { headers: { Authorization: process.env.DBL_API } })
 				.send({ server_count: client.guilds.size })
 				.end()
-				.catch(() => null)
+				.catch(() => {})
 
 		return client.user.setActivity(`${client.guilds.size} ${client.guilds.size > 1 ? `Guilds` : `Guild`} | ${client.guilds.reduce((a, b) => a + b.memberCount, 0)} Members`, { type: `WATCHING` })
 	},

@@ -80,26 +80,21 @@ module.exports = class extends Command {
 				await m.react(`🇳`)
 
 				return reactions.then(r => {
-					if (r.array()[0].emoji.name === `🔄`) {
-						m.reactions.removeAll()
-
+					if (r.array()[0].emoji.name === `🔄`)
 						return this.preview(message, randomColor())
-					} if (r.array()[0].emoji.name === `🇾`) {
-						m.reactions.removeAll()
-
+					if (r.array()[0].emoji.name === `🇾`)
 						return hex.clean
-					} if (r.array()[0].emoji.name === `🇳`) {
-						m.reactions.removeAll()
+					if (r.array()[0].emoji.name === `🇳`) {
 						message.send(`Canceled`)
 
 						return false
 					}
 				}).catch(() => {
-					m.reactions.removeAll()
 					message.send(`You didn't react in time`)
 
 					return false
-				})
+
+				}).finally(() => m.reactions.removeAll().catch(() => {}))
 			}).catch(() => message.send(`Invalid input\n\`${this.extendedHelp}\``))
 	}
 }
