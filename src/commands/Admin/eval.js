@@ -1,5 +1,6 @@
-const { Command, Stopwatch } = require(`klasa`)
-const { inspect } = require(`util`)
+const
+	{ Command, Stopwatch } = require(`klasa`),
+	{ inspect } = require(`util`)
 
 module.exports = class extends Command {
 	constructor(...args) {
@@ -15,10 +16,11 @@ module.exports = class extends Command {
 	}
 
 	async run(message, [code]) {
-		const { success, result, time, type } = await this.eval(message, code.join(` `))
-		const footer = this.client.methods.util.codeBlock(`ts`, type)
-		const output = message.language.get(success ? `COMMAND_EVAL_OUTPUT` : `COMMAND_EVAL_ERROR`, time, this.client.methods.util.codeBlock(`js`, result), footer)
-		const silent = `silent` in message.flags
+		const
+			{ success, result, time, type } = await this.eval(message, code.join(` `)),
+			footer = this.client.methods.util.codeBlock(`ts`, type),
+			output = message.language.get(success ? `COMMAND_EVAL_OUTPUT` : `COMMAND_EVAL_ERROR`, time, this.client.methods.util.codeBlock(`js`, result), footer),
+			silent = `silent` in message.flags
 
 		if (silent) return null
 
@@ -38,10 +40,10 @@ module.exports = class extends Command {
 
 	// Eval the input
 	async eval(message, code) {
-		const client = this.client // eslint-disable-line no-unused-vars
-		const msg = message // eslint-disable-line no-unused-vars
-
-		const stopwatch = new Stopwatch()
+		const
+			client = this.client, // eslint-disable-line no-unused-vars
+			msg = message, // eslint-disable-line no-unused-vars
+			stopwatch = new Stopwatch()
 		let success, syncTime, asyncTime, result, thenable = false, type = ``
 		try {
 			if (message.flags.async) code = `(async () => {\n${code}\n})();`

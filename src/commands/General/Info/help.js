@@ -30,9 +30,10 @@ module.exports = class extends Command {
 
 			return message.send(info.join(`\n`), { code: `asciidoc` })
 		}
-		const help = await this.buildHelp(message)
-		const categories = Object.keys(help)
-		const helpMessage = []
+		const
+			help = await this.buildHelp(message),
+			categories = Object.keys(help),
+			helpMessage = []
 		for (let cat = 0; cat < categories.length; cat++) {
 			helpMessage.push(`**${categories[cat]} Commands**:`, `\`\`\`asciidoc`)
 			const subCategories = Object.keys(help[categories[cat]])
@@ -44,10 +45,10 @@ module.exports = class extends Command {
 	}
 
 	async buildHelp(msg) {
-		const help = {}
-
-		const commandNames = [...this.client.commands.keys()]
-		const longest = commandNames.reduce((long, str) => Math.max(long, str.length), 0)
+		const
+			help = {},
+			commandNames = [...this.client.commands.keys()],
+			longest = commandNames.reduce((long, str) => Math.max(long, str.length), 0)
 
 		await Promise.all(this.client.commands.map(command =>
 			this.client.inhibitors.run(msg, command, true).then(() => {

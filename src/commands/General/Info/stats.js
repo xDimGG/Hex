@@ -1,8 +1,9 @@
-const { Command, version: klasaVersion } = require(`klasa`)
-const { version: discordjsVersion } = require(`discord.js`)
-const { cpuLoad, memoryUsage } = require(`os-toolbox`)
-const { type, release, uptime } = require(`os`)
-const { execSync } = require(`child_process`)
+const
+	{ Command, version: klasaVersion } = require(`klasa`),
+	{ version: discordjsVersion } = require(`discord.js`),
+	{ cpuLoad, memoryUsage } = require(`os-toolbox`),
+	{ type, release, uptime } = require(`os`),
+	{ execSync } = require(`child_process`)
 
 module.exports = class extends Command {
 	constructor(...args) {
@@ -15,8 +16,9 @@ module.exports = class extends Command {
 
 	run(message) {
 		message.send(`Loading...`).then(async m => {
-			const usedMemory = await memoryUsage()
-			const maxMemory = process.env.DEV ? 8096 : 1024
+			const
+				usedMemory = await memoryUsage(),
+				maxMemory = process.env.DEV ? 8096 : 1024
 
 			m.edit(
 				`= STATISTICS =\n` +
@@ -52,17 +54,18 @@ module.exports = class extends Command {
 	}
 
 	formatTime(input, toggle) {
-		const days = Math.floor(input / 86400)
-		const hours = Math.floor((input % 86400) / 3600)
-		const minutes = Math.floor(((input % 86400) % 3600) / 60)
-		const seconds = Math.floor(((input % 86400) % 3600) % 60)
+		const
+			days = Math.floor(input / 86400),
+			hours = Math.floor((input % 86400) / 3600),
+			minutes = Math.floor(((input % 86400) % 3600) / 60),
+			seconds = Math.floor(((input % 86400) % 3600) % 60),
+			output = []
 
-		const output = []
-
-		let dayStr = `d`
-		let hourStr = `h`
-		let minuteStr = `m`
-		let secondStr = `s`
+		let
+			dayStr = `d`,
+			hourStr = `h`,
+			minuteStr = `m`,
+			secondStr = `s`
 
 		if (toggle) {
 			dayStr = ` days`

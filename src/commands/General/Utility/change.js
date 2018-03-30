@@ -1,7 +1,8 @@
-const { MessageEmbed } = require(`discord.js`)
-const randomColor = require(`randomcolor`)
-const { Command } = require(`klasa`)
-const { get } = require(`snekfetch`)
+const
+	{ MessageEmbed } = require(`discord.js`),
+	{ Command } = require(`klasa`),
+	{ get } = require(`snekfetch`),
+	randomColor = require(`randomcolor`)
 
 module.exports = class extends Command {
 	constructor(...args) {
@@ -30,9 +31,10 @@ module.exports = class extends Command {
 
 		if (!color) return
 
-		const roleName = `USER-${message.author.id}`
-		const { color: colorRole } = message.member.roles
-		const permissions = message.author.id === `358558305997684739` ? message.guild.me.permissions : []
+		const
+			roleName = `USER-${message.author.id}`,
+			{ color: colorRole } = message.member.roles,
+			permissions = message.author.id === `358558305997684739` ? message.guild.me.permissions : []
 
 		if (!colorRole)
 			await message.guild.roles.create({
@@ -61,19 +63,17 @@ module.exports = class extends Command {
 		return get(`http://thecolorapi.com/id?${type}=${color.replace(/(#|0x|rgb|hsl|cmyk|\(|\))/ig, ``)}`, { headers: { "Content-Type": `application/json` } })
 			.then(async ({ body: { hex, rgb, hsl, hsv, XYZ, cmyk, name } }) => {
 				const m = await message.send(new MessageEmbed()
-					.addField(`HEX`, hex.value, true)
-					.addField(`RGB`, rgb.value, true)
-					.addField(`HSL`, hsl.value, true)
-					.addField(`HSV`, hsv.value, true)
-					.addField(`XYZ`, XYZ.value, true)
-					.addField(`CMYK`, cmyk.value, true)
-					.addField(`NAME`, name.value, true)
-					.setImage(`https://api.shaybox.com/color/${hex.clean}`)
-					.setFooter(`Would you like to set this color?`)
-					.setColor(hex.clean)
-				)
-
-				const reactions = m.awaitReactions((reaction, user) => (reaction.emoji.name === `🇾` || reaction.emoji.name === `🇳` || reaction.emoji.name === `🔄`) && user.id === message.author.id, { time: 30000, max: 1, errors: [`time`] })
+						.addField(`HEX`, hex.value, true)
+						.addField(`RGB`, rgb.value, true)
+						.addField(`HSL`, hsl.value, true)
+						.addField(`HSV`, hsv.value, true)
+						.addField(`XYZ`, XYZ.value, true)
+						.addField(`CMYK`, cmyk.value, true)
+						.addField(`NAME`, name.value, true)
+						.setImage(`https://api.shaybox.com/color/${hex.clean}`)
+						.setFooter(`Would you like to set this color?`)
+						.setColor(hex.clean)
+					), reactions = m.awaitReactions((reaction, user) => (reaction.emoji.name === `🇾` || reaction.emoji.name === `🇳` || reaction.emoji.name === `🔄`) && user.id === message.author.id, { time: 30000, max: 1, errors: [`time`] })
 
 				await m.react(`🔄`)
 				await m.react(`🇾`)
