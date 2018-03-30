@@ -26,7 +26,9 @@ module.exports = class extends Command {
 		this.client.runningUsers.push(message.author.id)
 
 		if (color.length < 1) color.push(randomColor())
-		color = await this.preview(message, toColor.hex(getColor.rgb(color.join(` `))))
+		color = getColor.rgb(color.join(` `))
+		if (color) color = await this.preview(message, color)
+		else message.send(`Invalid input color`)
 
 		this.client.runningUsers.splice(this.client.runningUsers.indexOf(message.author.id), 1)
 
@@ -59,7 +61,7 @@ module.exports = class extends Command {
 	}
 
 	preview(message, color) {
-		return get(`http://thecolorapi.com/id?hex=${color.replace(`#`, ``)}`, { headers: { "Content-Type": `application/json` } })
+		return get(`http://thecolorapi.com/id?rgb=${color}`, { headers: { "Content-Type": `application/json` } })
 			.then(async ({ body: { hex, rgb, hsl, hsv, XYZ, cmyk, name } }) => {
 				const m = await message.send(new MessageEmbed()
 						.addField(`HEX`, hex.value, true)
