@@ -6,6 +6,7 @@ module.exports = class extends Command {
 		super(...args, {
 			enabled: true,
 			runIn: [`text`],
+			botPerms: [`MANAGE_ROLES`, `EMBED_LINKS`],
 			description: `Remove name color`,
 			extendedDescription: `Deletes the role that gives your name color, if you have one.`,
 		})
