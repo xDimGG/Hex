@@ -15,16 +15,11 @@ module.exports = class extends Command {
 	run(message) {
 		const colorRole = message.member.roles.find(`name`, `USER-${message.member.id}`)
 
-		if (!colorRole)
-			return message.send(new MessageEmbed()
-				.setTitle(`❌ **ERROR**`)
-				.setDescription(`You dont have one!`)
-				.setColor(0xFF0000)
-			)
+		if (!colorRole) return message.send(`You don't a hex role`)
 
 		colorRole.delete().then(role => {
 			message.send(new MessageEmbed()
-				.setTitle(`✅ **Removed ${role.hexColor.toUpperCase().replace(`#`, ``)}**`)
+				.setTitle(`✅ **Removed ${role.hexColor.toUpperCase()}**`)
 				.setColor(role.color)
 			)
 		}).catch(error => {
@@ -34,7 +29,5 @@ module.exports = class extends Command {
 				.setColor(0xFF0000)
 			)
 		})
-
-		return undefined
 	}
 }
