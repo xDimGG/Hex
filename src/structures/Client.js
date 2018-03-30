@@ -1,5 +1,7 @@
 const { KlasaClient } = require(`klasa`)
 
+Error.stackTraceLimit = Infinity
+
 new class extends KlasaClient {
 	constructor() {
 		super({
