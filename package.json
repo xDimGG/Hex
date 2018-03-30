@@ -36,6 +36,15 @@
       "sourceType": "module"
     },
     "rules": {
+      "one-var": [
+        "error",
+        {
+          "var": "consecutive",
+          "let": "consecutive",
+          "const": "consecutive",
+          "separateRequires": true
+        }
+      ],
       "quotes": [
         "error",
         "backtick"

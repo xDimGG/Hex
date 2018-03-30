@@ -4,8 +4,8 @@ module.exports = class extends Command {
 	constructor(...args) {
 		super(...args, {
 			enabled: true,
-			aliases: [`guilds`],
 			permLevel: 9,
+			aliases: [`guilds`],
 			description: `All guilds the bot is in`,
 		})
 	}

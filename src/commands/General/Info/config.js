@@ -4,8 +4,8 @@ module.exports = class extends Command {
 	constructor(...args) {
 		super(...args, {
 			enabled: true,
-			runIn: [`text`],
 			permLevel: 6,
+			runIn: [`text`],
 			usage: `(Key:key) (Value:value)`,
 			description: msg => msg.language.get(`COMMAND_CONF_SERVER_DESCRIPTION`),
 		})

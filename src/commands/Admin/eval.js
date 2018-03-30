@@ -8,7 +8,6 @@ module.exports = class extends Command {
 			guarded: true,
 			aliases: [`ev`],
 			permLevel: 10,
-			usageDelim: ``,
 			usage: `<expression:str>`,
 			description: msg => msg.language.get(`COMMAND_EVAL_DESCRIPTION`),
 			extendedHelp: msg => msg.language.get(`COMMAND_EVAL_EXTENDEDHELP`),
@@ -16,7 +15,7 @@ module.exports = class extends Command {
 	}
 
 	async run(message, [code]) {
-		const { success, result, time, type } = await this.eval(message, code)
+		const { success, result, time, type } = await this.eval(message, code.join(` `))
 		const footer = this.client.methods.util.codeBlock(`ts`, type)
 		const output = message.language.get(success ? `COMMAND_EVAL_OUTPUT` : `COMMAND_EVAL_ERROR`, time, this.client.methods.util.codeBlock(`js`, result), footer)
 		const silent = `silent` in message.flags
@@ -43,12 +42,7 @@ module.exports = class extends Command {
 		const msg = message // eslint-disable-line no-unused-vars
 
 		const stopwatch = new Stopwatch()
-		let success
-		let syncTime
-		let asyncTime
-		let result
-		let thenable = false
-		let type = ``
+		let success, syncTime, asyncTime, result, thenable = false, type = ``
 		try {
 			if (message.flags.async) code = `(async () => {\n${code}\n})();`
 			result = eval(code)
