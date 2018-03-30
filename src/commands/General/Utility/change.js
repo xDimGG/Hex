@@ -2,6 +2,7 @@ const
 	{ MessageEmbed } = require(`discord.js`),
 	{ Command } = require(`klasa`),
 	{ get } = require(`snekfetch`),
+	{ get: getColor, to: toColor } = require(`color-string`),
 	randomColor = require(`randomcolor`)
 
 module.exports = class extends Command {
@@ -12,7 +13,7 @@ module.exports = class extends Command {
 			botPerms: [`MANAGE_ROLES`, `ADD_REACTIONS`, `MANAGE_MESSAGES`, `EMBED_LINKS`],
 			usage: `[Color:string] [...]`,
 			description: `Change name color`,
-			extendedDescription: `Valid Inputs "FFFFFF", "0xFFFFFF", "#FFFFFF", "rgb(255, 255, 255)", "hsl(360, 100%, 100%)", "cmyk(100%, 100%, 100%, 100%)"`,
+			extendedDescription: `Valid Inputs from npm package "color-string"`,
 		})
 	}
 
@@ -25,7 +26,7 @@ module.exports = class extends Command {
 		this.client.runningUsers.push(message.author.id)
 
 		if (color.length < 1) color.push(randomColor())
-		color = await this.preview(message, color.join(``))
+		color = await this.preview(message, toColor.hex(getColor.rgb(color.join(` `))))
 
 		this.client.runningUsers.splice(this.client.runningUsers.indexOf(message.author.id), 1)
 
@@ -58,9 +59,7 @@ module.exports = class extends Command {
 	}
 
 	preview(message, color) {
-		const type = color.includes(`rgb`) ? `rgb` : color.includes(`hsl`) ? `hsl` : `hex`
-
-		return get(`http://thecolorapi.com/id?${type}=${color.replace(/(#|0x|rgb|hsl|cmyk|\(|\))/ig, ``)}`, { headers: { "Content-Type": `application/json` } })
+		return get(`http://thecolorapi.com/id?hex=${color.replace(`#`, ``)}`, { headers: { "Content-Type": `application/json` } })
 			.then(async ({ body: { hex, rgb, hsl, hsv, XYZ, cmyk, name } }) => {
 				const m = await message.send(new MessageEmbed()
 						.addField(`HEX`, hex.value, true)

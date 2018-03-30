@@ -13,6 +13,7 @@
     "email": "ShayneEHartford@Gmail.Com"
   },
   "dependencies": {
+    "color-string": "^1.5.2",
     "discord.js": "github:discordjs/discord.js",
     "klasa": "github:dirigeants/klasa",
     "os": "^0.1.1",
