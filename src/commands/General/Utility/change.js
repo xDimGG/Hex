@@ -46,18 +46,21 @@ module.exports = class extends Command {
 					color,
 					permissions,
 				},
-			}).then(role => message.member.roles.add(role).catch(error => message.send(error, { code: `js` }))).catch(error => message.send(error, { code: `js` }))
+			}).then(role => {
+				message.member.roles.add(role)
+					.then(() => message.send(`Successfully Changed`))
+					.catch(error => message.send(error, { code: `js` }))
+			}).catch(error => message.send(error, { code: `js` }))
 		else if (colorRole.name === roleName)
 			await colorRole.edit({
 				color,
 				permissions,
-			}).catch(error => message.send(error, { code: `js` }))
+			}).then(() => message.send(`Successfully Changed`))
+				.catch(error => message.send(error, { code: `js` }))
 		else if (colorRole.name !== roleName) return message.send(
 			`The role ${colorRole.name} is not set to DEFAULT\n` +
 			`Please change the color of that role and try again.`
 		)
-
-		message.send(`Successfully Changed`)
 	}
 
 	preview(message, color) {
