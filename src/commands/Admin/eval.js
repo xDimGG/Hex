@@ -9,7 +9,7 @@ module.exports = class extends Command {
 			guarded: true,
 			aliases: [`ev`],
 			permLevel: 10,
-			usage: `<expression:str>`,
+			usage: `<Code:string> [...]`,
 			description: msg => msg.language.get(`COMMAND_EVAL_DESCRIPTION`),
 			extendedHelp: msg => msg.language.get(`COMMAND_EVAL_EXTENDEDHELP`),
 		})
