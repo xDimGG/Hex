@@ -9,7 +9,6 @@ new class extends KlasaClient {
 			cmdDeleting: true,
 			cmdEditing: true,
 			cmdPrompt: true,
-			typing: true,
 			clientBaseDir: `./src/`,
 			prefix: `h!`,
 			readyMessage: client => client.user.tag,
