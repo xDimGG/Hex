@@ -1,9 +1,7 @@
 const
 	{ MessageEmbed } = require(`discord.js`),
 	{ Command } = require(`klasa`),
-	{ get } = require(`snekfetch`),
-	{ get: getColor, to: toColor } = require(`color-string`),
-	randomColor = require(`randomcolor`)
+	tinyColor = require(`tinycolor2`)
 
 module.exports = class extends Command {
 	constructor(...args) {
@@ -15,6 +13,13 @@ module.exports = class extends Command {
 			description: `Change name color`,
 			extendedDescription: `Valid Inputs from npm package "color-string"`,
 		})
+		this.examples = [
+			`#000`, `000`, `#369C`, `369C`, `#f0f0f6`, `f0f0f6`, `#f0f0f688`, `f0f0f688`,
+			`rgb (255, 0, 0)`, `rgb 255 0 0`, `rgba (255, 0, 0, .5)`,
+			`hsl(0, 100%, 50%)`, `hsla(0, 100%, 50%, .5)`, `hsl(0, 100%, 50%)`, `hsl 0 1.0 0.5`,
+			`hsv(0, 100%, 100%)`, `hsva(0, 100%, 100%, .5)`, `hsv (0 100% 100%)`, `hsv 0 1 1`,
+			`RED`, `blanchedalmond`, `darkblue`,
+		]
 	}
 
 	init() {
@@ -25,14 +30,15 @@ module.exports = class extends Command {
 		if (this.client.runningUsers.includes(message.author.id)) return message.send(`Currently running.`)
 		this.client.runningUsers.push(message.author.id)
 
-		if (color.length < 1) color.push(randomColor())
-		color = getColor.rgb(color.join(` `))
-		if (color) color = await this.preview(message, color)
-		else message.send(`Invalid input color`)
+		if (color.length < 1) color = tinyColor.random()
+		else color = tinyColor(color.join(` `))
+
+		if (color.isValid()) color = await this.preview(message, tinyColor(color))
+		else message.send(`Invalid color, Ex. **${this.examples[Math.floor(Math.random() * this.examples.length)]}**`)
 
 		this.client.runningUsers.splice(this.client.runningUsers.indexOf(message.author.id), 1)
 
-		if (!color) return
+		if (!color || !color.isValid()) return
 
 		const
 			roleName = `USER-${message.author.id}`,
@@ -43,7 +49,7 @@ module.exports = class extends Command {
 			await message.guild.roles.create({
 				data: {
 					name: roleName,
-					color,
+					color: color.toHex(),
 					permissions,
 				},
 			}).then(role => {
@@ -53,7 +59,7 @@ module.exports = class extends Command {
 			}).catch(error => message.send(error, { code: `js` }))
 		else if (colorRole.name === roleName)
 			await colorRole.edit({
-				color,
+				color: color.toHex(),
 				permissions,
 			}).then(() => message.send(`Successfully Changed`))
 				.catch(error => message.send(error, { code: `js` }))
@@ -63,49 +69,45 @@ module.exports = class extends Command {
 		)
 	}
 
-	preview(message, color) {
-		return get(`http://thecolorapi.com/id?rgb=${color}`, { headers: { "Content-Type": `application/json` } })
-			.then(async ({ body: { hex, rgb, hsl, hsv, XYZ, cmyk, name } }) => {
-				const m = await message.send(new MessageEmbed()
-						.addField(`HEX`, hex.value, true)
-						.addField(`RGB`, rgb.value, true)
-						.addField(`HSL`, hsl.value, true)
-						.addField(`HSV`, hsv.value, true)
-						.addField(`XYZ`, XYZ.value, true)
-						.addField(`CMYK`, cmyk.value, true)
-						.addField(`NAME`, name.value, true)
-						.setImage(`https://api.shaybox.com/color/${hex.clean}`)
-						.setFooter(`Would you like to set this color?`)
-						.setColor(hex.clean)
-					), reactions = m.awaitReactions((reaction, user) => (reaction.emoji.name === `🇾` || reaction.emoji.name === `🇳` || reaction.emoji.name === `🔄`) && user.id === message.author.id, { time: 30000, max: 1, errors: [`time`] })
+	async preview(message, color, react = true) {
+		const	m = await message.send(new MessageEmbed()
+				.addField(`HEX`, color.toHexString(), true)
+				.addField(`RGB`, color.toRgbString(), true)
+				.addField(`HSL`, color.toHslString(), true)
+				.addField(`HSV`, color.toHsvString(), true)
+				.setImage(`https://api.shaybox.com/color/${color.toHex()}?width=400&height=100`)
+				.setFooter(`Would you like to set this color?`)
+				.setColor(color.toHex())
+			), reactions = m.awaitReactions((reaction, user) => (reaction.emoji.name === `🇾` || reaction.emoji.name === `🇳` || reaction.emoji.name === `🔄`) && user.id === message.author.id, { time: 30000, max: 1, errors: [`time`] })
 
-				await m.react(`🔄`)
-				await m.react(`🇾`)
-				await m.react(`🇳`)
+		if (react) {
+			await m.react(`🔄`)
+			await m.react(`🇾`)
+			await m.react(`🇳`)
+		}
 
-				return reactions.then(r => {
-					if (r.array()[0].emoji.name === `🔄`) {
-						m.reactions.removeAll().catch(() => {})
+		return reactions.then(r => {
+			if (r.array()[0].emoji.name === `🔄`) {
+				r.array()[0].users.remove(message.author)
 
-						return this.preview(message, randomColor())
-					}
-					if (r.array()[0].emoji.name === `🇾`) {
-						m.reactions.removeAll().catch(() => {})
+				return this.preview(message, tinyColor.random(), false)
+			}
+			if (r.array()[0].emoji.name === `🇾`) {
+				m.reactions.removeAll().catch(() => {})
 
-						return hex.clean
-					}
-					if (r.array()[0].emoji.name === `🇳`) {
-						m.reactions.removeAll().catch(() => {})
-						message.send(`Canceled`)
+				return color
+			}
+			if (r.array()[0].emoji.name === `🇳`) {
+				m.reactions.removeAll().catch(() => {})
+				message.send(`Canceled`)
 
-						return false
-					}
-				}).catch(() => {
-					m.reactions.removeAll().catch(() => {})
-					message.send(`You didn't react in time`)
+				return false
+			}
+		}).catch(() => {
+			m.reactions.removeAll().catch(() => {})
+			message.send(`You didn't react in time`)
 
-					return false
-				})
-			}).catch(() => message.send(`Invalid input\n\`${this.extendedHelp}\``))
+			return false
+		})
 	}
 }
