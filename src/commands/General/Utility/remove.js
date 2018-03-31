@@ -18,7 +18,7 @@ module.exports = class extends Command {
 
 		if (!colorRole) return message.send(`You don't a hex role`)
 
-		colorRole.delete().then(role => {
+		colorRole.delete().then(() => {
 			message.send(new MessageEmbed()
 				.setTitle(`**Removed ${colorRole.hexColor.toUpperCase()}**`)
 				.setImage(`https://api.shaybox.com/color/${colorRole.hexColor.replace(`#`, ``)}?width=140&height=50`)

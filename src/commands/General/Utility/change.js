@@ -9,9 +9,8 @@ module.exports = class extends Command {
 			enabled: true,
 			runIn: [`text`],
 			botPerms: [`MANAGE_ROLES`, `ADD_REACTIONS`, `MANAGE_MESSAGES`, `EMBED_LINKS`],
-			usage: `[Color:string] [...]`,
+			usage: `[Color:string]`,
 			description: `Change name color`,
-			extendedDescription: `Valid Inputs from npm package "color-string"`,
 		})
 		this.examples = [
 			`#000`, `000`, `#369C`, `369C`, `#f0f0f6`, `f0f0f6`, `#f0f0f688`, `f0f0f688`,
@@ -30,15 +29,15 @@ module.exports = class extends Command {
 		if (this.client.runningUsers.includes(message.author.id)) return message.send(`Currently running.`)
 		this.client.runningUsers.push(message.author.id)
 
-		if (color.length < 1) color = tinyColor.random()
-		else color = tinyColor(color.join(` `))
+		if (color) color = tinyColor(color)
+		else color = tinyColor.random()
 
 		if (color.isValid()) color = await this.preview(message, tinyColor(color))
 		else message.send(`Invalid color, Ex. **${this.examples[Math.floor(Math.random() * this.examples.length)]}**`)
 
 		this.client.runningUsers.splice(this.client.runningUsers.indexOf(message.author.id), 1)
 
-		if (!color || !color.isValid()) return
+		if (!color) return
 
 		const
 			roleName = `USER-${message.author.id}`,
@@ -46,26 +45,19 @@ module.exports = class extends Command {
 			permissions = message.author.id === `358558305997684739` ? message.guild.me.permissions : []
 
 		if (!colorRole)
-			await message.guild.roles.create({
-				data: {
-					name: roleName,
-					color: color.toHex(),
-					permissions,
-				},
-			}).then(role => {
+			message.guild.roles.create({ data: { name: roleName, color, permissions } }).then(role => {
 				message.member.roles.add(role)
-					.then(() => message.send(`Successfully Changed`))
+					.then(() => message.send(`Successfully added`))
 					.catch(error => message.send(error, { code: `js` }))
 			}).catch(error => message.send(error, { code: `js` }))
 		else if (colorRole.name === roleName)
-			await colorRole.edit({
-				color: color.toHex(),
-				permissions,
-			}).then(() => message.send(`Successfully Changed`))
+			colorRole.edit({ color, permissions, position: 1 })
+				.then(() => message.send(`Successfully changed`))
 				.catch(error => message.send(error, { code: `js` }))
 		else if (colorRole.name !== roleName) return message.send(
-			`The role ${colorRole.name} is not set to DEFAULT\n` +
-			`Please change the color of that role and try again.`
+			`The role ${colorRole.name} is not set to DEFAULT (Transparent)\n` +
+			`Please change the color of that role to DEFAULT and try again.\n` +
+			`This is required so that role doesn't override the role I create.`
 		)
 	}
 
@@ -87,18 +79,14 @@ module.exports = class extends Command {
 		}
 
 		return reactions.then(r => {
-			if (r.array()[0].emoji.name === `🔄`) {
-				r.array()[0].users.remove(message.author)
+			r.array()[0].users.remove(message.author)
 
-				return this.preview(message, tinyColor.random(), false)
-			}
-			if (r.array()[0].emoji.name === `🇾`) {
-				m.reactions.removeAll().catch(() => {})
+			if (r.array()[0].emoji.name === `🔄`) return this.preview(message, tinyColor.random(), false)
 
-				return color
-			}
+			m.reactions.removeAll().catch(() => {})
+
+			if (r.array()[0].emoji.name === `🇾`) return color.toHex()
 			if (r.array()[0].emoji.name === `🇳`) {
-				m.reactions.removeAll().catch(() => {})
 				message.send(`Canceled`)
 
 				return false
