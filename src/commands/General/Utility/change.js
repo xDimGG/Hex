@@ -25,7 +25,7 @@ module.exports = class extends Command {
 		this.client.runningUsers = []
 	}
 
-	async run(message, [...color]) {
+	async run(message, [color]) {
 		if (this.client.runningUsers.includes(message.author.id)) return message.send(`Currently running.`)
 		this.client.runningUsers.push(message.author.id)
 
