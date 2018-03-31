@@ -9,7 +9,7 @@ module.exports = class extends Command {
 			guarded: true,
 			aliases: [`ev`],
 			permLevel: 10,
-			usage: `<Code:string> [...]`,
+			usage: `<Code:string>`,
 			description: msg => msg.language.get(`COMMAND_EVAL_DESCRIPTION`),
 			extendedHelp: msg => msg.language.get(`COMMAND_EVAL_EXTENDEDHELP`),
 		})
@@ -17,7 +17,7 @@ module.exports = class extends Command {
 
 	async run(message, [code]) {
 		const
-			{ success, result, time, type } = await this.eval(message, code.join(` `)),
+			{ success, result, time, type } = await this.eval(message, code),
 			footer = this.client.methods.util.codeBlock(`ts`, type),
 			output = message.language.get(success ? `COMMAND_EVAL_OUTPUT` : `COMMAND_EVAL_ERROR`, time, this.client.methods.util.codeBlock(`js`, result), footer),
 			silent = `silent` in message.flags
