@@ -20,15 +20,12 @@ module.exports = class extends Command {
 
 		colorRole.delete().then(role => {
 			message.send(new MessageEmbed()
-				.setTitle(`✅ **Removed ${role.hexColor.toUpperCase()}**`)
-				.setColor(role.color)
+				.setTitle(`**Removed ${colorRole.hexColor.toUpperCase()}**`)
+				.setImage(`https://api.shaybox.com/color/${colorRole.hexColor.replace(`#`, ``)}?width=140&height=50`)
+				.setColor(colorRole.color)
 			)
 		}).catch(error => {
-			message.send(new MessageEmbed()
-				.setTitle(`❌ **ERROR**`)
-				.setDescription(`\`\`\`\n${error}\n\`\`\``)
-				.setColor(0xFF0000)
-			)
+			message.send(error, { code: `js` })
 		})
 	}
 }

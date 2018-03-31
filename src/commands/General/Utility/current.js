@@ -19,7 +19,8 @@ module.exports = class extends Command {
 		if (!colorRole) return message.send(`You don't a hex role`)
 
 		message.send(new MessageEmbed()
-			.setTitle(`✅ **Current value ${colorRole.hexColor.toUpperCase()}**`)
+			.setTitle(`**Current value ${colorRole.hexColor.toUpperCase()}**`)
+			.setImage(`https://api.shaybox.com/color/${colorRole.hexColor.replace(`#`, ``)}?width=140&height=50`)
 			.setColor(colorRole.color)
 		)
 	}
