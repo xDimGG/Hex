@@ -37,7 +37,7 @@ module.exports = class extends Command {
 
 		this.client.runningUsers.splice(this.client.runningUsers.indexOf(message.author.id), 1)
 
-		if (color && color.isValid()) this.change(message, color)
+		if (color && color.isValid()) this.change(message, color.getHex())
 	}
 
 	async preview(message, color, react = true) {
@@ -64,7 +64,7 @@ module.exports = class extends Command {
 
 			m.reactions.removeAll().catch(() => {})
 
-			if (r.array()[0].emoji.name === `🇾`) return color
+			if (r.array()[0].emoji.name === `🇾`) return color.toHex()
 			if (r.array()[0].emoji.name === `🇳`) {
 				message.send(`Canceled`)
 
