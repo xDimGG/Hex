@@ -35,7 +35,7 @@ module.exports = class extends Command {
 
 		this.client.runningUsers.splice(this.client.runningUsers.indexOf(message.author.id), 1)
 
-		if (color && color.isValid()) this.change(message, color.toHex())
+		if (color && color.isValid()) this.change(message, color.toHex() === `000000` ? `000001` : color.toHex())
 	}
 
 	async preview(message, color, react = true) {
