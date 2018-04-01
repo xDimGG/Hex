@@ -37,9 +37,7 @@ module.exports = class extends Command {
 
 		this.client.runningUsers.splice(this.client.runningUsers.indexOf(message.author.id), 1)
 
-		if (!color) return
-
-		this.change(message, color)
+		if (color) this.change(message, color)
 	}
 
 	async preview(message, color, react = true) {
@@ -98,7 +96,7 @@ module.exports = class extends Command {
 				.catch(error => message.send(error, { code: `js` }))
 		else if (colorRole.name !== roleName)
 			colorRole.edit({ color: `DEFAULT` })
-				.then(() => this.change(message, color))
+				.then(() => this.change(message, message.member.roles.color))
 				.catch(() => message.send(
 					`The role ${colorRole.name} is not set to DEFAULT (Transparent)\n` +
 					`Please change the color of that role to DEFAULT and try again.\n` +
