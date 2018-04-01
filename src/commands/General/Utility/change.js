@@ -9,9 +9,10 @@ module.exports = class extends Command {
 			enabled: true,
 			runIn: [`text`],
 			botPerms: [`MANAGE_ROLES`, `ADD_REACTIONS`, `MANAGE_MESSAGES`, `EMBED_LINKS`],
-			usage: `[Color:string]`,
+			usage: `[Color:color]`,
 			description: `Change name color`,
 		})
+		this.createCustomResolver(`color`, arg => arg ? tinyColor(arg) : tinyColor.random())
 		this.examples = [
 			`#000`, `000`, `#369C`, `369C`, `#f0f0f6`, `f0f0f6`, `#f0f0f688`, `f0f0f688`,
 			`rgb (255, 0, 0)`, `rgb 255 0 0`, `rgba (255, 0, 0, .5)`,
@@ -29,15 +30,12 @@ module.exports = class extends Command {
 		if (this.client.runningUsers.includes(message.author.id)) return message.send(`Currently running.`)
 		this.client.runningUsers.push(message.author.id)
 
-		if (color) color = tinyColor(color)
-		else color = tinyColor.random()
-
-		if (color.isValid()) color = await this.preview(message, tinyColor(color))
+		if (color.isValid()) color = await this.preview(message, color)
 		else message.send(`Invalid color, Ex. **${this.examples[Math.floor(Math.random() * this.examples.length)]}**`)
 
 		this.client.runningUsers.splice(this.client.runningUsers.indexOf(message.author.id), 1)
 
-		if (color && color.isValid()) this.change(message, color.getHex())
+		if (color && color.isValid()) this.change(message, color.toHex())
 	}
 
 	async preview(message, color, react = true) {
