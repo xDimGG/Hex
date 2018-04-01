@@ -96,7 +96,7 @@ module.exports = class extends Command {
 				.catch(error => message.send(error, { code: `js` }))
 		else if (colorRole.name !== roleName)
 			colorRole.edit({ color: `DEFAULT` })
-				.then(() => this.change(message, message.member.roles.color))
+				.then(() => this.change(message, color))
 				.catch(() => message.send(
 					`The role ${colorRole.name} is not set to DEFAULT (Transparent)\n` +
 					`Please change the color of that role to DEFAULT and try again.\n` +
