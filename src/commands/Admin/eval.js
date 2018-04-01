@@ -1,5 +1,5 @@
 const
-	{ Command, Stopwatch } = require(`klasa`),
+	{ Command, Stopwatch, Type } = require(`klasa`),
 	{ inspect } = require(`util`)
 
 module.exports = class extends Command {
@@ -44,14 +44,14 @@ module.exports = class extends Command {
 			client = this.client, // eslint-disable-line no-unused-vars
 			msg = message, // eslint-disable-line no-unused-vars
 			stopwatch = new Stopwatch()
-		let success, syncTime, asyncTime, result, thenable = false, type = ``
+		let success, syncTime, asyncTime, result, thenable = false, type
 		try {
 			if (message.flags.async) code = `(async () => {\n${code}\n})();`
 			result = eval(code)
 			syncTime = stopwatch.friendlyDuration
+			type = new Type(result)
 			if (this.client.methods.util.isThenable(result)) {
 				thenable = true
-				type += this.client.methods.util.getTypeName(result)
 				stopwatch.restart()
 				result = await result
 				asyncTime = stopwatch.friendlyDuration
@@ -65,7 +65,6 @@ module.exports = class extends Command {
 		}
 
 		stopwatch.stop()
-		type += thenable ? `<${this.client.methods.util.getDeepTypeName(result)}>` : this.client.methods.util.getDeepTypeName(result)
 		if (success && typeof result !== `string`)
 			result = inspect(result, {
 				depth: message.flags.depth ? parseInt(message.flags.depth) || 0 : 0,

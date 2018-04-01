@@ -97,7 +97,8 @@ module.exports = class extends Command {
 				.then(() => this.change(message, color))
 				.catch(() => message.send(
 					`Please move the \`Hex\` role to the top of the list\n` +
-					`Or set the color of the \`${colorRole.name}\` role to \`DEFAULT\` and try again`
+					`Or set the color of the \`${colorRole.name}\` role to \`DEFAULT\` and try again`,
+					{ files: [`http://shay.is-your.pet/Gmaw.png`] }
 				))
 	}
 }
