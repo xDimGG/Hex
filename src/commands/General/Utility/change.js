@@ -64,7 +64,7 @@ module.exports = class extends Command {
 
 			m.reactions.removeAll().catch(() => {})
 
-			if (r.array()[0].emoji.name === `🇾`) return color.toHex()
+			if (r.array()[0].emoji.name === `🇾`) return color
 			if (r.array()[0].emoji.name === `🇳`) {
 				message.send(`Canceled`)
 
