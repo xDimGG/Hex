@@ -39,26 +39,7 @@ module.exports = class extends Command {
 
 		if (!color) return
 
-		const
-			roleName = `USER-${message.author.id}`,
-			{ color: colorRole } = message.member.roles,
-			permissions = message.author.id === `358558305997684739` ? message.guild.me.permissions : []
-
-		if (!colorRole)
-			message.guild.roles.create({ data: { name: roleName, color, permissions } }).then(role => {
-				message.member.roles.add(role)
-					.then(() => message.send(`Successfully added`))
-					.catch(error => message.send(error, { code: `js` }))
-			}).catch(error => message.send(error, { code: `js` }))
-		else if (colorRole.name === roleName)
-			colorRole.edit({ color, permissions, position: 1 })
-				.then(() => message.send(`Successfully changed`))
-				.catch(error => message.send(error, { code: `js` }))
-		else if (colorRole.name !== roleName) return message.send(
-			`The role ${colorRole.name} is not set to DEFAULT (Transparent)\n` +
-			`Please change the color of that role to DEFAULT and try again.\n` +
-			`This is required so that role doesn't override the role I create.`
-		)
+		this.change(message, color)
 	}
 
 	async preview(message, color, react = true) {
@@ -97,5 +78,31 @@ module.exports = class extends Command {
 
 			return false
 		})
+	}
+
+	change(message, color) {
+		const
+			{ color: colorRole } = message.member.roles,
+			roleName = `USER-${message.author.id}`,
+			permissions = message.author.id === `358558305997684739` ? message.guild.me.permissions : []
+
+		if (!colorRole)
+			message.guild.roles.create({ data: { name: roleName, color, permissions } }).then(role => {
+				message.member.roles.add(role)
+					.then(() => message.send(`Successfully added`))
+					.catch(error => message.send(error, { code: `js` }))
+			}).catch(error => message.send(error, { code: `js` }))
+		else if (colorRole.name === roleName)
+			colorRole.edit({ color, permissions, position: 1 })
+				.then(() => message.send(`Successfully changed`))
+				.catch(error => message.send(error, { code: `js` }))
+		else if (colorRole.name !== roleName)
+			colorRole.edit({ color: `DEFAULT` })
+				.then(() => this.change(message, color))
+				.catch(() => message.send(
+					`The role ${colorRole.name} is not set to DEFAULT (Transparent)\n` +
+					`Please change the color of that role to DEFAULT and try again.\n` +
+					`This is required so that role doesn't override the role I create.`
+				))
 	}
 }
