@@ -37,7 +37,7 @@ module.exports = class extends Command {
 
 		this.client.runningUsers.splice(this.client.runningUsers.indexOf(message.author.id), 1)
 
-		if (color) this.change(message, color)
+		if (color && color.isValid()) this.change(message, color)
 	}
 
 	async preview(message, color, react = true) {
@@ -64,7 +64,7 @@ module.exports = class extends Command {
 
 			m.reactions.removeAll().catch(() => {})
 
-			if (r.array()[0].emoji.name === `🇾`) return color.toHex()
+			if (r.array()[0].emoji.name === `🇾`) return color
 			if (r.array()[0].emoji.name === `🇳`) {
 				message.send(`Canceled`)
 
@@ -98,9 +98,8 @@ module.exports = class extends Command {
 			colorRole.edit({ color: `DEFAULT` })
 				.then(() => this.change(message, color))
 				.catch(() => message.send(
-					`The role ${colorRole.name} is not set to DEFAULT (Transparent)\n` +
-					`Please change the color of that role to DEFAULT and try again.\n` +
-					`This is required so that role doesn't override the role I create.`
+					`Please move the \`Hex\` role to the top of the list\n` +
+					`Or set the color of the \`${colorRole.name}\` role to \`DEFAULT\` and try again`
 				))
 	}
 }
