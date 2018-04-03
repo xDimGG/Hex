@@ -20,7 +20,7 @@ module.exports = class extends Command {
 
 		message.send(new MessageEmbed()
 			.setTitle(`**Current value ${colorRole.hexColor.toUpperCase()}**`)
-			.setImage(`https://api.shaybox.com/color/${colorRole.hexColor.replace(`#`, ``)}?width=140&height=50`)
+			.setImage(`https://shaybox-api.glitch.me/color/${colorRole.hexColor.replace(`#`, ``)}?width=140&height=50`)
 			.setColor(colorRole.color)
 		)
 	}

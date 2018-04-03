@@ -44,7 +44,7 @@ module.exports = class extends Command {
 				.addField(`RGB`, color.toRgbString(), true)
 				.addField(`HSL`, color.toHslString(), true)
 				.addField(`HSV`, color.toHsvString(), true)
-				.setImage(`https://api.shaybox.com/color/${color.toHex()}?width=400&height=100`)
+				.setImage(`https://shaybox-api.glitch.me/color/${color.toHex()}?width=400&height=100`)
 				.setFooter(`Would you like to set this color?`)
 				.setColor(color.toHex())
 			), reactions = m.awaitReactions((reaction, user) => (reaction.emoji.name === `🇾` || reaction.emoji.name === `🇳` || reaction.emoji.name === `🔄`) && user.id === message.author.id, { time: 30000, max: 1, errors: [`time`] })
