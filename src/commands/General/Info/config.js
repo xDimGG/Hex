@@ -12,7 +12,7 @@ module.exports = class extends Command {
 
 		this
 			.createCustomResolver(`key`, arg => {
-				if (arg && ![`prefix`].includes(arg.toLowerCase())) throw `Available Options: **Prefix**` // eslint-disable-line no-throw-literal
+				if (arg && ![`prefix`].includes(arg.toLowerCase())) throw `Available Options: **prefix** (Case Sensitive)` // eslint-disable-line no-throw-literal
 
 				return arg ? arg.toLowerCase() : undefined
 			})
@@ -28,7 +28,7 @@ module.exports = class extends Command {
 		if (!key) {
 			const content = [
 				`= Guild Settings =`,
-				`Prefix :: ${config.prefix}`,
+				`prefix :: ${config.prefix}`,
 			]
 
 			return message.send(content.join(`\n`), { code: `asciidoc` })
