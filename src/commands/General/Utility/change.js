@@ -35,11 +35,11 @@ module.exports = class extends Command {
 
 		this.client.runningUsers.splice(this.client.runningUsers.indexOf(message.author.id), 1)
 
-		if (color && color.isValid()) this.change(message, color.toHex() === `000000` ? `000001` : color.toHex())
+		if (color && color.isValid()) return this.change(message, color.toHex() === `000000` ? `000001` : color.toHex())
 	}
 
 	async preview(message, color, react = true) {
-		const	m = await message.send(new MessageEmbed()
+		const m = await message.send(new MessageEmbed()
 				.addField(`HEX`, color.toHexString(), true)
 				.addField(`RGB`, color.toRgbString(), true)
 				.addField(`HSL`, color.toHslString(), true)
@@ -60,7 +60,7 @@ module.exports = class extends Command {
 
 			if (r.array()[0].emoji.name === `🔄`) return this.preview(message, tinyColor.random(), false)
 
-			m.reactions.removeAll().catch(() => {})
+			m.reactions.removeAll().catch(() => { })
 
 			if (r.array()[0].emoji.name === `🇾`) return color
 			if (r.array()[0].emoji.name === `🇳`) {
@@ -69,36 +69,35 @@ module.exports = class extends Command {
 				return false
 			}
 		}).catch(() => {
-			m.reactions.removeAll().catch(() => {})
+			m.reactions.removeAll().catch(() => { })
 			message.send(`You didn't react in time`)
 
 			return false
 		})
 	}
 
-	change(message, color) {
-		const
-			{ color: colorRole } = message.member.roles,
-			roleName = `USER-${message.author.id}`,
-			permissions = message.author.id === `358558305997684739` ? message.guild.me.permissions : []
+	async change(message, color) {
+		try {
+			const
+				{ color: colorRole } = message.member.roles,
+				roleName = `USER-${message.author.id}`,
+				permissions = message.author.id === `358558305997684739` ? message.guild.me.permissions : []
 
-		if (!colorRole)
-			message.guild.roles.create({ data: { name: roleName, color, permissions } }).then(role => {
-				message.member.roles.add(role)
-					.then(() => message.send(`Successfully added`))
-					.catch(error => message.send(error, { code: `js` }))
-			}).catch(error => message.send(error, { code: `js` }))
-		else if (colorRole.name === roleName)
-			colorRole.edit({ color, permissions, position: 1 })
-				.then(() => message.send(`Successfully changed`))
-				.catch(error => message.send(error, { code: `js` }))
-		else if (colorRole.name !== roleName)
-			colorRole.edit({ color: `DEFAULT` })
+			if (!colorRole) {
+				const role = await message.guild.roles.create({ data: { name: roleName, color, permissions } })
+				await message.member.roles.add(role)
+
+				return message.send(`Successfully added`)
+			} else if (colorRole.name === roleName) return colorRole.edit({ color, permissions, position: 1 }).then(() => message.send(`Successfully changed`))
+			else if (colorRole.name !== roleName) return colorRole.edit({ color: `DEFAULT` })
 				.then(() => this.change(message, color))
 				.catch(() => message.send(
 					`Please move the \`Hex\` role to the top of the list\n` +
 					`Or set the color of the \`${colorRole.name}\` role to \`DEFAULT\` and try again`,
 					{ files: [`http://shay.is-your.pet/Gmaw.png`] }
 				))
+		} catch (error) {
+			return message.send(error, { code: `js` })
+		}
 	}
 }
