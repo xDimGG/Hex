@@ -1,7 +1,7 @@
 const { updateActivity } = require(`../structures/Utils`)
 const { Event } = require(`klasa`)
 
-module.exports = class extends Event {
+module.exports = class This extends Event {
 	constructor(...args) {
 		super(...args, {})
 	}
