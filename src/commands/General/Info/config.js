@@ -3,11 +3,12 @@ const { Command } = require(`klasa`)
 module.exports = class This extends Command {
 	constructor(...args) {
 		super(...args, {
+			description: msg => msg.language.get(`COMMAND_CONF_SERVER_DESCRIPTION`),
 			enabled: true,
 			permLevel: 6,
 			runIn: [`text`],
 			usage: `(Key:key) (Value:value)`,
-			description: msg => msg.language.get(`COMMAND_CONF_SERVER_DESCRIPTION`),
+			usageDelim: ` `,
 		})
 
 		this
