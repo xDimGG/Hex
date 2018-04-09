@@ -1,5 +1,6 @@
-const { updateActivity } = require(`../structures/Utils`)
-const { Event } = require(`klasa`)
+const
+	{ updateActivity } = require(`../structures/Utils`),
+	{ Event } = require(`klasa`)
 
 module.exports = class This extends Event {
 	constructor(...args) {
