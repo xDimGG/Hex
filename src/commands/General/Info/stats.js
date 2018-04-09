@@ -5,7 +5,7 @@ const
 	{ type, release, uptime } = require(`os`),
 	{ execSync } = require(`child_process`)
 
-module.exports = class extends Command {
+module.exports = class This extends Command {
 	constructor(...args) {
 		super(...args, {
 			enabled: true,

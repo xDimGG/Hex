@@ -2,7 +2,7 @@ const
 	{ MessageEmbed } = require(`discord.js`),
 	{ Command } = require(`klasa`)
 
-module.exports = class extends Command {
+module.exports = class This extends Command {
 	constructor(...args) {
 		super(...args, {
 			enabled: true,

@@ -3,7 +3,7 @@ const
 	{ Command } = require(`klasa`),
 	tinyColor = require(`tinycolor2`)
 
-module.exports = class extends Command {
+module.exports = class This extends Command {
 	constructor(...args) {
 		super(...args, {
 			enabled: true,

@@ -6,6 +6,6 @@ module.exports = class extends Event {
 	}
 
 	run(reason) {
-		this.client.log(reason instanceof Error ? reason.stack : reason, { code: `js` })
+		this.client.log(`Rejection:\n${reason instanceof Error ? reason.stack : reason}`, { code: `js` })
 	}
 }

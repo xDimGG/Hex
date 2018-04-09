@@ -6,6 +6,6 @@ module.exports = class extends Event {
 	}
 
 	run(error) {
-		this.client.log(error.stack, { code: `js` })
+		this.client.log(`Exception:\n${error.stack}`, { code: `js` })
 	}
 }
