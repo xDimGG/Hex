@@ -5,11 +5,11 @@ const
 module.exports = class This extends Command {
 	constructor(...args) {
 		super(...args, {
-			enabled: true,
-			runIn: [`text`],
 			botPerms: [`MANAGE_ROLES`, `EMBED_LINKS`],
 			description: `Remove name color`,
+			enabled: true,
 			extendedDescription: `Deletes the role that gives your name color, if you have one.`,
+			runIn: [`text`],
 		})
 	}
 

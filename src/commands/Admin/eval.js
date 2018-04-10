@@ -5,13 +5,13 @@ const
 module.exports = class This extends Command {
 	constructor(...args) {
 		super(...args, {
-			enabled: true,
-			guarded: true,
 			aliases: [`ev`],
+			description: msg => msg.language.get(`COMMAND_EVAL_DESCRIPTION`),
+			enabled: true,
+			extendedHelp: msg => msg.language.get(`COMMAND_EVAL_EXTENDEDHELP`),
+			guarded: true,
 			permLevel: 10,
 			usage: `<Code:string>`,
-			description: msg => msg.language.get(`COMMAND_EVAL_DESCRIPTION`),
-			extendedHelp: msg => msg.language.get(`COMMAND_EVAL_EXTENDEDHELP`),
 		})
 	}
 
@@ -71,7 +71,7 @@ module.exports = class This extends Command {
 				showHidden: Boolean(message.flags.showHidden),
 			})
 
-		return { success, type, time: this.formatTime(syncTime, asyncTime), result: this.client.methods.util.clean(result) }
+		return { result: this.client.methods.util.clean(result), success, time: this.formatTime(syncTime, asyncTime), type }
 	}
 
 	formatTime(syncTime, asyncTime) {

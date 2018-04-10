@@ -8,9 +8,9 @@ const
 module.exports = class This extends Command {
 	constructor(...args) {
 		super(...args, {
-			enabled: true,
 			aliases: [`info`, `ping`],
 			description: `System & Bot stats`,
+			enabled: true,
 		})
 	}
 

@@ -6,11 +6,11 @@ const
 module.exports = class This extends Command {
 	constructor(...args) {
 		super(...args, {
+			botPerms: [`MANAGE_ROLES`, `ADD_REACTIONS`, `MANAGE_MESSAGES`, `EMBED_LINKS`],
+			description: `Change name color`,
 			enabled: true,
 			runIn: [`text`],
-			botPerms: [`MANAGE_ROLES`, `ADD_REACTIONS`, `MANAGE_MESSAGES`, `EMBED_LINKS`],
 			usage: `[Color:color]`,
-			description: `Change name color`,
 		})
 		this.createCustomResolver(`color`, arg => arg ? tinyColor(arg) : tinyColor.random())
 		this.examples = [
@@ -47,7 +47,7 @@ module.exports = class This extends Command {
 				.setImage(`https://shaybox-api.glitch.me/color/${color.toHex()}?width=400&height=100`)
 				.setFooter(`Would you like to set this color?`)
 				.setColor(color.toHex())
-			), reactions = m.awaitReactions((reaction, user) => (reaction.emoji.name === `🇾` || reaction.emoji.name === `🇳` || reaction.emoji.name === `🔄`) && user.id === message.author.id, { time: 30000, max: 1, errors: [`time`] })
+			), reactions = m.awaitReactions((reaction, user) => (reaction.emoji.name === `🇾` || reaction.emoji.name === `🇳` || reaction.emoji.name === `🔄`) && user.id === message.author.id, { errors: [`time`], max: 1, time: 30000 })
 
 		if (react) {
 			await m.react(`🔄`)

@@ -3,10 +3,10 @@ const { Command } = require(`klasa`)
 module.exports = class This extends Command {
 	constructor(...args) {
 		super(...args, {
-			enabled: true,
-			permLevel: 9,
 			aliases: [`guilds`],
 			description: `All guilds the bot is in`,
+			enabled: true,
+			permLevel: 9,
 		})
 	}
 

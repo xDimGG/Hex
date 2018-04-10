@@ -3,10 +3,10 @@ const { Command, util } = require(`klasa`)
 module.exports = class This extends Command {
 	constructor(...args) {
 		super(...args, {
-			enabled: true,
-			guarded: true,
 			aliases: [`commands`],
 			description: msg => msg.language.get(`COMMAND_HELP_DESCRIPTION`),
+			enabled: true,
+			guarded: true,
 			usage: `(Command:cmd)`,
 		})
 

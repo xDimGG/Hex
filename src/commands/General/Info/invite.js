@@ -3,8 +3,8 @@ const { Command } = require(`klasa`)
 module.exports = class This extends Command {
 	constructor(...args) {
 		super(...args, {
-			enabled: true,
 			description: `Bot invite link`,
+			enabled: true,
 		})
 	}
 
