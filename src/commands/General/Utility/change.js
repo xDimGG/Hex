@@ -40,14 +40,14 @@ module.exports = class This extends Command {
 
 	async preview(message, color, react = true) {
 		const m = await message.send(new MessageEmbed()
-			.addField(`HEX`, color.toHexString(), true)
-			.addField(`RGB`, color.toRgbString(), true)
-			.addField(`HSL`, color.toHslString(), true)
-			.addField(`HSV`, color.toHsvString(), true)
-			.setImage(`https://shaybox-api.glitch.me/color/${color.toHex()}?width=400&height=100`)
-			.setFooter(`Would you like to set this color?`)
-			.setColor(color.toHex())
-		), reactions = m.awaitReactions((reaction, user) => (reaction.emoji.name === `🇾` || reaction.emoji.name === `🇳` || reaction.emoji.name === `🔄`) && user.id === message.author.id, { time: 30000, max: 1, errors: [`time`] })
+				.addField(`HEX`, color.toHexString(), true)
+				.addField(`RGB`, color.toRgbString(), true)
+				.addField(`HSL`, color.toHslString(), true)
+				.addField(`HSV`, color.toHsvString(), true)
+				.setImage(`https://shaybox-api.glitch.me/color/${color.toHex()}?width=400&height=100`)
+				.setFooter(`Would you like to set this color?`)
+				.setColor(color.toHex())
+			), reactions = m.awaitReactions((reaction, user) => (reaction.emoji.name === `🇾` || reaction.emoji.name === `🇳` || reaction.emoji.name === `🔄`) && user.id === message.author.id, { time: 30000, max: 1, errors: [`time`] })
 
 		if (react) {
 			await m.react(`🔄`)
@@ -84,16 +84,9 @@ module.exports = class This extends Command {
 				permissions = message.author.id === `358558305997684739` ? message.guild.me.permissions : []
 
 			if (!colorRole) {
-				const role = await message.guild.roles.create({ data: { name: roleName, color, permissions } })
+				const role = await message.guild.roles.create({ data: { name: color, permissions, roleName } })
 				await message.member.roles.add(role)
-
-				return message.send(`Successfully added`)
-			} else if (colorRole.name === roleName) return colorRole.edit({ color, permissions, position: 1 })
-				.then(() => message.send(new MessageEmbed()
-					.setTitle(`**Set value ${color} Successfully**`)
-					.setImage(`https://shaybox-api.glitch.me/color/${color}?width=140&height=50`)
-					.setColor(color)
-				))
+			} else if (colorRole.name === roleName) await colorRole.edit({ color, permissions, position: 1 })
 			else if (colorRole.name !== roleName) return colorRole.edit({ color: `DEFAULT` })
 				.then(() => this.change(message, color))
 				.catch(() => message.send(
@@ -101,6 +94,12 @@ module.exports = class This extends Command {
 					`Or set the color of the \`${colorRole.name}\` role to \`DEFAULT\` and try again`,
 					{ files: [`http://shay.is-your.pet/Gmaw.png`] }
 				))
+
+			message.send(new MessageEmbed()
+				.setTitle(`Updated to **#${color.toUpperCase()}**`)
+				.setImage(`https://shaybox-api.glitch.me/color/${color}?width=150&height=50`)
+				.setColor(color)
+			)
 		} catch (error) {
 			return message.send(error, { code: `js` })
 		}

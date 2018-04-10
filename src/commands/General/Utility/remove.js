@@ -21,7 +21,7 @@ module.exports = class This extends Command {
 		colorRole.delete().then(() => {
 			message.send(new MessageEmbed()
 				.setTitle(`**Removed ${colorRole.hexColor.toUpperCase()}**`)
-				.setImage(`https://shaybox-api.glitch.me/color/${colorRole.hexColor.replace(`#`, ``)}?width=140&height=50`)
+				.setImage(`https://shaybox-api.glitch.me/color/${colorRole.hexColor.replace(`#`, ``)}?width=150&height=50`)
 				.setColor(colorRole.color)
 			)
 		}).catch(error => {
