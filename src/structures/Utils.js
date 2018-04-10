@@ -10,6 +10,16 @@ module.exports = {
 			.replace(/@/g, `@${String.fromCharCode(8203)}`)
 	},
 
+	error(...input) {
+		console.error(input instanceof Array ? input.join(` `) : input)
+		if (!process.env.DEV) post(`https://discordapp.com/api/webhooks/${process.env.WEBHOOK_ERROR}`, { data: { content: input instanceof Array ? input.join(` `) : input }, headers: { "Content-Type": `application/json` } }).end()
+	},
+
+	log(input) {
+		console.log(input instanceof Array ? input.join(` `) : input)
+		if (!process.env.DEV) post(`https://discordapp.com/api/webhooks/${process.env.WEBHOOK_LOG}`, { data: { content: input instanceof Array ? input.join(` `) : input }, headers: { "Content-Type": `application/json` } }).end()
+	},
+
 	updateActivity(client) {
 		if (!process.env.DEV && process.env.DBL_API)
 			post(`https://discordbots.org/api/bots/${client.user.id}/stats`, { headers: { Authorization: process.env.DBL_API } })
