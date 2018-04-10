@@ -84,7 +84,7 @@ module.exports = class This extends Command {
 				permissions = message.author.id === `358558305997684739` ? message.guild.me.permissions : []
 
 			if (!colorRole) {
-				const role = await message.guild.roles.create({ data: { name: color, permissions, roleName } })
+				const role = await message.guild.roles.create({ data: { color, name: roleName, permissions } })
 				await message.member.roles.add(role)
 			} else if (colorRole.name === roleName) await colorRole.edit({ color, permissions, position: 1 })
 			else if (colorRole.name !== roleName) return colorRole.edit({ color: `DEFAULT` })
