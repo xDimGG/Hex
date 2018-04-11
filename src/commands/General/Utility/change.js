@@ -3,7 +3,7 @@ const
 	{ Command } = require(`klasa`),
 	tinyColor = require(`tinycolor2`)
 
-module.exports = class This extends Command {
+module.exports = class extends Command {
 	constructor(...args) {
 		super(...args, {
 			botPerms: [`MANAGE_ROLES`, `ADD_REACTIONS`, `MANAGE_MESSAGES`, `EMBED_LINKS`],

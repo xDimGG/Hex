@@ -1,6 +1,6 @@
 const { Command } = require(`klasa`)
 
-module.exports = class This extends Command {
+module.exports = class extends Command {
 	constructor(...args) {
 		super(...args, {
 			description: msg => msg.language.get(`COMMAND_CONF_SERVER_DESCRIPTION`),

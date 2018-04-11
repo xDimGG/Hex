@@ -5,7 +5,7 @@ const
 	{ type, release, uptime } = require(`os`),
 	{ execSync } = require(`child_process`)
 
-module.exports = class This extends Command {
+module.exports = class extends Command {
 	constructor(...args) {
 		super(...args, {
 			aliases: [`info`, `ping`],

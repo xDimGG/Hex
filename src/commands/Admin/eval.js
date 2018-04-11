@@ -2,7 +2,7 @@ const
 	{ Command, Stopwatch, Type } = require(`klasa`),
 	{ inspect } = require(`util`)
 
-module.exports = class This extends Command {
+module.exports = class extends Command {
 	constructor(...args) {
 		super(...args, {
 			aliases: [`ev`],

@@ -1,6 +1,6 @@
 const { Command, util } = require(`klasa`)
 
-module.exports = class This extends Command {
+module.exports = class extends Command {
 	constructor(...args) {
 		super(...args, {
 			aliases: [`commands`],

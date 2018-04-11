@@ -2,7 +2,7 @@ const
 	{ MessageEmbed } = require(`discord.js`),
 	{ Command } = require(`klasa`)
 
-module.exports = class This extends Command {
+module.exports = class extends Command {
 	constructor(...args) {
 		super(...args, {
 			botPerms: [`MANAGE_ROLES`, `EMBED_LINKS`],

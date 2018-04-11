@@ -1,6 +1,6 @@
 const { Event } = require(`klasa`)
 
-module.exports = class This extends Event {
+module.exports = class extends Event {
 	constructor(...args) {
 		super(...args, {})
 	}

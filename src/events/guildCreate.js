@@ -2,7 +2,7 @@ const
 	{ updateActivity } = require(`../structures/Utils`),
 	{ Event } = require(`klasa`)
 
-module.exports = class This extends Event {
+module.exports = class extends Event {
 	run(guild) {
 		if (!guild.available) return
 		if (this.client.configs.guildBlacklist.includes(guild.id)) {
