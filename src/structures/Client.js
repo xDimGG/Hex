@@ -17,6 +17,7 @@ GuildExtension.extend(Guild)
 new class extends AkairoClient {
 	constructor() {
 		super({
+			allowMention: true,
 			automateCategories: true,
 			commandDirectory: `./src/commands/`,
 			emitters: true,
