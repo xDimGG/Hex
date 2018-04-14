@@ -59,7 +59,11 @@ module.exports = class extends Command {
 
 			m.reactions.removeAll().catch(() => {})
 
-			if (r.array()[0].emoji.name === `🇾`) return color
+			if (r.array()[0].emoji.name === `🇾`) {
+				m.delete()
+
+				return color
+			}
 			if (r.array()[0].emoji.name === `🇳`) {
 				m.edit(`Canceled`, { embed: null })
 
