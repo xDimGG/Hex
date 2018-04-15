@@ -1,6 +1,5 @@
 const
 	{ Command } = require(`discord-akairo`),
-	{ post } = require(`snekfetch`),
 	{ basename } = require(`path`),
 	{ inspect } = require(`util`)
 
@@ -24,7 +23,7 @@ module.exports = class extends Command {
 
 		let output = String
 		try {
-			output = inspect(await eval(code), { compact: true, maxArrayLength: null, showHidden: true })
+			output = inspect(await eval(code))
 		} catch (error) {
 			output = inspect(error)
 		}
