@@ -11,16 +11,17 @@ module.exports = class extends Command {
 	}
 
 	exec(message) {
-		const output = []
-		this.handler.categories.forEach(category => {
-			const
-				commandNames = category.filter(c => !c.ownerOnly && c.id !== `help`).sort(),
-				longest = commandNames.keyArray().reduce((long, str) => Math.max(long, str.length), 0)
+		const output = [],
+			allCommands = this.handler.modules.filter(c => !c.ownerOnly && c.id !== `help`).sort(),
+			longest = allCommands.keyArray().reduce((long, str) => Math.max(long, str.length), 0)
 
-			if (commandNames.size < 1) return
+		this.handler.categories.forEach(category => {
+			const commands = category.filter(c => !c.ownerOnly && c.id !== `help`).sort()
+
+			if (commands.size < 1) return
 
 			output.push(`= ${category.id} =`)
-			output.push(commandNames.map(c => `${this.upperCase(c.id)}${` `.repeat(longest - c.id.length)} :: ${c.description}`).sort().join(`\n`))
+			output.push(commands.map(c => `${this.upperCase(c.id)}${` `.repeat(longest - c.id.length)} :: ${c.description}`).sort().join(`\n`))
 		})
 
 		message.channel.send(output.join(`\n`), { code: `asciidoc`, split: { append: `\`\`\``, prepend: `\`\`\`asciidoc\n` } })
