@@ -2,6 +2,7 @@ const
 	Logger = require(`./Logger`),
 	Database = require(`./Database`),
 	GuildExtension = require(`./Extensions/Guild`),
+	{ DBL_API, DEV, TOKEN } = process.env,
 	{ AkairoClient } = require(`discord-akairo`),
 	{ Guild } = require(`discord.js`),
 	{ post } = require(`snekfetch`)
@@ -38,7 +39,7 @@ new class extends AkairoClient {
 
 	async init() {
 		await this.db.sync()
-		await this.login(process.env.TOKEN)
+		await this.login(TOKEN)
 		process.log(this.user.tag)
 	}
 
@@ -53,7 +54,7 @@ new class extends AkairoClient {
 
 	updateActivity() {
 		this.user.setActivity(`${this.guilds.size} ${this.guilds.size > 1 ? `Guilds` : `Guild`} | ${this.guilds.reduce((a, b) => a + b.memberCount, 0)} Members`, { type: `WATCHING` })
-		if (!process.env.DEV && process.env.DBL_API)
-			post(`https://discordbots.org/api/bots/${this.user.id}/stats`, { data: { server_count: this.guilds.size }, headers: { Authorization: process.env.DBL_API } }).end()
+		if (!DEV && DBL_API)
+			post(`https://discordbots.org/api/bots/${this.user.id}/stats`, { data: { server_count: this.guilds.size }, headers: { Authorization: DBL_API } }).end()
 	}
 }().init()
