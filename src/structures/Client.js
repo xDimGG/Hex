@@ -39,7 +39,7 @@ new class extends AkairoClient {
 	async init() {
 		await this.db.sync()
 		await this.login(process.env.TOKEN)
-		console.log(this.user.tag)
+		process.log(this.user.tag)
 	}
 
 	clean(input) {
