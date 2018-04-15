@@ -29,7 +29,7 @@ module.exports = class extends Command {
 		if (![`prefix`].includes(key)) return message.channel.send(`\`${key}\` is not a valid option, **prefix**`)
 		if (!value) return message.channel.send(`Please provide a value`)
 
-		await message.guild.set({ key: value })
+		await message.guild.set({ [key]: value })
 		message.channel.send(`Updated ${key} from ${config[key]} to ${value}`)
 	}
 }
