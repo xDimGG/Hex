@@ -23,6 +23,7 @@ new class extends AkairoClient {
 			commandDirectory: `./src/commands/`,
 			emitters: true,
 			handleEdits: true,
+			inhibitorDirectory: `./src/inhibitors/`,
 			listenerDirectory: `./src/listeners/`,
 			ownerID: `358558305997684739`,
 			prefix: async m => m.guild ? (await m.guild.get()).prefix : `h!`,
