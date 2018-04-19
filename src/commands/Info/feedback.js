@@ -24,6 +24,6 @@ module.exports = class extends Command {
 			`\`\`\`\n${feedback}\n\`\`\``
 		)
 
-		message.send(`Thank you for your feedback`)
+		message.channel.send(`Thank you for your feedback`)
 	}
 }
