@@ -18,6 +18,7 @@ module.exports = class extends Command {
 	}
 
 	exec(message, { feedback }) {
+		if (!feedback) return message.channel.send(`Please provide input`)
 		this.client.channels.get(`368572194667888646`).send(
 			`\`${message.author.tag}\`\n` +
 			`${message.channel.type === `text` ? `\`#${message.channel.name}\` in \`${message.guild.name} (${message.guild.id})\`\n` : `DMs / GroupDMs\n`}` +
