@@ -20,9 +20,10 @@ module.exports = class extends Command {
 	async exec(message, { code }) {
 		if (!code) return message.channel.send('Please provide code to eval');
 
-		let output = String;
+		let output;
 		try {
-			output = inspect(await eval(code));
+			const evaled = eval(code);
+			output = inspect(evaled instanceof Promise ? await evaled : evaled);
 		} catch (error) {
 			output = inspect(error);
 		}
@@ -32,6 +33,7 @@ module.exports = class extends Command {
 		message.channel.send(
 			`${output instanceof Error ? '❌ Error' : '📤 Output'}:\n` +
 			`${output.length > 2000 ? '' : `\`\`\`js\n${output}\n\`\`\``}`,
-			output.length > 2000 ? { files: [{ attachment: Buffer.from(output), name: 'output.txt' }] } : {});
+			output.length > 2000 ? { files: [{ attachment: Buffer.from(output), name: 'output.txt' }] } : {}
+		);
 	}
 };
