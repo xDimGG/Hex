@@ -6,11 +6,10 @@ const	{ AkairoClient } = require('discord-akairo');
 const	{ Guild } = require('discord.js');
 const	{ post } = require('snekfetch');
 
-for (const log in Logger)
-	if (Logger.includes(log)) {
-		process[log] = console[log];
-		console[log] = Logger[log];
-	}
+for (const log in Logger) { // eslint-disable-line guard-for-in
+	process[log] = console[log];
+	console[log] = Logger[log];
+}
 
 GuildExtension.extend(Guild);
 
