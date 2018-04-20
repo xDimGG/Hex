@@ -1,17 +1,16 @@
-const
-	{ Command } = require(`discord-akairo`),
-	{ basename } = require(`path`)
+const	{ Command } = require('discord-akairo');
+const	{ basename } = require('path');
 
 module.exports = class extends Command {
 	constructor() {
-		super(basename(__filename).split(`.`)[0], {
-			aliases: [basename(__filename).split(`.`)[0]],
-			clientPermissions: [`SEND_MESSAGES`],
-			description: `Bot and Support server invite link`,
-		})
+		super(basename(__filename).split('.')[0], {
+			aliases: [basename(__filename).split('.')[0]],
+			clientPermissions: ['SEND_MESSAGES'],
+			description: 'Bot and Support server invite link',
+		});
 	}
 
 	exec(message) {
-		message.channel.send(`<https://bot.shaybox.com/${this.client.user.id}>\nIf you would like support, join my support server <https://discord.shaybox.com/>`)
+		message.channel.send(`<https://bot.shaybox.com/${this.client.user.id}>\nIf you would like support, join my support server <https://discord.shaybox.com/>`);
 	}
-}
+};

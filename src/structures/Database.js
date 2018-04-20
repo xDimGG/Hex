@@ -1,12 +1,12 @@
-const Sequelize = require(`sequelize`)
+const Sequelize = require('sequelize');
 
 module.exports = class extends Sequelize {
 	constructor() {
 		super(process.env.POSTGRES, {
-			dialect: `postgres`,
+			dialect: 'postgres',
 			logging: false,
-		})
-		this.guildConfig = this.define(`guilds`, {
+		});
+		this.guildConfig = this.define('guilds', {
 			id: {
 				allowNull: false,
 				primaryKey: true,
@@ -15,9 +15,9 @@ module.exports = class extends Sequelize {
 			},
 			prefix: {
 				allowNull: false,
-				defaultValue: `h!`,
+				defaultValue: 'h!',
 				type: Sequelize.STRING,
 			},
-		})
+		});
 	}
-}
+};

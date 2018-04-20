@@ -3,6 +3,6 @@ module.exports = class {
 		Object.defineProperties(
 			target.prototype,
 			Object.getOwnPropertyDescriptors(this.prototype)
-		)
+		);
 	}
-}
+};
