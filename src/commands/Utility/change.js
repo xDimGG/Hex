@@ -18,11 +18,23 @@ module.exports = class extends Command {
 			'hsv(0, 100%, 100%)', 'hsva(0, 100%, 100%, .5)', 'hsv (0 100% 100%)', 'hsv 0 1 1',
 			'RED', 'blanchedalmond', 'darkblue',
 		];
+		this.add = user => {
+			const timer = setTimeout(() => this.remove(user), 1000 * 60);
+			this.client.runningUsers[user] = timer;
+
+			return timer;
+		};
+		this.remove = user => {
+			const timer = this.client.runningUsers[user];
+			delete this.client.runningUsers[user];
+
+			return clearTimeout(timer);
+		};
 	}
 
 	async exec(message, { color }) {
-		if (this.client.runningUsers.includes(message.author.id)) return message.channel.send('Currently running.');
-		this.client.runningUsers.push(message.author.id);
+		if (this.client.runningUsers[message.author.id]) return message.channel.send('Currently running.');
+		this.add(message.author.id);
 
 		if (color) color = tinyColor(color);
 		else color = tinyColor.random();
@@ -30,7 +42,7 @@ module.exports = class extends Command {
 		if (color.isValid()) color = await this.preview(message, message, color);
 		else message.channel.send(`Invalid color, Ex. **${this.examples[Math.floor(Math.random() * this.examples.length)]}**`);
 
-		this.client.runningUsers.splice(this.client.runningUsers.indexOf(message.author.id), 1);
+		this.remove(message.author.id);
 
 		if (color && color.isValid()) return this.change(message, color.toHex() === '000000' ? '000001' : color.toHex());
 	}
@@ -54,7 +66,11 @@ module.exports = class extends Command {
 		).then(r => {
 			r.array()[0].users.remove(message.author);
 
-			if (r.array()[0].emoji.name === '🔄') return this.preview(message, m, tinyColor.random(), false);
+			if (r.array()[0].emoji.name === '🔄') {
+				this.add(message.author.id);
+
+				return this.preview(message, m, tinyColor.random(), false);
+			}
 
 			m.reactions.removeAll().catch(() => {});
 

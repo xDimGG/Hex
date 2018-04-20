@@ -33,7 +33,7 @@ new class extends AkairoClient {
 			messageSweepInterval: 60,
 		});
 		this.db = new Database();
-		this.runningUsers = [];
+		this.runningUsers = {};
 	}
 
 	async init() {
