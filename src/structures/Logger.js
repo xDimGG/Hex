@@ -3,7 +3,6 @@ const { post } = require('snekfetch');
 module.exports = {
 	debug(...content) {
 		if (content instanceof Array) content = content.join(' ');
-		process.log(content);
 		if (process.env.DEV) return;
 		post(`https://discordapp.com/api/webhooks/${process.env.WEBHOOK_CONSOLE}`,
 			{
@@ -13,7 +12,6 @@ module.exports = {
 	},
 	error(...content) {
 		if (content instanceof Array) content = content.join(' ');
-		process.log(content);
 		if (process.env.DEV) return;
 		post(`https://discordapp.com/api/webhooks/${process.env.WEBHOOK_CONSOLE}`,
 			{
@@ -23,7 +21,6 @@ module.exports = {
 	},
 	info(...content) {
 		if (content instanceof Array) content = content.join(' ');
-		process.log(content);
 		if (process.env.DEV) return;
 		post(`https://discordapp.com/api/webhooks/${process.env.WEBHOOK_CONSOLE}`,
 			{
@@ -33,7 +30,6 @@ module.exports = {
 	},
 	log(...content) {
 		if (content instanceof Array) content = content.join(' ');
-		process.log(content);
 		if (process.env.DEV) return;
 		post(`https://discordapp.com/api/webhooks/${process.env.WEBHOOK_CONSOLE}`,
 			{
@@ -43,7 +39,6 @@ module.exports = {
 	},
 	warn(...content) {
 		if (content instanceof Array) content = content.join(' ');
-		process.log(content);
 		if (process.env.DEV) return;
 		post(`https://discordapp.com/api/webhooks/${process.env.WEBHOOK_CONSOLE}`,
 			{

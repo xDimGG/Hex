@@ -1,15 +1,9 @@
-const	Logger = require('./Logger');
 const	Database = require('./Database');
 const	GuildExtension = require('./Extensions/Guild');
 const	{ DBL_API, DEV, TOKEN } = process.env;
 const	{ AkairoClient } = require('discord-akairo');
 const	{ Guild } = require('discord.js');
 const	{ post } = require('snekfetch');
-
-for (const log in Logger) { // eslint-disable-line guard-for-in
-	process[log] = console[log];
-	console[log] = Logger[log];
-}
 
 GuildExtension.extend(Guild);
 
@@ -39,7 +33,7 @@ new class extends AkairoClient {
 	async init() {
 		await this.db.sync();
 		await this.login(TOKEN);
-		process.log(this.user.tag);
+		console.log(this.user.tag);
 	}
 
 	clean(input) {
