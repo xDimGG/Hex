@@ -1,4 +1,5 @@
-const { Command, version: akairoVersion } = require('discord-akairo');
+const Command = require('../../structures/Extensions/Command');
+const { version: akairoVersion } = require('discord-akairo');
 const { version: discordjsVersion } = require('discord.js');
 const { cpuLoad, memoryUsage } = require('os-toolbox');
 const { type, release, uptime, totalmem } = require('os');
