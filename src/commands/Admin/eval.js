@@ -1,11 +1,9 @@
-const	{ Command } = require('discord-akairo');
-const	{ basename } = require('path');
-const	{ inspect } = require('util');
+const Command = require('../../structures/Extensions/Command');
+const { inspect } = require('util');
 
 module.exports = class extends Command {
 	constructor() {
-		super(basename(__filename).split('.')[0], {
-			aliases: [basename(__filename).split('.')[0]],
+		super({
 			args: [
 				{
 					id: 'code',
@@ -28,12 +26,20 @@ module.exports = class extends Command {
 			output = inspect(error);
 		}
 
-		output = this.client.clean(output);
+		output = this.clean(output);
 
-		message.channel.send(
-			`${output instanceof Error ? '❌ Error' : '📤 Output'}:\n` +
+		message.channel.send([
+			`${output instanceof Error ? '❌ Error' : '📤 Output'}:`,
 			`${output.length > 2000 ? '' : `\`\`\`js\n${output}\n\`\`\``}`,
-			output.length > 2000 ? { files: [{ attachment: Buffer.from(output), name: 'output.txt' }] } : {}
-		);
+		], output.length > 2000 ? { files: [{ attachment: Buffer.from(output), name: 'output.txt' }] } : {});
+	}
+
+	clean(input) {
+		for (const env in process.env)
+			if (env.includes('TOKEN') || env.includes('POSTGRES') || env.includes('_API') || env.includes('WEBHOOK_')) input = String(input).replace(process.env[env], '[SECRET!]');
+
+		return String(input)
+			.replace(/`/g, `\`${String.fromCharCode(8203)}`)
+			.replace(/@/g, `@${String.fromCharCode(8203)}`);
 	}
 };

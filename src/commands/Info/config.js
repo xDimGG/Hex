@@ -1,10 +1,8 @@
-const	{ Command } = require('discord-akairo');
-const	{ basename } = require('path');
+const Command = require('../../structures/Extensions/Command');
 
 module.exports = class extends Command {
 	constructor() {
-		super(basename(__filename).split('.')[0], {
-			aliases: [basename(__filename).split('.')[0]],
+		super({
 			args: [
 				{ id: 'key' },
 				{ id: 'value' },
@@ -22,7 +20,7 @@ module.exports = class extends Command {
 				`prefix :: ${config.prefix}`,
 			];
 
-			return message.channel.send(content.join('\n'), { code: 'asciidoc' });
+			return message.channel.send(content, { code: 'asciidoc' });
 		}
 
 		if (!['prefix'].includes(key)) return message.channel.send(`\`${key}\` is not a valid option, **prefix**`);

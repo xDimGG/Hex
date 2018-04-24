@@ -1,11 +1,9 @@
-const	{ Command } = require('discord-akairo');
-const	{ basename } = require('path');
-const	{ MessageEmbed } = require('discord.js');
+const Command = require('../../structures/Extensions/Command');
+const { MessageEmbed } = require('discord.js');
 
 module.exports = class extends Command {
 	constructor() {
-		super(basename(__filename).split('.')[0], {
-			aliases: [basename(__filename).split('.')[0]],
+		super({
 			clientPermissions: ['SEND_MESSAGES', 'EMBED_LINKS'],
 			description: 'Gives name color, if you have one.',
 		});

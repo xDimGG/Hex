@@ -8,8 +8,8 @@ module.exports = class extends Extension {
 	}
 
 	async set(data) {
-		const	config = await this.client.db.guildConfig.findById(this.id);
-		const	result = await config.update(data);
+		const config = await this.client.db.guildConfig.findById(this.id);
+		const result = await config.update(data);
 
 		return result.dataValues;
 	}

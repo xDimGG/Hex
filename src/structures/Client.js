@@ -1,9 +1,7 @@
-const	Database = require('./Database');
-const	GuildExtension = require('./Extensions/Guild');
-const	{ DBL_API, DEV, TOKEN } = process.env;
-const	{ AkairoClient } = require('discord-akairo');
-const	{ Guild } = require('discord.js');
-const	{ post } = require('snekfetch');
+const Database = require('./Database');
+const GuildExtension = require('./Extensions/Guild');
+const { AkairoClient } = require('discord-akairo');
+const { Guild } = require('discord.js');
 
 GuildExtension.extend(Guild);
 
@@ -11,6 +9,7 @@ new class extends AkairoClient {
 	constructor() {
 		super({
 			allowMention: true,
+			automateAliases: true,
 			automateCategories: true,
 			commandDirectory: './src/commands/',
 			emitters: true,
@@ -18,7 +17,7 @@ new class extends AkairoClient {
 			inhibitorDirectory: './src/inhibitors/',
 			listenerDirectory: './src/listeners/',
 			ownerID: '358558305997684739',
-			prefix: async m => m.guild ? (await m.guild.get()).prefix : 'h!',
+			prefix: m => m.guild ? m.guild.get().then(c => c.prefix) : 'h!',
 		}, {
 			disableEveryone: true,
 			disabledEvents: ['TYPING_START'],
@@ -32,21 +31,7 @@ new class extends AkairoClient {
 
 	async init() {
 		await this.db.sync();
-		await this.login(TOKEN);
+		await this.login(process.env.TOKEN);
 		console.log(this.user.tag);
-	}
-
-	clean(input) {
-		for (const env in process.env)
-			if (env.includes('TOKEN') || env.includes('POSTGRES') || env.includes('_API') || env.includes('WEBHOOK_')) input = String(input).replace(process.env[env], '[SECRET!]');
-
-		return String(input)
-			.replace(/`/g, `\`${String.fromCharCode(8203)}`)
-			.replace(/@/g, `@${String.fromCharCode(8203)}`);
-	}
-
-	updateActivity() {
-		this.user.setActivity(`${this.guilds.size} ${this.guilds.size > 1 ? 'Guilds' : 'Guild'} | ${this.guilds.reduce((a, b) => a + b.memberCount, 0)} Members`, { type: 'WATCHING' });
-		if (!DEV && DBL_API) post(`https://discordbots.org/api/bots/${this.user.id}/stats`, { data: { server_count: this.guilds.size }, headers: { Authorization: DBL_API } }).end();
 	}
 }().init();

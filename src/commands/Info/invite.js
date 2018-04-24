@@ -1,10 +1,8 @@
-const	{ Command } = require('discord-akairo');
-const	{ basename } = require('path');
+const Command = require('../../structures/Extensions/Command');
 
 module.exports = class extends Command {
 	constructor() {
-		super(basename(__filename).split('.')[0], {
-			aliases: [basename(__filename).split('.')[0]],
+		super({
 			clientPermissions: ['SEND_MESSAGES'],
 			description: 'Bot and Support server invite link',
 		});

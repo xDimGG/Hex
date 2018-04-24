@@ -1,18 +1,14 @@
-const	{ Command } = require('discord-akairo');
-const	{ basename } = require('path');
+const Command = require('../../structures/Extensions/Command');
 
 module.exports = class extends Command {
 	constructor() {
-		super(basename(__filename).split('.')[0], {
-			aliases: [basename(__filename).split('.')[0]],
-			clientPermissions: ['SEND_MESSAGES'],
-		});
+		super({ clientPermissions: ['SEND_MESSAGES'] });
 	}
 
 	exec(message) {
 		const output = [];
-		const	allCommands = this.handler.modules.filter(c => !c.ownerOnly && c.id !== 'help').sort();
-		const	longest = allCommands.keyArray().reduce((long, str) => Math.max(long, str.length), 0);
+		const allCommands = this.handler.modules.filter(c => !c.ownerOnly && c.id !== 'help').sort();
+		const longest = allCommands.keyArray().reduce((long, str) => Math.max(long, str.length), 0);
 
 		this.handler.categories.forEach(category => {
 			const commands = category.filter(c => !c.ownerOnly && c.id !== 'help').sort();

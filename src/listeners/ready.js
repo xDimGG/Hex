@@ -1,12 +1,12 @@
-const	{ Listener } = require('discord-akairo');
-const	{ basename } = require('path');
+const Listener = require('../structures/Extensions/Listeners');
+const { updateActivity } = require('../structures/Utils');
 
 module.exports = class extends Listener {
 	constructor() {
-		super(basename(__filename).split('.')[0], { event: basename(__filename).split('.')[0] });
+		super({ event: require('path').parse(__filename).name });
 	}
 
 	exec() {
-		this.client.updateActivity();
+		updateActivity(this.client);
 	}
 };

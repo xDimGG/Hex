@@ -1,10 +1,9 @@
-const	{ Inhibitor } = require('discord-akairo');
-const	{ basename } = require('path');
+const { Inhibitor } = require('discord-akairo');
 
 module.exports = class extends Inhibitor {
 	constructor() {
-		super(basename(__filename).split('.')[0], {
-			reason: basename(__filename).split('.')[0],
+		super({
+			reason: require('path').parse(__filename).name,
 			type: 'all',
 		});
 	}

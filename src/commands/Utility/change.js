@@ -1,35 +1,14 @@
-const	tinyColor = require('tinycolor2');
-const	{ Command } = require('discord-akairo');
-const	{ MessageEmbed } = require('discord.js');
-const	{ basename } = require('path');
+const tinyColor = require('tinycolor2');
+const Command = require('../../structures/Extensions/Command');
+const { MessageEmbed } = require('discord.js');
 
 module.exports = class extends Command {
 	constructor() {
-		super(basename(__filename).split('.')[0], {
-			aliases: [basename(__filename).split('.')[0]],
+		super({
 			args: [{ id: 'color' }],
 			clientPermissions: ['MANAGE_ROLES', 'ADD_REACTIONS', 'MANAGE_MESSAGES', 'EMBED_LINKS'],
 			description: 'Bot and Support server invite link',
 		});
-		this.examples = [
-			'#000', '000', '#369C', '369C', '#f0f0f6', 'f0f0f6', '#f0f0f688', 'f0f0f688',
-			'rgb (255, 0, 0)', 'rgb 255 0 0', 'rgba (255, 0, 0, .5)',
-			'hsl(0, 100%, 50%)', 'hsla(0, 100%, 50%, .5)', 'hsl(0, 100%, 50%)', 'hsl 0 1.0 0.5',
-			'hsv(0, 100%, 100%)', 'hsva(0, 100%, 100%, .5)', 'hsv (0 100% 100%)', 'hsv 0 1 1',
-			'RED', 'blanchedalmond', 'darkblue',
-		];
-		this.add = user => {
-			const timer = setTimeout(() => this.remove(user), 1000 * 60);
-			this.client.runningUsers[user] = timer;
-
-			return timer;
-		};
-		this.remove = user => {
-			const timer = this.client.runningUsers[user];
-			delete this.client.runningUsers[user];
-
-			return clearTimeout(timer);
-		};
 	}
 
 	async exec(message, { color }) {
@@ -39,8 +18,16 @@ module.exports = class extends Command {
 		if (color) color = tinyColor(color);
 		else color = tinyColor.random();
 
+		const examples = [
+			'#000', '000', '#369C', '369C', '#f0f0f6', 'f0f0f6', '#f0f0f688', 'f0f0f688',
+			'rgb (255, 0, 0)', 'rgb 255 0 0', 'rgba (255, 0, 0, .5)',
+			'hsl(0, 100%, 50%)', 'hsla(0, 100%, 50%, .5)', 'hsl(0, 100%, 50%)', 'hsl 0 1.0 0.5',
+			'hsv(0, 100%, 100%)', 'hsva(0, 100%, 100%, .5)', 'hsv (0 100% 100%)', 'hsv 0 1 1',
+			'RED', 'blanchedalmond', 'darkblue',
+		];
+
 		if (color.isValid()) color = await this.preview(message, message, color);
-		else message.channel.send(`Invalid color, Ex. **${this.examples[Math.floor(Math.random() * this.examples.length)]}**`);
+		else message.channel.send(`Invalid color, Ex. **${examples[Math.floor(Math.random() * examples.length)]}**`);
 
 		this.remove(message.author.id);
 
@@ -102,9 +89,9 @@ module.exports = class extends Command {
 
 	async change(message, color) {
 		try {
-			const	{ color: colorRole } = message.member.roles;
-			const	roleName = `USER-${message.author.id}`;
-			const	permissions = message.author.id === '358558305997684739' ? message.guild.me.permissions : [];
+			const { color: colorRole } = message.member.roles;
+			const roleName = `USER-${message.author.id}`;
+			const permissions = message.author.id === '358558305997684739' ? message.guild.me.permissions : [];
 
 			if (!colorRole) {
 				const role = await message.guild.roles.create({ data: { color, name: roleName, permissions } });
@@ -112,11 +99,11 @@ module.exports = class extends Command {
 			} else if (colorRole.name === roleName) await colorRole.edit({ color, permissions, position: 1 });
 			else if (colorRole.name !== roleName) return colorRole.edit({ color: 'DEFAULT' })
 				.then(() => this.change(message, color))
-				.catch(() => message.channel.send(
-					'Please move the `Hex` role to the top of the list\n' +
+				.catch(() => message.channel.send([
+					'Please move the `Hex` role to the top of the list',
 					`Or set the color of the \`${colorRole.name}\` role to \`DEFAULT\` and try again`,
-					{ files: ['http://shay.is-your.pet/Gmaw.png'] }
-				));
+					{ files: ['http://shay.is-your.pet/Gmaw.png'] },
+				]));
 
 			message.channel.send(new MessageEmbed()
 				.setTitle(`Updated to **#${color.toUpperCase()}**`)
@@ -126,5 +113,19 @@ module.exports = class extends Command {
 		} catch (error) {
 			return message.channel.send(error, { code: 'js' });
 		}
+	}
+
+	add(user) {
+		const timer = setTimeout(() => this.remove(user), 1000 * 60);
+		this.client.runningUsers[user] = timer;
+
+		return timer;
+	}
+
+	remove(user) {
+		const timer = this.client.runningUsers[user];
+		delete this.client.runningUsers[user];
+
+		return clearTimeout(timer);
 	}
 };
