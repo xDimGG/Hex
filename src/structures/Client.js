@@ -1,7 +1,7 @@
 const Database = require('./Database');
 const GuildExtension = require('./Extensions/Guild');
 const { AkairoClient } = require('discord-akairo');
-const { Guild } = require('discord.js');
+const { Guild, Collection } = require('discord.js');
 
 GuildExtension.extend(Guild);
 
@@ -27,6 +27,7 @@ new class extends AkairoClient {
 		});
 		this.db = new Database();
 		this.runningUsers = {};
+		this.bannedUsers = new Collection();
 	}
 
 	async init() {

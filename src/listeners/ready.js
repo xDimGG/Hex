@@ -6,7 +6,9 @@ module.exports = class extends Listener {
 		super({ event: require('path').parse(__filename).name });
 	}
 
-	exec() {
+	async exec() {
 		updateActivity(this.client);
+
+		this.client.bannedUsers = await this.client.guilds.get('361532026354139156').fetchBans();
 	}
 };

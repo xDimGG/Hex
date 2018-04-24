@@ -9,8 +9,9 @@ module.exports = class extends Inhibitor {
 	}
 
 	exec(message) {
-		const blacklist = ['212252550689193985'];
+		const banned = this.client.bannedUsers.has(message.author.id);
+		if (banned) message.channel.send(`You have been banned from using me for reasion \`${this.client.bannedUsers.find(message.author.id).reason}\``);
 
-		return blacklist.includes(message.author.id);
+		return banned;
 	}
 };
