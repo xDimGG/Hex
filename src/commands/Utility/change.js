@@ -67,13 +67,13 @@ module.exports = class extends Command {
 				return color;
 			}
 			if (r.array()[0].emoji.name === '🇳') {
-				m.edit('Canceled', { embed: null });
+				m.edit('Canceled', { embed: null }).catch(() => {});
 
 				return false;
 			}
 		}).catch(() => {
 			m.reactions.removeAll().catch(() => {});
-			m.edit('You didn\'t react in time', { embed: null });
+			m.edit('You didn\'t react in time', { embed: null }).catch(() => {});
 
 			return false;
 		});
