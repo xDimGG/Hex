@@ -62,7 +62,7 @@ module.exports = class extends Command {
 			m.reactions.removeAll().catch(() => {});
 
 			if (r.array()[0].emoji.name === '🇾') {
-				m.delete();
+				m.delete().catch(() => {});
 
 				return color;
 			}
