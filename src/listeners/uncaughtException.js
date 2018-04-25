@@ -1,4 +1,3 @@
-const Logger = require('../structures/Logger');
 const Listener = require('../structures/Extensions/Listeners');
 
 module.exports = class extends Listener {
@@ -7,7 +6,7 @@ module.exports = class extends Listener {
 	}
 
 	exec(error) {
-		Logger.error(error.stack);
+		this.client.log(error.stack);
 		console.log(error.stack);
 		process.exit(1);
 	}

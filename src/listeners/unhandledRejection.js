@@ -1,4 +1,3 @@
-const Logger = require('../structures/Logger');
 const Listener = require('../structures/Extensions/Listeners');
 
 module.exports = class extends Listener {
@@ -7,7 +6,7 @@ module.exports = class extends Listener {
 	}
 
 	exec(reason) {
-		Logger.error(reason instanceof Error ? reason.stack : reason);
+		this.client.log(reason instanceof Error ? reason.stack : reason);
 		console.log(reason instanceof Error ? reason.stack : reason);
 	}
 };

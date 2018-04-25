@@ -35,4 +35,8 @@ new class extends AkairoClient {
 		await this.login(process.env.TOKEN);
 		console.log(this.user.tag);
 	}
+
+	log(...i) {
+		this.channels.get('361533828520476684').send(i, { code: 'js' });
+	}
 }().init();
