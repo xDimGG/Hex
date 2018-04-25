@@ -6,6 +6,7 @@ module.exports = class extends Command {
 		super({
 			args: [
 				{
+					description: 'Code to eval',
 					id: 'code',
 					match: 'content',
 				},
@@ -16,7 +17,7 @@ module.exports = class extends Command {
 	}
 
 	async exec(message, { code }) {
-		if (!code) return message.channel.send('Please provide code to eval');
+		if (!code) return message.channel.send('**Missing Argument**: **Code**');
 
 		let output;
 		try {
@@ -30,13 +31,13 @@ module.exports = class extends Command {
 
 		message.channel.send([
 			`${output instanceof Error ? '❌ Error' : '📤 Output'}:`,
-			`${output.length > 2000 ? '' : `\`\`\`js\n${output}\n\`\`\``}`,
+			`${output.length > 2000 ? 'File was too large' : `\`\`\`js\n${output}\n\`\`\``}`,
 		], output.length > 2000 ? { files: [{ attachment: Buffer.from(output), name: 'output.txt' }] } : {});
 	}
 
 	clean(input) {
 		for (const env in process.env)
-			if (env.includes('TOKEN') || env.includes('POSTGRES') || env.includes('_API') || env.includes('WEBHOOK_')) input = String(input).replace(process.env[env], '[SECRET!]');
+			if (/(TOKEN|POSTGRES|WEBHOOK_|_API)/ig.test(env)) input = String(input).replace(process.env[env], '[SECRET!]');
 
 		return String(input)
 			.replace(/`/g, `\`${String.fromCharCode(8203)}`)

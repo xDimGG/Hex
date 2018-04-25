@@ -3,7 +3,7 @@ const Listener = require('../structures/Extensions/Listeners');
 
 module.exports = class extends Listener {
 	constructor() {
-		super({ event: require('path').parse(__filename).name });
+		super({ emitter: process });
 	}
 
 	exec(error) {

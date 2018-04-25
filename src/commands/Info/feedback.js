@@ -15,7 +15,7 @@ module.exports = class extends Command {
 	}
 
 	exec(message, { feedback }) {
-		if (!feedback) return message.channel.send('Please provide input');
+		if (!feedback) return message.channel.send('**Missing Argument**: **Feedback**');
 
 		this.client.channels.get('368572194667888646').send([
 			`\`${message.author.tag}\``,

@@ -9,6 +9,6 @@ function name(mod) {
 
 module.exports = class extends Listener {
 	constructor(options) {
-		super(name(module), options);
+		super(name(module), Object.assign({ event: name(module) }, options));
 	}
 };

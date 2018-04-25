@@ -8,7 +8,7 @@ const { execSync } = require('child_process');
 module.exports = class extends Command {
 	constructor() {
 		super({
-			aliases: [require('path').parse(__filename).name, 'about', 'info', 'ping', 'bot'],
+			aliases: ['about', 'info', 'ping', 'bot'],
 			clientPermissions: ['SEND_MESSAGES'],
 			description: 'OS and Bot statistics',
 		});

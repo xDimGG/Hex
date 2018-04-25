@@ -3,7 +3,7 @@ const Command = require('../../structures/Extensions/Command');
 module.exports = class extends Command {
 	constructor() {
 		super({
-			aliases: [require('path').parse(__filename).name, 'guilds'],
+			aliases: ['guilds'],
 			clientPermissions: ['SEND_MESSAGES'],
 			ownerOnly: true,
 		});
