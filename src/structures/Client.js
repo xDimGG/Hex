@@ -7,7 +7,7 @@ GuildExtension.extend(Guild);
 
 new class extends AkairoClient {
 	constructor(...options) {
-		super(options);
+		super(...options);
 		this.db = new Database();
 		this.runningUsers = {};
 		this.bannedUsers = new Collection();
