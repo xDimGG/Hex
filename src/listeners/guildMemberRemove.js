@@ -1,4 +1,4 @@
-const Listener = require('../structures/Extensions/Listeners');
+const Listener = require('../structures/Listeners');
 
 module.exports = class extends Listener {
 	exec(member) {

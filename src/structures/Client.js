@@ -6,37 +6,16 @@ const { Guild, Collection } = require('discord.js');
 GuildExtension.extend(Guild);
 
 new class extends AkairoClient {
-	constructor() {
-		super({
-			allowMention: true,
-			automateAliases: true,
-			automateCategories: true,
-			commandDirectory: './src/commands/',
-			emitters: true,
-			handleEdits: true,
-			inhibitorDirectory: './src/inhibitors/',
-			listenerDirectory: './src/listeners/',
-			ownerID: '358558305997684739',
-			prefix: m => m.guild ? m.guild.get().then(c => c.prefix) : 'h!',
-		}, {
-			disableEveryone: true,
-			disabledEvents: ['TYPING_START'],
-			messageCacheLifetime: 60,
-			messageCacheMaxSize: 50,
-			messageSweepInterval: 60,
-		});
+	constructor(...options) {
+		super(options);
 		this.db = new Database();
 		this.runningUsers = {};
 		this.bannedUsers = new Collection();
 	}
 
-	async init() {
+	async login(token) {
 		await this.db.sync();
-		await this.login(process.env.TOKEN);
+		await super.login(token);
 		console.log(this.user.tag);
 	}
-
-	log(...i) {
-		this.channels.get('361533828520476684').send(i, { code: 'js' });
-	}
-}().init();
+};

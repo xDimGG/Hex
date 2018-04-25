@@ -1,5 +1,5 @@
 const tinyColor = require('tinycolor2');
-const Command = require('../../structures/Extensions/Command');
+const Command = require('../../structures/Command');
 const { MessageEmbed } = require('discord.js');
 
 module.exports = class extends Command {

@@ -1,4 +1,4 @@
-const Listener = require('../structures/Extensions/Listeners');
+const Listener = require('../structures/Listeners');
 const { updateActivity } = require('../structures/Utils');
 
 module.exports = class extends Listener {

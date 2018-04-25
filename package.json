@@ -2,7 +2,7 @@
   "name": "hex",
   "version": "0.0.0",
   "description": "Custom Hex Color Role",
-  "main": "src/structures/Client.js",
+  "main": "src/index.js",
   "scripts": {
     "start": "node .",
     "test": "nodemon .",
