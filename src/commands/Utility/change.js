@@ -51,7 +51,7 @@ module.exports = class extends Command {
 			(reaction, user) => (reaction.emoji.name === '🇾' || reaction.emoji.name === '🇳' || reaction.emoji.name === '🔄') && user.id === message.author.id,
 			{ errors: ['time'], max: 1, time: 30000 }
 		).then(r => {
-			r.array()[0].users.remove(message.author);
+			r.array()[0].users.remove(message.author).catch(() => {});
 
 			if (r.array()[0].emoji.name === '🔄') {
 				this.add(message.author.id);
