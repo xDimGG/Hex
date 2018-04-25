@@ -5,7 +5,7 @@ const { Guild, Collection } = require('discord.js');
 
 GuildExtension.extend(Guild);
 
-new class extends AkairoClient {
+module.exports = class extends AkairoClient {
 	constructor(...options) {
 		super(...options);
 		this.db = new Database();
