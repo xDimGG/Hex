@@ -4,6 +4,7 @@ const { MessageEmbed } = require('discord.js');
 module.exports = class extends Command {
 	constructor() {
 		super({
+			channel: 'guild',
 			clientPermissions: ['SEND_MESSAGES', 'MANAGE_ROLES', 'EMBED_LINKS'],
 			description: 'Deletes the role that gives your name color, if you have one.',
 		});

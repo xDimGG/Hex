@@ -4,6 +4,7 @@ const { MessageEmbed } = require('discord.js');
 module.exports = class extends Command {
 	constructor() {
 		super({
+			channel: 'guild',
 			clientPermissions: ['SEND_MESSAGES', 'EMBED_LINKS'],
 			description: 'Gives name color, if you have one.',
 		});

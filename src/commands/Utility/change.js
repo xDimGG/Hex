@@ -6,6 +6,7 @@ module.exports = class extends Command {
 	constructor() {
 		super({
 			args: [{ id: 'color' }],
+			channel: 'guild',
 			clientPermissions: ['MANAGE_ROLES', 'ADD_REACTIONS', 'MANAGE_MESSAGES', 'EMBED_LINKS'],
 			description: 'Change your name color',
 		});
