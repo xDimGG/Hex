@@ -7,7 +7,7 @@ module.exports = class extends Command {
 		super({
 			args: [{ id: 'color' }],
 			clientPermissions: ['MANAGE_ROLES', 'ADD_REACTIONS', 'MANAGE_MESSAGES', 'EMBED_LINKS'],
-			description: 'Bot and Support server invite link',
+			description: 'Change your name color',
 		});
 	}
 
