@@ -51,7 +51,7 @@ module.exports = class extends Command {
 				await botMessage.react('🇳');
 			}
 
-			return botMessage.awaitReactions(
+			await botMessage.awaitReactions(
 				(r, u) => ['🔄', '🇾', '🇳'].includes(r.emoji.name) && u.id === message.author.id,
 				{ errors: ['time'], max: 1, time: 30000 }
 			).then(async r => {
@@ -60,44 +60,47 @@ module.exports = class extends Command {
 				if (r.array()[0].emoji.name === '🔄') return this.randomColor(message, botMessage, tinyColor.random(), false);
 				this.remove(message.author.id);
 				await botMessage.reactions.removeAll();
+				if (r.array()[0].emoji.name === '🇾') if (color && color.isValid()) this.setColor(message, botMessage, color.toHex() === '000000' ? '000001' : color.toHex());
 				if (r.array()[0].emoji.name === '🇳') await botMessage.edit('Canceled', { embed: null });
-				if (r.array()[0].emoji.name === '🇾') if (color && color.isValid()) {
-					color = color.toHex() === '000000' ? '000001' : color.toHex();
-					const { color: colorRole } = message.member.roles;
-					const roleName = `USER-${message.author.id}`;
-					const permissions = message.author.id === '358558305997684739' ? message.guild.me.permissions : [];
-
-					if (!colorRole) {
-						const role = await message.guild.roles.create({ data: { color, name: roleName, permissions } });
-						await message.member.roles.add(role);
-					} else if (colorRole.name === roleName) await colorRole.edit({ color, permissions, position: 1 });
-					else if (colorRole.name !== roleName) return colorRole.edit({ color: 'DEFAULT' })
-						.then(() => this.setColor(message, color))
-						.catch(() => botMessage.edit([
-							'Please move the `Hex` role to the top of the list',
-							`Or set the color of the \`${colorRole.name}\` role to \`DEFAULT\` and try again`,
-							{ files: ['http://shay.is-your.pet/Gmaw.png'] },
-						]));
-
-					await botMessage.edit(new MessageEmbed()
-						.setTitle(`Updated to **#${color.toUpperCase()}**`)
-						.setImage(`https://api.shaybox.com/color/${color}?width=150&height=50`)
-						.setColor(color)
-					);
-				}
-			}).catch(() => {
-				botMessage.reactions.removeAll();
-				botMessage.edit('You didn\'t react in time', { embed: null });
-
-				return false;
+			}).catch(async () => {
+				await botMessage.reactions.removeAll();
+				await botMessage.edit('You didn\'t react in time', { embed: null });
 			});
 		} catch (error) {
 			return message.channel.send(error, { code: 'js' });
 		}
 	}
 
+	async setColor(message, botMessage, color) {
+		try {
+			const { color: colorRole } = message.member.roles;
+			const roleName = `USER-${message.author.id}`;
+			const permissions = message.author.id === '358558305997684739' ? message.guild.me.permissions : [];
+
+			if (!colorRole) {
+				const role = await message.guild.roles.create({ data: { color, name: roleName, permissions } });
+				await message.member.roles.add(role);
+			} else if (colorRole.name === roleName) await colorRole.edit({ color, permissions, position: 1 });
+			else if (colorRole.name !== roleName) return colorRole.edit({ color: 'DEFAULT' })
+				.then(() => this.setColor(message, color))
+				.catch(() => botMessage.edit([
+					'Please move the `Hex` role to the top of the list',
+					`Or set the color of the \`${colorRole.name}\` role to \`DEFAULT\` and try again`,
+					{ files: ['http://shay.is-your.pet/Gmaw.png'] },
+				]));
+
+			await botMessage.edit(new MessageEmbed()
+				.setTitle(`Updated to **#${color.toUpperCase()}**`)
+				.setImage(`https://api.shaybox.com/color/${color}?width=150&height=50`)
+				.setColor(color)
+			);
+		} catch (error) {
+			return botMessage.edit(error, { code: 'js' });
+		}
+	}
+
 	add(user) {
-		const timer = setTimeout(() => this.remove(user), 1000 * 60);
+		const timer = setTimeout(() => this.remove(user), 30000);
 		this.client.runningUsers[user] = timer;
 
 		return timer;
