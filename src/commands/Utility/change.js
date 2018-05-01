@@ -87,7 +87,7 @@ module.exports = class extends Command {
 				`Please move the \`${botRole.name}\` role to the top of the list`,
 				`Or move \`${colorRole.name}\` below \`${botRole.name}\``,
 			], { files: ['http://shay.is-your.pet/Gmaw.png'] });
-			else await colorRole.edit({ color, permissions, position });
+			else if (colorRole.name === roleName) await colorRole.edit({ color, permissions, position });
 
 			await botMessage.edit(new MessageEmbed()
 				.setTitle(`Updated to **#${color.toUpperCase()}**`)
