@@ -8,7 +8,8 @@ module.exports = class extends Command {
 				{ id: 'value' },
 			],
 			clientPermissions: ['SEND_MESSAGES'],
-			description: 'Bot and Support server invite link',
+			description: 'Bot configuration',
+			userPermissions: ['ADMINISTRATOR'],
 		});
 	}
 
