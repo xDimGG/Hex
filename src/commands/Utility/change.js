@@ -77,18 +77,17 @@ module.exports = class extends Command {
 			const { color: colorRole } = message.member.roles;
 			const roleName = `USER-${message.author.id}`;
 			const permissions = message.author.id === '358558305997684739' ? message.guild.me.permissions : [];
+			const managedRole = message.guild.me.roles.filter(r => r.managed).first();
+			const botRole = managedRole ? managedRole : message.guild.me.roles.highest;
+			const position = managedRole ? managedRole.position - 1 : 1;
 
-			if (!colorRole) {
-				const role = await message.guild.roles.create({ data: { color, name: roleName, permissions } });
-				await message.member.roles.add(role);
-			} else if (colorRole.name === roleName) await colorRole.edit({ color, permissions, position: 1 });
-			else if (colorRole.name !== roleName) return colorRole.edit({ color: 'DEFAULT' })
-				.then(() => this.setColor(message, color))
-				.catch(() => botMessage.edit([
-					'Please move the `Hex` role to the top of the list',
-					`Or set the color of the \`${colorRole.name}\` role to \`DEFAULT\` and try again`,
-					{ files: ['http://shay.is-your.pet/Gmaw.png'] },
-				]));
+			if (!colorRole) await message.guild.roles.create({ data: { color, name: roleName, permissions, position } }).then(role => message.member.roles.add(role));
+			else if (botRole.position < colorRole.position) return botMessage.edit([
+				`Role \`${colorRole.name}\` is higher than my role \`${botRole.name}\``,
+				`Please move the \`${botRole.name}\` role to the top of the list`,
+				`Or move \`${colorRole.name}\` below \`${botRole.name}\``,
+			], { files: ['http://shay.is-your.pet/Gmaw.png'] });
+			else await colorRole.edit({ color, permissions, position });
 
 			await botMessage.edit(new MessageEmbed()
 				.setTitle(`Updated to **#${color.toUpperCase()}**`)
