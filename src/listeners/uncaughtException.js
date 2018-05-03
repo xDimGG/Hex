@@ -1,4 +1,5 @@
 const Listener = require('../structures/Listener');
+const { log } = require('../structures/Utils');
 
 module.exports = class extends Listener {
 	constructor() {
@@ -6,8 +7,7 @@ module.exports = class extends Listener {
 	}
 
 	exec(error) {
-		this.client.channels.get('361533828520476684').send(error.stack, { code: 'js' });
-		console.log(error.stack);
+		log(error);
 		process.exit(1);
 	}
 };
