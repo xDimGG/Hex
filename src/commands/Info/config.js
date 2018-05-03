@@ -19,6 +19,8 @@ module.exports = class extends Command {
 			const content = [
 				'= Guild Settings =',
 				`prefix :: ${config.prefix}`,
+				'',
+				`${await this.handler.prefix(message)}config (Key) (Value)`,
 			];
 
 			return message.channel.send(content, { code: 'asciidoc' });
