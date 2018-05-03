@@ -83,7 +83,7 @@ module.exports = class extends Command {
 			const position = managedRole ? managedRole.position - 1 : 1;
 
 			if (colorRole) {
-				if (botRole.position < colorRole.position) return botMessage.edit([
+				if (colorRole.name === roleName && botRole.position < colorRole.position) return botMessage.edit([
 					`Role \`${colorRole.name}\` is higher than my role \`${botRole.name}\``,
 					`Please move the \`${botRole.name}\` role to the top of the list`,
 					`Or move \`${colorRole.name}\` below \`${botRole.name}\``,
@@ -94,11 +94,10 @@ module.exports = class extends Command {
 					`Please move the \`${botRole.name}\` role to the top of the list`,
 					`Or remove \`${colorRole.name}\`'s color`,
 				], { files: ['http://shay.is-your.pet/Gmaw.png'] });
-
-				if (colorRole.name === roleName) await colorRole.edit({ color, permissions, position });
 			}
 
-			await message.guild.roles.create({ data: { color, name: roleName, permissions, position } })
+			if (colorRole.name === roleName) await colorRole.edit({ color, permissions, position });
+			else await message.guild.roles.create({ data: { color, name: roleName, permissions, position } })
 				.then(role => message.member.roles.add(role));
 
 			await botMessage.edit(new MessageEmbed()
