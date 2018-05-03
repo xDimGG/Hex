@@ -22,7 +22,7 @@ module.exports = class extends Command {
 		let output;
 		try {
 			const evaled = eval(code);
-			output = inspect(evaled instanceof Promise ? await evaled : evaled);
+			output = inspect(evaled instanceof Promise ? await evaled : evaled, { maxArrayLength: Infinity });
 		} catch (error) {
 			output = inspect(error);
 		}
