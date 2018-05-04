@@ -2,10 +2,10 @@ const { post } = require('snekfetch');
 const { isError, inspect } = require('util');
 
 module.exports = {
-	log(...input) {
-		console[input instanceof Error ? 'error' : 'log'](...input);
-		if (isError(input)) input = inspect(input, { depth: 10 });
-		if (!process.env.DEV) this.client.channels.get('361533828520476684').send(...input, { code: 'js' });
+	log(...content) {
+		console[content instanceof Error ? 'error' : 'log'](...content);
+		if (isError(content)) content = inspect(content, { depth: 10 });
+		if (!process.env.DEV) post(`https://discordapp.com/api/webhooks/${process.env.CONSOLE}`, { data: { avatar_url: 'https://api.shaybox.com/discord/avatar/361796552165031936', ...content, username: 'Hex' } });
 	},
 
 	updateActivity(client) {
