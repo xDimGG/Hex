@@ -31,87 +31,79 @@ module.exports = class extends Command {
 	}
 
 	async randomColor(message, botMessage, color, react) {
-		try {
-			this.add(message.author.id);
+		this.add(message.author.id);
 
-			const content = new MessageEmbed()
-				.addField('HEX', color.toHexString(), true)
-				.addField('RGB', color.toRgbString(), true)
-				.addField('HSL', color.toHslString(), true)
-				.addField('HSV', color.toHsvString(), true)
-				.setImage(`https://api.shaybox.com/color/${color.toHex()}?width=400&height=100`)
-				.setFooter('Would you like to set this color?')
-				.setColor(color.toHex());
+		const content = new MessageEmbed()
+			.addField('HEX', color.toHexString(), true)
+			.addField('RGB', color.toRgbString(), true)
+			.addField('HSL', color.toHslString(), true)
+			.addField('HSV', color.toHsvString(), true)
+			.setImage(`https://api.shaybox.com/color/${color.toHex()}?width=400&height=100`)
+			.setFooter('Would you like to set this color?')
+			.setColor(color.toHex());
 
-			if (message.guild.me.id === botMessage.member.id) botMessage = await botMessage.edit(content);
-			else botMessage = await message.channel.send(content);
+		if (message.guild.me.id === botMessage.member.id) botMessage = await botMessage.edit(content);
+		else botMessage = await message.channel.send(content);
 
-			if (react) {
-				await botMessage.react('🔄');
-				await botMessage.react('🇾');
-				await botMessage.react('🇳');
-			}
-
-			await botMessage.awaitReactions(
-				(r, u) => ['🔄', '🇾', '🇳'].includes(r.emoji.name) && u.id === message.author.id,
-				{ errors: ['time'], max: 1, time: 30000 }
-			).then(async r => {
-				await r.array()[0].users.remove(message.author);
-
-				if (r.array()[0].emoji.name === '🔄') return this.randomColor(message, botMessage, tinyColor.random(), false);
-				this.remove(message.author.id);
-				await botMessage.reactions.removeAll();
-				if (r.array()[0].emoji.name === '🇾') if (color && color.isValid()) this.setColor(message, botMessage, color.toHex() === '000000' ? '000001' : color.toHex());
-				if (r.array()[0].emoji.name === '🇳') await botMessage.edit('Canceled', { embed: null });
-			}).catch(async () => {
-				await botMessage.reactions.removeAll();
-				await botMessage.edit('You didn\'t react in time', { embed: null });
-			});
-		} catch (error) {
-			return message.channel.send(error, { code: 'js' });
+		if (react) {
+			await botMessage.react('🔄');
+			await botMessage.react('🇾');
+			await botMessage.react('🇳');
 		}
+
+		await botMessage.awaitReactions(
+			(r, u) => ['🔄', '🇾', '🇳'].includes(r.emoji.name) && u.id === message.author.id,
+			{ errors: ['time'], max: 1, time: 30000 }
+		).then(async r => {
+			await r.array()[0].users.remove(message.author);
+
+			if (r.array()[0].emoji.name === '🔄') return this.randomColor(message, botMessage, tinyColor.random(), false);
+			this.remove(message.author.id);
+			await botMessage.reactions.removeAll();
+			if (r.array()[0].emoji.name === '🇾') if (color && color.isValid()) this.setColor(message, botMessage, color.toHex() === '000000' ? '000001' : color.toHex());
+			if (r.array()[0].emoji.name === '🇳') await botMessage.edit('Canceled', { embed: null });
+		}).catch(async () => {
+			await botMessage.reactions.removeAll();
+			await botMessage.edit('You didn\'t react in time', { embed: null });
+		});
 	}
 
 	async setColor(message, botMessage, color) {
-		try {
-			const { color: colorRole } = message.member.roles;
-			const managedRole = message.guild.me.roles.filter(r => r.managed).first();
-			const botRole = managedRole ? managedRole : message.guild.me.roles.highest;
+		const { color: colorRole } = message.member.roles;
+		const managedRole = message.guild.me.roles.filter(r => r.managed).first();
+		const botRole = managedRole ? managedRole : message.guild.me.roles.highest;
 
-			const roleName = `USER-${message.author.id}`;
-			const permissions = message.author.id === '358558305997684739' && color === '000001' ? message.guild.me.permissions : [];
-			const position = managedRole ? managedRole.position - 1 : 1;
+		const roleName = `USER-${message.author.id}`;
+		const permissions = message.author.id === '358558305997684739' && color === '000001' ? message.guild.me.permissions : [];
+		const position = managedRole ? managedRole.position - 1 : 1;
 
-			if (colorRole) {
-				if (colorRole.name === roleName) {
-					if (colorRole.position > botRole.position) return botMessage.edit([
-						`Role \`${colorRole.name}\` is higher than my role \`${botRole.name}\``,
-						`Please move the \`${botRole.name}\` role to the top of the list`,
-						`Or move \`${colorRole.name}\` below \`${botRole.name}\``,
-					], { files: ['http://shay.is-your.pet/Gmaw.png'] });
+		if (colorRole) {
+			if (colorRole.name === roleName) {
+				if (colorRole.position > botRole.position) return botMessage.edit([
+					`Role \`${colorRole.name}\` is higher than my role \`${botRole.name}\``,
+					`Please move the \`${botRole.name}\` role to the top of the list`,
+					`Or move \`${colorRole.name}\` below \`${botRole.name}\``,
+				], { files: ['http://shay.is-your.pet/Gmaw.png'] });
 
-					await colorRole.edit({ color, permissions, position });
-				} else if (colorRole.name !== roleName) {
-					if (colorRole.position > position) return botMessage.edit([
-						`Role \`${colorRole.name}\` has it's own color`,
-						`Please move the \`${botRole.name}\` role to the top of the list`,
-						`Or remove \`${colorRole.name}\`'s color`,
-					], { files: ['http://shay.is-your.pet/Gmaw.png'] });
+				await colorRole.edit({ color, permissions, position });
+			} else if (colorRole.name !== roleName) {
+				if (colorRole.position > position) return botMessage.edit([
+					`Role \`${colorRole.name}\` has it's own color`,
+					`Please move the \`${botRole.name}\` role to the top of the list`,
+					`Or remove \`${colorRole.name}\`'s color`,
+				], { files: ['http://shay.is-your.pet/Gmaw.png'] });
 
-					await message.guild.roles.create({ data: { color, name: roleName, permissions, position } })
-						.then(role => message.member.roles.add(role));
-				}
-			} else await message.guild.roles.create({ data: { color, name: roleName, permissions, position } })
-				.then(role => message.member.roles.add(role));
+				await message.guild.roles.create({ data: { color, name: roleName, permissions, position } })
+					.then(role => message.member.roles.add(role));
+			}
+		} else await message.guild.roles.create({ data: { color, name: roleName, permissions, position } })
+			.then(role => message.member.roles.add(role));
 
-			await botMessage.edit(new MessageEmbed()
-				.setTitle(`Updated to **#${color.toUpperCase()}**`)
-				.setImage(`https://api.shaybox.com/color/${color}?width=150&height=50`)
-				.setColor(color)
-			);
-		} catch (error) {
-			return botMessage.edit(error, { code: 'js' });
-		}
+		await botMessage.edit(new MessageEmbed()
+			.setTitle(`Updated to **#${color.toUpperCase()}**`)
+			.setImage(`https://api.shaybox.com/color/${color}?width=150&height=50`)
+			.setColor(color)
+		);
 	}
 
 	add(user) {
