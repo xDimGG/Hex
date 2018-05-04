@@ -1,12 +1,11 @@
 const { post } = require('snekfetch');
-const { isArray, isError, inspect } = require('util');
+const { isError, inspect } = require('util');
 
 module.exports = {
 	log(...input) {
-		console.log(input);
-		if (isArray(input)) input = input.join(' ');
+		console[input instanceof Error ? 'error' : 'log'](...input);
 		if (isError(input)) input = inspect(input, { depth: 10 });
-		if (!process.env.DEV) this.client.channels.get('361533828520476684').send(input, { code: 'js' });
+		if (!process.env.DEV) this.client.channels.get('361533828520476684').send(...input, { code: 'js' });
 	},
 
 	updateActivity(client) {

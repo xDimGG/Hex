@@ -16,6 +16,5 @@ module.exports = class extends AkairoClient {
 	async login(token) {
 		await this.db.sync();
 		await super.login(token);
-		console.log(this.user.tag);
 	}
 };
