@@ -6,7 +6,7 @@ module.exports = {
 		console[content instanceof Error ? 'error' : 'log'](...content);
 		if (isArray(content)) content = content.join('\n');
 		if (isError(content)) content = inspect(content, { depth: 10 });
-		if (!process.env.DEV) post(`https://discordapp.com/api/webhooks/${process.env.CONSOLE}`, { data: { avatar_url: 'https://api.shaybox.com/discord/avatar/361796552165031936', content, username: 'Hex' } });
+		if (!process.env.DEV) post(`https://discordapp.com/api/webhooks/${process.env.CONSOLE}`, { data: { avatar_url: 'https://api.shaybox.com/discord/avatar/361796552165031936', content, username: 'Hex' } }).end();
 	},
 
 	updateActivity(client) {
