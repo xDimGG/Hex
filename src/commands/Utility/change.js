@@ -83,19 +83,24 @@ module.exports = class extends Command {
 			const position = managedRole ? managedRole.position - 1 : 1;
 
 			if (colorRole) {
-				if (colorRole.name === roleName && botRole.position < colorRole.position) return botMessage.edit([
-					`Role \`${colorRole.name}\` is higher than my role \`${botRole.name}\``,
-					`Please move the \`${botRole.name}\` role to the top of the list`,
-					`Or move \`${colorRole.name}\` below \`${botRole.name}\``,
-				], { files: ['http://shay.is-your.pet/Gmaw.png'] });
+				if (colorRole.name === roleName) {
+					if (colorRole.position > botRole.position) return botMessage.edit([
+						`Role \`${colorRole.name}\` is higher than my role \`${botRole.name}\``,
+						`Please move the \`${botRole.name}\` role to the top of the list`,
+						`Or move \`${colorRole.name}\` below \`${botRole.name}\``,
+					], { files: ['http://shay.is-your.pet/Gmaw.png'] });
 
-				if (colorRole.name !== roleName && colorRole.position > position) return botMessage.edit([
-					`Role \`${colorRole.name}\` has it's own color`,
-					`Please move the \`${botRole.name}\` role to the top of the list`,
-					`Or remove \`${colorRole.name}\`'s color`,
-				], { files: ['http://shay.is-your.pet/Gmaw.png'] });
+					await colorRole.edit({ color, permissions, position });
+				} else if (colorRole.name !== roleName) {
+					if (colorRole.position > position) return botMessage.edit([
+						`Role \`${colorRole.name}\` has it's own color`,
+						`Please move the \`${botRole.name}\` role to the top of the list`,
+						`Or remove \`${colorRole.name}\`'s color`,
+					], { files: ['http://shay.is-your.pet/Gmaw.png'] });
 
-				if (colorRole.name === roleName) await colorRole.edit({ color, permissions, position });
+					await message.guild.roles.create({ data: { color, name: roleName, permissions, position } })
+						.then(role => message.member.roles.add(role));
+				}
 			} else await message.guild.roles.create({ data: { color, name: roleName, permissions, position } })
 				.then(role => message.member.roles.add(role));
 
