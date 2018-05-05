@@ -1,12 +1,12 @@
-const { isArray, isError, inspect } = require('util');
+const { isArray, isError } = require('util');
 const { post } = require('snekfetch');
 
 module.exports = {
 	log(...content) {
-		console[content instanceof Error ? 'error' : 'log'](...content);
+		console[isError(content) ? 'error' : 'log'](...content);
 		if (isArray(content)) content = content.join('\n');
-		if (isError(content)) content = inspect(content, { depth: 10 });
-		if (!process.env.DEV) post(`https://discordapp.com/api/webhooks/${process.env.CONSOLE}`, { data: { avatar_url: 'https://api.shaybox.com/discord/avatar/361796552165031936', content, username: 'Hex' } }).end();
+		if (isError(content)) content = `\`\`\`js\n${content.stack}\n\`\`\``;
+		if (!process.env.DEV) post(`https://discordapp.com/api/webhooks/${process.env.CONSOLE}`, { data: { avatar_url: 'https://api.shaybox.com/discord/avatar/402031976548270081', content, username: 'Anti Hoister' } }).end();
 	},
 
 	updateActivity(client) {
