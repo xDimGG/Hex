@@ -17,4 +17,4 @@ new Client({
 	messageCacheLifetime: 60,
 	messageCacheMaxSize: 50,
 	messageSweepInterval: 60,
-}).login(process.env.TOKEN);
+}).login(process.env.token);

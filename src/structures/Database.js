@@ -2,7 +2,7 @@ const Sequelize = require('sequelize');
 
 module.exports = class extends Sequelize {
 	constructor() {
-		super(process.env.POSTGRES, {
+		super(process.env.database, {
 			dialect: 'postgres',
 			logging: false,
 		});
