@@ -22,9 +22,9 @@ module.exports = class extends Command {
 		let output;
 		try {
 			const evaled = eval(code);
-			output = inspect(evaled instanceof Promise ? await evaled : evaled, { maxArrayLength: Infinity });
+			output = evaled instanceof Promise ? await evaled : evaled;
 		} catch (error) {
-			output = inspect(error);
+			output = error.stack;
 		}
 
 		output = this.clean(output);
