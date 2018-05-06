@@ -63,8 +63,8 @@ module.exports = class extends Command {
 			if (r.array()[0].emoji.name === '🇾') if (color && color.isValid()) this.setColor(message, botMessage, color.toHex() === '000000' ? '000001' : color.toHex());
 			if (r.array()[0].emoji.name === '🇳') await botMessage.edit('Canceled', { embed: null });
 		}).catch(async () => {
-			await botMessage.reactions.removeAll();
-			await botMessage.edit('You didn\'t react in time', { embed: null });
+			if (message) await botMessage.reactions.removeAll();
+			if (botMessage) await botMessage.edit('You didn\'t react in time', { embed: null });
 		});
 	}
 
