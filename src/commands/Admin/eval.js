@@ -1,5 +1,4 @@
 const Command = require('../../structures/Command');
-const { inspect } = require('util');
 
 module.exports = class extends Command {
 	constructor() {

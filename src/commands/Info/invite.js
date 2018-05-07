@@ -9,6 +9,9 @@ module.exports = class extends Command {
 	}
 
 	exec(message) {
-		message.channel.send(`<https://bot.shaybox.com/${this.client.user.id}>\nIf you would like support, join my support server <https://discord.shaybox.com/>`);
+		message.channel.send([
+			`<https://bot.shaybox.com/${this.client.user.id}>`,
+			'If you would like support, join my support server <https://discord.shaybox.com/>',
+		]);
 	}
 };
