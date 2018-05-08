@@ -9,8 +9,8 @@ module.exports = class extends AkairoClient {
 	constructor(...options) {
 		super(...options);
 		this.db = new Database();
-		this.runningUsers = {};
 		this.bannedUsers = new Collection();
+		this.runningUsers = {};
 	}
 
 	async login(token) {
