@@ -10,7 +10,7 @@ new Client({
 	inhibitorDirectory: './src/inhibitors/',
 	listenerDirectory: './src/listeners/',
 	ownerID: '358558305997684739',
-	prefix: m => m.guild ? m.guild.get().then(c => c.prefix) : 'h!',
+	prefix: m => m.guild ? m.guild.get().then(c => c.prefix).catch(() => 'h!') : 'h!',
 }, {
 	disableEveryone: true,
 	disabledEvents: ['TYPING_START'],
