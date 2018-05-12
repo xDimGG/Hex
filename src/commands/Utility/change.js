@@ -12,7 +12,7 @@ module.exports = class extends Command {
 		});
 	}
 
-	exec(message, { color }) {
+	async exec(message, { color }) {
 		if (this.client.runningUsers[message.author.id]) return message.channel.send('Currently running.');
 
 		if (color) color = tinyColor(color);
@@ -26,7 +26,7 @@ module.exports = class extends Command {
 			'RED', 'blanchedalmond', 'darkblue',
 		];
 
-		if (color.isValid()) this.randomColor(message, message, color, true);
+		if (color.isValid()) await this.randomColor(message, message, color, true);
 		else message.channel.send(`Invalid color, Ex. **${examples[Math.floor(Math.random() * examples.length)]}**`);
 	}
 
@@ -51,7 +51,7 @@ module.exports = class extends Command {
 			await botMessage.react('🇳');
 		}
 
-		botMessage.awaitReactions(
+		await botMessage.awaitReactions(
 			(r, u) => ['🔄', '🇾', '🇳'].includes(r.emoji.name) && u.id === message.author.id,
 			{ errors: ['time'], max: 1, time: 30000 }
 		).then(async reactions => {
