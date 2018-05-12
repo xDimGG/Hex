@@ -15,7 +15,7 @@ module.exports = class extends Listener {
 			'Error:',
 			`\`\`\`\n${error.stack}\n\`\`\``,
 		]);
-		if (!message || error instanceof BaseError) return;
+		if (!message || (error instanceof BaseError)) return;
 		await message.channel.send([
 			'An unexpected error has occured',
 			'Please report this to my support server <https://discord.shaybox.com/>',
