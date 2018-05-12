@@ -8,14 +8,18 @@ module.exports = class extends Listener {
 	}
 
 	async exec(error, message) {
-		log(error);
-		if (!message) return;
-		if (error instanceof BaseError) return;
+		log([
+			`An unexpected error has occured in \`${message.channel.name}\` (\`${message.channel.id}\`)`,
+			'Message content:',
+			`\`\`\`\n${message.content}\n\`\`\``,
+			'Error:',
+			`\`\`\`\n${error.stack}\n\`\`\``,
+		]);
+		if (!message || error instanceof BaseError) return;
 		await message.channel.send([
 			'An unexpected error has occured',
 			'Please report this to my support server <https://discord.shaybox.com/>',
-			`\`\`\`${error.stack}\`\`\``,
+			`\`\`\`\n${error.stack}\n\`\`\``,
 		]);
-		await message.channel.stopTyping();
 	}
 };
