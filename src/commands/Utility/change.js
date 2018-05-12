@@ -51,20 +51,21 @@ module.exports = class extends Command {
 			await botMessage.react('🇳');
 		}
 
-		await botMessage.awaitReactions(
+		botMessage.awaitReactions(
 			(r, u) => ['🔄', '🇾', '🇳'].includes(r.emoji.name) && u.id === message.author.id,
 			{ errors: ['time'], max: 1, time: 30000 }
-		).then(async r => {
-			await r.array()[0].users.remove(message.author);
+		).then(async reactions => {
+			const reaction = reactions.first();
+			await reaction.users.remove(message.author);
 
-			if (r.array()[0].emoji.name === '🔄') return this.randomColor(message, botMessage, tinyColor.random(), false);
+			if (reaction.emoji.name === '🔄') return this.randomColor(message, botMessage, tinyColor.random(), false);
 			this.remove(message.author.id);
-			await botMessage.reactions.removeAll();
-			if (r.array()[0].emoji.name === '🇾') if (color && color.isValid()) this.setColor(message, botMessage, color.toHex() === '000000' ? '000001' : color.toHex());
-			if (r.array()[0].emoji.name === '🇳') await botMessage.edit('Canceled', { embed: null });
-		}).catch(async () => {
-			if (message) await botMessage.reactions.removeAll();
-			if (botMessage) await botMessage.edit('You didn\'t react in time', { embed: null });
+			botMessage.reactions.removeAll();
+			if (reaction.emoji.name === '🇾') if (color && color.isValid()) this.setColor(message, botMessage, color.toHex() === '000000' ? '000001' : color.toHex());
+			if (reaction.emoji.name === '🇳') botMessage.edit('Canceled', { embed: null });
+		}).catch(() => {
+			botMessage.reactions.removeAll();
+			botMessage.edit('You didn\'t react in time', { embed: null });
 		});
 	}
 
