@@ -1,10 +1,11 @@
 const { post } = require('snekfetch');
+const { isArray, isError } = require('util');
 const { console_webhook, avatar_url, username } = process.env;
 
 module.exports = {
 	log(...content) {
-		console[content instanceof Error ? 'error' : 'log'](...content);
-		if (content instanceof Array) content = content.join(' ');
+		console[isError(content) ? 'error' : 'log'](...content);
+		if (isArray(...content)) content = content.join(' ');
 		if (!process.env.dev) post(`https://discordapp.com/api/webhooks/${console_webhook}`, { data: { avatar_url, content, username } }).end();
 	},
 
