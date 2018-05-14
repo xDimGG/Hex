@@ -1,6 +1,6 @@
 const Listener = require('../structures/Listener');
 const { log } = require('../structures/Utils');
-const { BaseError } = require('sequelize');
+const { Error: BaseError } = require('sequelize');
 
 module.exports = class extends Listener {
 	constructor() {
@@ -8,6 +8,7 @@ module.exports = class extends Listener {
 	}
 
 	async exec(error, message) {
+		console.error(error);
 		log([
 			`An unexpected error has occured in \`${message.channel.name}\` (\`${message.channel.id}\`)`,
 			'Message content:',
