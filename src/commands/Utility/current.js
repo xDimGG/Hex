@@ -11,7 +11,7 @@ module.exports = class extends Command {
 	}
 
 	exec(message) {
-		const colorRole = message.member.roles.find('name', `USER-${message.member.id}`);
+		const colorRole = message.member.roles.find(r => r.name === `USER-${message.member.id}`);
 
 		if (!colorRole) return message.channel.send('You don\'t a hex role');
 
