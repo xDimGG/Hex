@@ -70,6 +70,8 @@ module.exports = class extends Command {
 	}
 
 	async setColor(message, botMessage, color) {
+		if (!message.member) message.guild.members.fetch(message.member);
+
 		const { color: colorRole } = message.member.roles;
 		const managedRole = message.guild.me.roles.filter(r => r.managed).first();
 		const botRole = managedRole ? managedRole : message.guild.me.roles.highest;
