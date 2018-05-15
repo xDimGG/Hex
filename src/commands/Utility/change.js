@@ -26,7 +26,7 @@ module.exports = class extends Command {
 			'RED', 'blanchedalmond', 'darkblue',
 		];
 
-		if (color.isValid()) await this.randomColor(message, message, color, true);
+		if (color.isValid()) await this.randomColor(message, null, color, true);
 		else message.channel.send(`Invalid color, Ex. **${examples[Math.floor(Math.random() * examples.length)]}**`);
 	}
 
@@ -42,7 +42,7 @@ module.exports = class extends Command {
 			.setFooter('Would you like to set this color?')
 			.setColor(color.toHex());
 
-		if (message.guild.me.id === botMessage.member.id) botMessage = await botMessage.edit(content);
+		if (botMessage && message.guild.me.id === botMessage.member.id) botMessage = await botMessage.edit(content);
 		else botMessage = await message.channel.send(content);
 
 		if (react) {
