@@ -4,8 +4,8 @@ FROM node:10-alpine
 LABEL maintainer "ShayBox <shayneehartford@gmail.com>"
 # Workdir
 WORKDIR /usr/src/Shaybot
-# Copy package.json and yarn.lock for Yarn
-COPY package.json yarn.lock ./
+# Copy package.json
+COPY package.json ./
 # Install dependencies 
 RUN apk add --update \
 && apk add --no-cache ca-certificates \
