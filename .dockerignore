@@ -1,0 +1,6 @@
+# Docker
+.dockerignore
+docker-compose.yml
+docker-compose.yml.example
+docker.sh
+Dockerfile
