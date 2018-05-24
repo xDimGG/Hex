@@ -20,8 +20,6 @@ COPY . .
 # Enviroment variables
 ENV token=\
     database=\
-    weather_api=\
-    google_maps_api=\
     dbl_api=\
     dbots_api=
 # Run command
