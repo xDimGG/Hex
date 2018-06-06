@@ -1,0 +1,179 @@
+{
+  "extends": "tslint:all",
+  "rules": {
+    "align": false,
+    "array-type": [
+      true,
+      "array"
+    ],
+    "arrow-parens": false,
+    "arrow-return-shorthand": false,
+    "ban-comma-operator": false,
+    "ban-types": {
+      "options": [
+        [
+          "Avoid using the `Boolean` type. Did you mean `boolean`?",
+          "Boolean"
+        ],
+        [
+          "Avoid using the `Function` type. Prefer a specific function type, like `() => void`, or use `ts.AnyFunction`.",
+          "Function"
+        ],
+        [
+          "Avoid using the `Number` type. Did you mean `number`?",
+          "Number"
+        ],
+        [
+          "Avoid using the `Object` type. Did you mean `object`?",
+          "Object"
+        ],
+        [
+          "Avoid using the `String` type. Did you mean `string`?",
+          "String"
+        ]
+      ]
+    },
+    "boolean-trivia": true,
+    "class-name": true,
+    "comment-format": [
+      true,
+      "check-space"
+    ],
+    "completed-docs": false,
+    "curly": [
+      true,
+      "ignore-same-line"
+    ],
+    "debug-assert": true,
+    "eofline": false,
+    "forin": false,
+    "indent": [
+      true,
+      "tabs"
+    ],
+    "interface-name": [
+      true,
+      "never-prefix"
+    ],
+    "interface-over-type-literal": true,
+    "jsdoc-format": true,
+    "linebreak-style": [
+      true,
+      "CRLF"
+    ],
+    "max-classes-per-file": false,
+    "max-line-length": false,
+    "member-access": false,
+    "member-ordering": false,
+    "newline-per-chained-call": false,
+    "next-line": [
+      true,
+      "check-catch",
+      "check-else"
+    ],
+    "no-angle-bracket-type-assertion": false,
+    "no-any": false,
+    "no-bitwise": false,
+    "no-bom": true,
+    "no-conditional-assignment": false,
+    "no-consecutive-blank-lines": false,
+    "no-console": false,
+    "no-debugger": false,
+    "no-default-export": false,
+    "no-double-space": true,
+    "no-empty": false,
+    "no-empty-interface": false,
+    "no-eval": false,
+    "no-implicit-dependencies": [
+      true,
+      "dev"
+    ],
+    "no-in-operator": true,
+    "no-increment-decrement": true,
+    "no-inferrable-types": true,
+    "no-internal-module": true,
+    "no-magic-numbers": false,
+    "no-namespace": false,
+    "no-null-keyword": true,
+    "no-object-literal-type-assertion": false,
+    "no-parameter-reassignment": false,
+    "no-reference": false,
+    "no-shadowed-variable": false,
+    "no-submodule-imports": false,
+    "no-switch-case-fall-through": true,
+    "no-trailing-whitespace": [
+      true,
+      "ignore-template-strings"
+    ],
+    "no-type-assertion-whitespace": true,
+    "no-unnecessary-qualifier": true,
+    "no-unnecessary-type-assertion": true,
+    "no-unsafe-any": false,
+    "no-var-keyword": true,
+    "no-var-requires": false,
+    "object-literal-key-quotes": [
+      true,
+      "consistent-as-needed"
+    ],
+    "no-void-expression": false,
+    "object-literal-shorthand": true,
+    "object-literal-sort-keys": false,
+    "object-literal-surrounding-space": true,
+    "one-line": [
+      true,
+      "check-open-brace",
+      "check-whitespace"
+    ],
+    "one-variable-per-declaration": false,
+    "ordered-imports": false,
+    "prefer-conditional-expression": false,
+    "prefer-const": true,
+    "prefer-function-over-method": false,
+    "quotemark": [
+      true,
+      "single"
+    ],
+    "radix": false,
+    "semicolon": true,
+    "space-before-function-paren": false,
+    "space-within-parens": true,
+    "strict-boolean-expressions": false,
+    "strict-type-predicates": false,
+    "trailing-comma": false,
+    "triple-equals": true,
+    "type-operator-spacing": true,
+    "typedef": false,
+    "typedef-whitespace": [
+      true,
+      {
+        "call-signature": "nospace",
+        "index-signature": "nospace",
+        "parameter": "nospace",
+        "property-declaration": "nospace",
+        "variable-declaration": "nospace"
+      },
+      {
+        "call-signature": "onespace",
+        "index-signature": "onespace",
+        "parameter": "onespace",
+        "property-declaration": "onespace",
+        "variable-declaration": "onespace"
+      }
+    ],
+    "variable-name": [
+      true,
+      "allow-leading-underscore",
+      "ban-keywords",
+      "check-format"
+    ],
+    "whitespace": [
+      true,
+      "check-branch",
+      "check-decl",
+      "check-module",
+      "check-operator",
+      "check-separator",
+      "check-type"
+    ]
+  }
+}

@@ -59,4 +59,5 @@ typings/
 
 # Custom
 .vscode
-src/bwd/provider
+build/*
+!build/bwd

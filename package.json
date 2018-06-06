@@ -2,54 +2,34 @@
   "name": "hex",
   "version": "0.0.0",
   "description": "Custom Hex Color Role",
-  "main": "src/index.js",
+  "license": "MIT",
+  "main": "build/index.js",
   "scripts": {
+    "prestart": "tsc",
     "start": "node .",
-    "test": "nodemon .",
-    "debug": "node --nolazy --inspect-brk=9229 ."
+    "test": "tsc-watch -w --onSuccess \"node .\""
   },
   "author": {
     "name": "Shayne Hartford (ShayBox)",
     "email": "ShayneEHartford@Gmail.Com"
   },
   "dependencies": {
-    "discord-akairo": "github:ShayBox/discord-akairo",
+    "@types/node": "^9.6.6",
+    "@types/snekfetch": "^3.6.0",
+    "@types/tinycolor2": "^1.4.0",
     "discord.js": "github:discordjs/discord.js",
+    "klasa": "github:dirigeants/klasa",
     "os": "^0.1.1",
     "os-toolbox": "^0.2.9",
     "pg": "^7.4.1",
-    "sequelize": "^4.37.6",
-    "tinycolor2": "^1.4.1"
+    "tinycolor2": "^1.4.1",
+    "typescript": "^2.8.3"
   },
   "devDependencies": {
-    "@types/node": "^9.6.6",
-    "@types/sequelize": "^4.27.15",
-    "@types/snekfetch": "^3.6.0",
-    "discord.js-typings": "github:discordjs/discord.js-typings",
-    "eslint": "^4.18.1",
-    "eslint-config-lloti": "lloti/eslint-config-lloti"
+    "tsc-watch": "^1.0.22"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Shays-Bots/Hex.git"
-  },
-  "license": "MIT",
-  "eslintConfig": {
-    "extends": "eslint-config-lloti",
-    "parserOptions": {
-      "ecmaVersion": 9,
-      "sourceType": "module"
-    },
-    "rules": {
-      "global-require": 0,
-      "sort-keys": [
-        "error",
-        "asc",
-        {
-          "caseSensitive": true,
-          "natural": false
-        }
-      ]
-    }
   }
 }
