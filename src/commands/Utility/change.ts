@@ -35,7 +35,7 @@ export default class extends Command {
 	async randomColor(message: KlasaMessage, color: string, react: boolean) {
 		const botMessage = await message.send(new MessageEmbed()
 			.addField('HEX', `#${color.toUpperCase()}`, true)
-			.setImage(`https://via.placeholder.com/400x100/${color}/${color}`)
+			.setImage(`https://via.placeholder.com/165x100/${color}/${color}`)
 			.setFooter('Would you like to set this color?')
 			.setColor(color)
 		) as Message;
