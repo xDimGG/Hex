@@ -21,26 +21,23 @@ export default class extends Command {
 		];
 
 		this.createCustomResolver('color', async (arg, possible, message, params) => {
-			if (!arg) return tinycolor.random();
+			if (!arg) return Math.random().toString(16).slice(2, 8);
 			const color = tinycolor(arg);
 			if (color.isValid()) return color;
 			else return message.send(`Invalid color, Ex. **${this.examples[Math.floor(Math.random() * this.examples.length)]}**`);
 		});
 	}
 
-	async run(message: KlasaMessage, [color]: [tinycolorInstance]) {
+	async run(message: KlasaMessage, [color]: string[]) {
 		return this.randomColor(message, color, true);
 	}
 
-	async randomColor(message: KlasaMessage, color: tinycolorInstance, react: boolean) {
+	async randomColor(message: KlasaMessage, color: string, react: boolean) {
 		const botMessage = await message.send(new MessageEmbed()
-			.addField('HEX', color.toHexString(), true)
-			.addField('RGB', color.toRgbString(), true)
-			.addField('HSL', color.toHslString(), true)
-			.addField('HSV', color.toHsvString(), true)
-			.setImage(`https://via.placeholder.com/400x100/${color.toHex()}/${color.toHex()}`)
+			.addField('HEX', `#${color.toUpperCase()}`, true)
+			.setImage(`https://via.placeholder.com/400x100/${color}/${color}`)
 			.setFooter('Would you like to set this color?')
-			.setColor(color.toHex())
+			.setColor(color)
 		) as Message;
 
 		if (react) {
@@ -56,9 +53,9 @@ export default class extends Command {
 			const reaction = reactions.first();
 			await reaction.users.remove(message.author);
 
-			if (reaction.emoji.name === '🔄') return this.randomColor(message, tinycolor.random(), false);
+			if (reaction.emoji.name === '🔄') return this.randomColor(message, Math.random().toString(16).slice(2, 8), false);
 			await botMessage.reactions.removeAll();
-			if (reaction.emoji.name === '🇾') return this.setColor(message, color.toHex() === '000000' ? '000001' : color.toHex());
+			if (reaction.emoji.name === '🇾') return this.setColor(message, color === '000000' ? '000001' : color);
 			if (reaction.emoji.name === '🇳') return message.send('Canceled', { embed: undefined });
 		}).catch(async () => {
 			await botMessage.reactions.removeAll();
@@ -107,7 +104,7 @@ export default class extends Command {
 
 		return message.send(new MessageEmbed()
 			.setTitle(`Updated to **#${color.toUpperCase()}**`)
-			.setImage(`https://via.placeholder.com/150x50/${colorRole.hexColor.replace('#', '')}/${colorRole.hexColor.replace('#', '')}`)
+			.setImage(`https://via.placeholder.com/150x50/${color}/${color}`)
 			.setColor(color)
 		);
 	}
