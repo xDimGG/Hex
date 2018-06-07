@@ -13,7 +13,7 @@ export default class extends Command {
 
 		this.createCustomResolver('key', async (arg, possible, message, params) => {
 			if (!arg) return undefined;
-			if (!['prefix', 'logschannel'].includes(arg.toLowerCase())) return message.send('Invalid key');
+			if (!['prefix'].includes(arg.toLowerCase())) return message.send('Invalid key');
 
 			return arg;
 		});
