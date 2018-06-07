@@ -23,7 +23,7 @@ export default class extends Command {
 		this.createCustomResolver('color', async (arg, possible, message, params) => {
 			if (!arg) return Math.random().toString(16).slice(2, 8);
 			const color = tinycolor(arg);
-			if (color.isValid()) return color;
+			if (color.isValid()) return color.toHex();
 			else return message.send(`Invalid color, Ex. **${this.examples[Math.floor(Math.random() * this.examples.length)]}**`);
 		});
 	}
