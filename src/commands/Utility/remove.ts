@@ -18,7 +18,7 @@ export default class extends Command {
 		return colorRole.delete()
 			.then(async () => message.send(new MessageEmbed()
 				.setTitle(`**Removed ${colorRole.hexColor.toUpperCase()}**`)
-				.setImage(`https://api.shaybox.com/color/${colorRole.hexColor.replace('#', '')}?width=150&height=50`)
+				.setImage(`https://via.placeholder.com/150x50/${colorRole.hexColor.replace('#', '')}/${colorRole.hexColor.replace('#', '')}`)
 				.setColor(colorRole.color)
 			));
 	}

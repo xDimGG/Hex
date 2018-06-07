@@ -33,16 +33,15 @@ export default class extends Command {
 	}
 
 	async randomColor(message: KlasaMessage, color: tinycolorInstance, react: boolean) {
-		const content = new MessageEmbed()
+		const botMessage = await message.send(new MessageEmbed()
 			.addField('HEX', color.toHexString(), true)
 			.addField('RGB', color.toRgbString(), true)
 			.addField('HSL', color.toHslString(), true)
 			.addField('HSV', color.toHsvString(), true)
-			.setImage(`https://api.shaybox.com/color/${color.toHex()}?width=400&height=100`)
+			.setImage(`https://via.placeholder.com/400x100/${color.toHex()}/${color.toHex()}`)
 			.setFooter('Would you like to set this color?')
-			.setColor(color.toHex());
-
-		const botMessage = await message.send(content) as Message;
+			.setColor(color.toHex())
+		) as Message;
 
 		if (react) {
 			await botMessage.react('🔄');
@@ -108,7 +107,7 @@ export default class extends Command {
 
 		return message.send(new MessageEmbed()
 			.setTitle(`Updated to **#${color.toUpperCase()}**`)
-			.setImage(`https://api.shaybox.com/color/${color}?width=150&height=50`)
+			.setImage(`https://via.placeholder.com/150x50/${colorRole.hexColor.replace('#', '')}/${colorRole.hexColor.replace('#', '')}`)
 			.setColor(color)
 		);
 	}
