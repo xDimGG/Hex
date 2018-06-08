@@ -17,5 +17,13 @@ export default class extends Event {
 			},
 			headers: { Authorization: process.env.DBL_API }
 		});
+		post(`https://bots.discord.pw/api/bots/${this.client.user.id}/stats`, {
+			data: {
+				server_count: this.client.guilds.size,
+				shard_count: this.client.shard.count,
+				shard_id: this.client.shard.id
+			},
+			headers: { Authorization: process.env.DBOTS_API }
+		});
 	}
 }
