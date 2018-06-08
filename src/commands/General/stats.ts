@@ -37,6 +37,15 @@ export default class extends Command {
 			`• Heartbeat Ping :: ${Math.round(this.client.ping)}ms`,
 			`• Message Ping   :: ${Math.round(m.createdTimestamp - message.createdTimestamp)}ms`,
 			'',
+			'Bot Stats',
+			`• Cached Users   :: ${await this.getShard('this.users.size')}`,
+			`• Guilds         :: ${await this.getShard('this.guilds.size')}`,
+			`• Members        :: ${await this.getShard('this.guilds.reduce((a, b) => a + b.memberCount, 0)')}`,
+			`• Emojis         :: ${await this.getShard('this.emojis.size')}`,
+			`• Categories     :: ${await this.getShard('this.channels.filter(channel => channel.type === "category").size')}`,
+			`• Text Channels  :: ${await this.getShard('this.channels.filter(channel => channel.type === "text").size')}`,
+			`• Voice Channels :: ${await this.getShard('this.channels.filter(channel => channel.type === "voice").size')}`,
+			'',
 			'Shard Stats',
 			`• Cached Users   :: ${this.client.users.size.toLocaleString()}`,
 			`• Guilds         :: ${this.client.guilds.size.toLocaleString()}`,
@@ -46,6 +55,10 @@ export default class extends Command {
 			`• Text Channels  :: ${this.client.channels.filter(channel => channel.type === 'text').size.toLocaleString()}`,
 			`• Voice Channels :: ${this.client.channels.filter(channel => channel.type === 'voice').size.toLocaleString()}`,
 		], { code: 'asciidoc' });
+	}
+
+	async getShard(command: string) {
+		return (await this.client.shard.broadcastEval(command)).reduce((a: number, b: number) => a + b, 0).toLocaleString();
 	}
 
 	formatTime(input: number) {
