@@ -7,7 +7,7 @@
   "scripts": {
     "prestart": "tsc",
     "start": "node .",
-    "test": "tsc-watch -w --onSuccess \"node .\""
+    "test": "tsc-watch -w --onSuccess \"node --inspect .\""
   },
   "author": {
     "name": "Shayne Hartford (ShayBox)",
