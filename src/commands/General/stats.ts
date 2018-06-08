@@ -37,7 +37,7 @@ export default class extends Command {
 			`• Heartbeat Ping :: ${Math.round(this.client.ping)}ms`,
 			`• Message Ping   :: ${Math.round(m.createdTimestamp - message.createdTimestamp)}ms`,
 			'',
-			'Bot Stats',
+			'Shard Stats',
 			`• Cached Users   :: ${this.client.users.size.toLocaleString()}`,
 			`• Guilds         :: ${this.client.guilds.size.toLocaleString()}`,
 			`• Members        :: ${this.client.guilds.reduce((a: number, b) => a + b.memberCount, 0).toLocaleString()}`,

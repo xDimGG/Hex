@@ -3,11 +3,12 @@
   "version": "0.0.0",
   "description": "Custom Hex Color Role",
   "license": "MIT",
-  "main": "build/index.js",
+  "main": "build/shard.js",
   "scripts": {
     "prestart": "tsc",
     "start": "node .",
-    "test": "tsc-watch -w --onSuccess \"node --inspect .\""
+    "test": "tsc-watch -w --onSuccess \"node .\"",
+    "debug": "tsc-watch -w --onSuccess \"node --inspect build/index.js\""
   },
   "author": {
     "name": "Shayne Hartford (ShayBox)",
