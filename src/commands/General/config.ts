@@ -13,7 +13,7 @@ export default class extends Command {
 
 		this.createCustomResolver('key', async (arg, possible, message, params) => {
 			if (!arg) return undefined;
-			if (!['prefix'].includes(arg.toLowerCase())) return message.send('Invalid key');
+			if (!['prefix', 'hexrole'].includes(arg.toLowerCase())) return message.send('Invalid key');
 
 			return arg;
 		});
@@ -28,10 +28,11 @@ export default class extends Command {
 	async run(message: KlasaMessage, [key, value]: [KlasaMessage | string | undefined][]) {
 		if (key instanceof KlasaMessage || value instanceof KlasaMessage) return message;
 		if (typeof key !== 'string' || typeof value !== 'string') {
-			const { prefix } = message.guild.configs as guildSchema;
+			const { prefix, hexrole } = message.guild.configs as guildSchema;
 
 			return message.send(new MessageEmbed()
 				.addField('Prefix', prefix, true)
+				.addField('HexRole', hexrole, true)
 				.setFooter(`Example: ${message.guildConfigs.get('prefix')}config prefix !`)
 				.setColor(0x00FF00)
 			);
@@ -39,7 +40,7 @@ export default class extends Command {
 
 		const oldValue = await message.guildConfigs.get(key);
 
-		await message.guildConfigs.update({ [key]: value });
+		await message.guildConfigs.update(key, value, message.guild);
 
 		return message.send(`${key} was updated from ${oldValue} to ${value}`);
 	}

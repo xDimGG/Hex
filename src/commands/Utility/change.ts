@@ -1,6 +1,7 @@
 import { Command, KlasaClient, CommandStore, KlasaMessage } from 'klasa';
 import { Collection, MessageReaction, Role, MessageEmbed, Message } from 'discord.js';
 import * as tinycolor from 'tinycolor2';
+import { guildSchema } from '../../types/Schemas';
 
 export default class extends Command {
 	private readonly examples: string[];
@@ -29,6 +30,9 @@ export default class extends Command {
 	}
 
 	async run(message: KlasaMessage, [color]: string[]) {
+		const { hexrole } = message.guild.configs as guildSchema;
+		if (hexrole && !message.member.roles.has(hexrole)) return message.send('You do not have the hex role');
+
 		return this.randomColor(message, color, true);
 	}
 

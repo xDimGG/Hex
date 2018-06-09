@@ -12,6 +12,7 @@ export class guildSchema extends Configuration {
 	public language: Language;
 	public disableNaturalPrefix: boolean;
 	public diabledCommands: Command[];
+	public hexrole: Snowflake;
 }
 
 export class userSchema extends Configuration {}
