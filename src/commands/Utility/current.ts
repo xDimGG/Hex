@@ -18,7 +18,7 @@ export default class extends Command {
 		return message.send(new MessageEmbed()
 			.setTitle(`**Current value ${colorRole.hexColor.toUpperCase()}**`)
 			.setImage(`https://via.placeholder.com/150x50/${colorRole.hexColor.replace('#', '')}/${colorRole.hexColor.replace('#', '')}`)
-			.setColor(colorRole.color),
+			.setColor(colorRole.color)
 		);
 	}
 }

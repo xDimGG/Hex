@@ -143,8 +143,13 @@
     "trailing-comma": [
       true,
       {
-        "multiline": "always",
-        "singleline": "never"
+        "multiline": {
+          "objects": "always",
+          "arrays": "always",
+          "functions": "never",
+          "typeLiterals": "ignore"
+        },
+        "esSpecCompliant": true
       }
     ],
     "triple-equals": true,

@@ -55,7 +55,7 @@ export default class extends Command {
 					const description = typeof command.description === 'function' ? command.description(message) : command.description;
 					help[command.category][command.subCategory].push(`${(message.guildConfigs as guildSchema).prefix}${command.name.padEnd(longest)} :: ${description}`);
 				})
-				.catch(() => { }),
+				.catch(() => { })
 		));
 
 		return help;

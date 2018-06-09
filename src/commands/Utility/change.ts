@@ -37,7 +37,7 @@ export default class extends Command {
 			.addField('HEX', `#${color.toUpperCase()}`, true)
 			.setImage(`https://via.placeholder.com/165x100/${color}/${color}`)
 			.setFooter('Would you like to set this color?')
-			.setColor(color),
+			.setColor(color)
 		) as Message;
 
 		if (react) {
@@ -48,7 +48,7 @@ export default class extends Command {
 
 		await botMessage.awaitReactions(
 			(r, u) => ['🔄', '🇾', '🇳'].includes(r.emoji.name) && u.id === message.author.id,
-			{ errors: ['time'], max: 1, time: 30000 },
+			{ errors: ['time'], max: 1, time: 30000 }
 		).then(async (reactions: Collection<string, MessageReaction>) => {
 			const reaction = reactions.first();
 			await reaction.users.remove(message.author);
@@ -105,7 +105,7 @@ export default class extends Command {
 		return message.send(new MessageEmbed()
 			.setTitle(`Updated to **#${color.toUpperCase()}**`)
 			.setImage(`https://via.placeholder.com/150x50/${color}/${color}`)
-			.setColor(color),
+			.setColor(color)
 		);
 	}
 }

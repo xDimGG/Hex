@@ -19,7 +19,7 @@ export default class extends Command {
 			.then(async () => message.send(new MessageEmbed()
 				.setTitle(`**Removed ${colorRole.hexColor.toUpperCase()}**`)
 				.setImage(`https://via.placeholder.com/150x50/${colorRole.hexColor.replace('#', '')}/${colorRole.hexColor.replace('#', '')}`)
-				.setColor(colorRole.color),
+				.setColor(colorRole.color)
 			));
 	}
 }
