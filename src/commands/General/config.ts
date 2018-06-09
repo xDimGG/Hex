@@ -33,7 +33,7 @@ export default class extends Command {
 			return message.send(new MessageEmbed()
 				.addField('Prefix', prefix, true)
 				.setFooter(`Example: ${message.guildConfigs.get('prefix')}config prefix !`)
-				.setColor(0x00FF00)
+				.setColor(0x00FF00),
 			);
 		}
 

@@ -81,6 +81,7 @@
     "no-debugger": false,
     "no-default-export": false,
     "no-double-space": true,
+    "no-dynamic-delete": false,
     "no-empty": false,
     "no-empty-interface": false,
     "no-eval": false,
@@ -139,7 +140,13 @@
     "space-within-parens": true,
     "strict-boolean-expressions": false,
     "strict-type-predicates": false,
-    "trailing-comma": false,
+    "trailing-comma": [
+      true,
+      {
+        "multiline": "always",
+        "singleline": "never"
+      }
+    ],
     "triple-equals": true,
     "type-operator-spacing": true,
     "typedef": false,

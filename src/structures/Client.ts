@@ -10,7 +10,7 @@ export class Client extends KlasaClient {
 			disabledCorePieces: ['commands'],
 			prefix: 'h!',
 			providers: { default: 'postgresql', postgresql: { connectionString: process.env.DATABASE } },
-			readyMessage: c => c.user.tag
+			readyMessage: c => c.user.tag,
 		}});
 	}
 }

@@ -10,7 +10,7 @@ new Client({
 	presence: {
 		activity: {
 			type: 'WATCHING',
-			name: 'for @Hex help'
-		}
-	}
+			name: 'for @Hex help',
+		},
+	},
 }).login(process.env.TOKEN || '');

@@ -3,7 +3,7 @@ import { Command, KlasaClient, CommandStore, KlasaMessage } from 'klasa';
 export default class extends Command {
 	constructor(client: KlasaClient, store: CommandStore, file: string[], core: boolean) {
 		super(client, store, file, core, {
-			description: (message) => message.language.get('COMMAND_INVITE_DESCRIPTION')
+			description: 'Displays the bot invite link',
 		});
 	}
 
@@ -14,7 +14,7 @@ export default class extends Command {
 	async run(message: KlasaMessage) {
 		return message.send([
 			`Bot: <https://bot.shaybox.com/${this.client.user.id}>`,
-			'Server: <https://discord.shaybox.com>'
+			'Server: <https://discord.shaybox.com>',
 		]);
 	}
 }

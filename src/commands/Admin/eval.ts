@@ -8,7 +8,7 @@ export default class extends Command {
 			permissionLevel: 10,
 			description: (message) => message.language.get('COMMAND_EVAL_DESCRIPTION'),
 			extendedHelp: (message) => message.language.get('COMMAND_EVAL_EXTENDEDHELP'),
-			usage: '<expression:str>'
+			usage: '<expression:str>',
 		});
 	}
 
@@ -23,8 +23,8 @@ export default class extends Command {
 			return message.send(message.language.get('COMMAND_EVAL_SENDFILE', time, footer), {
 				files: [{
 					attachment: Buffer.from(result),
-					name: 'output.txt'
-				}]
+					name: 'output.txt',
+				}],
 			});
 		}
 
@@ -61,7 +61,7 @@ export default class extends Command {
 		if (typeof result !== 'string') {
 			result = inspect(result, {
 				depth: flags.depth ? parseInt(flags.depth) || 0 : 0,
-				showHidden: Boolean(flags.showHidden)
+				showHidden: Boolean(flags.showHidden),
 			});
 		}
 

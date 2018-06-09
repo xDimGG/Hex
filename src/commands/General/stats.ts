@@ -8,7 +8,7 @@ export default class extends Command {
 	constructor(client: KlasaClient, store: CommandStore, file: string[], core: boolean) {
 		super(client, store, file, core, {
 			aliases: ['statistics'],
-			description: (message) => message.language.get('COMMAND_STATS_DESCRIPTION')
+			description: (message) => message.language.get('COMMAND_STATS_DESCRIPTION'),
 		});
 	}
 

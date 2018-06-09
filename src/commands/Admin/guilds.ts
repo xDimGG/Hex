@@ -5,7 +5,7 @@ export default class extends Command {
 		super(client, store, file, core, {
 			aliases: ['servers'],
 			permissionLevel: 10,
-			description: 'Show list of all guilds bot is in',
+			description: 'Display list of guilds',
 		});
 	}
 

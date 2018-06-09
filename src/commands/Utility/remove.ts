@@ -6,7 +6,7 @@ export default class extends Command {
 		super(client, store, file, core, {
 			runIn: ['text'],
 			requiredPermissions: ['SEND_MESSAGES', 'MANAGE_ROLES', 'EMBED_LINKS'],
-			description: 'Deletes the role that gives your name color, if you have one.'
+			description: 'Deletes the role that gives your name color, if you have one.',
 		});
 	}
 
@@ -19,7 +19,7 @@ export default class extends Command {
 			.then(async () => message.send(new MessageEmbed()
 				.setTitle(`**Removed ${colorRole.hexColor.toUpperCase()}**`)
 				.setImage(`https://via.placeholder.com/150x50/${colorRole.hexColor.replace('#', '')}/${colorRole.hexColor.replace('#', '')}`)
-				.setColor(colorRole.color)
+				.setColor(colorRole.color),
 			));
 	}
 }
