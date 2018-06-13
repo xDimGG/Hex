@@ -6,7 +6,7 @@
   "main": "src/index.ts",
   "scripts": {
     "start": "node -r ts-node/register .",
-    "test": "nodemon -e ts --exec "node -r ts-node/register .""
+    "test": "nodemon -e ts --exec node -r ts-node/register ."
   },
   "author": {
     "name": "Shayne Hartford (ShayBox)",
