@@ -1,16 +1,7 @@
-import { Client } from './structures/Client';
+import { ShardingManager } from 'discord.js';
+
+const manager = new ShardingManager('./src/bot.ts', { token: process.env.TOKEN });
 
 // tslint:disable-next-line:no-floating-promises
-new Client({
-	disabledEvents: ['TYPING_START'],
-	disableEveryone: true,
-	messageCacheLifetime: 3600,
-	messageCacheMaxSize: -1,
-	messageSweepInterval: 3600,
-	presence: {
-		activity: {
-			type: 'WATCHING',
-			name: 'for @Hex help',
-		},
-	},
-}).login(process.env.TOKEN || '');
+manager.spawn();
+manager.on('shardCreate', shard => console.log(`Launched shard ${shard.id}`));
