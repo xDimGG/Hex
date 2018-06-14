@@ -55,6 +55,7 @@ export default class extends Command {
 			{ errors: ['time'], max: 1, time: 30000 }
 		).then(async (reactions: Collection<string, MessageReaction>) => {
 			const reaction = reactions.first();
+			if (!reaction) return undefined;
 			await reaction.users.remove(message.author);
 
 			if (reaction.emoji.name === '🔄') return this.randomColor(message, Math.random().toString(16).slice(2, 8), false);
