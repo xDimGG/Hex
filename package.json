@@ -27,7 +27,8 @@
     "typescript": "^2.9.1"
   },
   "devDependencies": {
-    "nodemon": "^1.17.5"
+    "nodemon": "^1.17.5",
+    "tslint": "^5.10.0"
   },
   "repository": {
     "type": "git",
