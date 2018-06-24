@@ -6,25 +6,24 @@
   "main": "src/index.ts",
   "scripts": {
     "start": "node -r ts-node/register .",
-    "test": "nodemon -e ts --exec node -r ts-node/register ."
+    "test": "nodemon -e ts --exec node -r ts-node/register .",
+    "debug": "nodemon -e ts --exec node -r ts-node/register src/client.ts --inspect"
   },
   "author": {
     "name": "Shayne Hartford (ShayBox)",
     "email": "ShayneEHartford@Gmail.Com"
   },
   "dependencies": {
-    "@types/node": "^9.6.6",
-    "@types/snekfetch": "^3.6.0",
+    "@types/node": "^10.3.5",
+    "@types/node-fetch": "^2.1.1",
     "@types/tinycolor2": "^1.4.0",
     "discord.js": "github:discordjs/discord.js",
     "klasa": "github:dirigeants/klasa#extension-support",
-    "os-toolbox": "^0.2.9",
-    "os": "^0.1.1",
-    "pg": "^7.4.1",
-    "snekfetch": "^4.0.2",
+    "node-fetch": "^2.1.2",
+    "pg": "^7.4.3",
     "tinycolor2": "^1.4.1",
-    "ts-node": "^6.1.1",
-    "typescript": "^2.9.1"
+    "ts-node": "^7.0.0",
+    "typescript": "^2.9.2"
   },
   "devDependencies": {
     "nodemon": "^1.17.5",

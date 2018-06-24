@@ -1,21 +1,22 @@
 {
-  "compileOnSave": true,
-  "compilerOptions": {
-    "allowJs": true,
-    "alwaysStrict": true,
-    "module": "commonjs",
-    "moduleResolution": "node",
-    "noImplicitAny": true,
-    "outDir": "build",
-    "pretty": true,
-    "sourceMap": true,
-    "strict": true,
-    "target": "esnext",
-  },
-  "exclude": [
-    "node_modules"
-  ],
-  "include": [
-    "src"
-  ],
+	"compileOnSave": true,
+	"compilerOptions": {
+		"allowJs": true,
+		"alwaysStrict": true,
+		"module": "commonjs",
+		"moduleResolution": "node",
+		"noImplicitAny": true,
+		"outDir": "build",
+		"pretty": true,
+		"sourceMap": true,
+		"strict": true,
+		"target": "esnext",
+	},
+	"exclude": [
+		"node_modules",
+		"**/*.js"
+	],
+	"include": [
+		"src"
+	],
 }

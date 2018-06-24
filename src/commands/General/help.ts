@@ -1,5 +1,5 @@
 import { Command, KlasaClient, CommandStore, KlasaMessage, util } from 'klasa';
-import { guildSchema } from '../../types/Schemas';
+import { GuildSchema } from '../../typings';
 
 export default class extends Command {
 	constructor(client: KlasaClient, store: CommandStore, file: string[], core: boolean) {
@@ -53,7 +53,7 @@ export default class extends Command {
 					if (!help.hasOwnProperty(command.category)) help[command.category] = {};
 					if (!help[command.category].hasOwnProperty(command.subCategory)) help[command.category][command.subCategory] = [];
 					const description = typeof command.description === 'function' ? command.description(message) : command.description;
-					help[command.category][command.subCategory].push(`${(message.guildConfigs as guildSchema).prefix}${command.name.padEnd(longest)} :: ${description}`);
+					help[command.category][command.subCategory].push(`${(message.guildConfigs as GuildSchema).prefix}${command.name.padEnd(longest)} :: ${description}`);
 				})
 				.catch(() => { })
 		));

@@ -1,6 +1,6 @@
 import { Command, KlasaClient, CommandStore, KlasaMessage } from 'klasa';
 import { MessageEmbed } from 'discord.js';
-import { guildSchema } from '../../types/Schemas';
+import { GuildSchema } from '../../typings';
 
 export default class extends Command {
 	constructor(client: KlasaClient, store: CommandStore, file: string[], core: boolean) {
@@ -28,7 +28,7 @@ export default class extends Command {
 	async run(message: KlasaMessage, [key, value]: [KlasaMessage | string | undefined][]) {
 		if (key instanceof KlasaMessage || value instanceof KlasaMessage) return message;
 		if (typeof key !== 'string' || typeof value !== 'string') {
-			const { prefix, hexrole } = message.guild.configs as guildSchema;
+			const { prefix, hexrole } = message.guild.configs as GuildSchema;
 
 			return message.send(new MessageEmbed()
 				.addField('Prefix', prefix, true)
@@ -38,10 +38,8 @@ export default class extends Command {
 			);
 		}
 
-		const oldValue = await message.guildConfigs.get(key);
-
 		await message.guildConfigs.update(key, value, message.guild);
 
-		return message.send(`${key} was updated from ${oldValue} to ${value}`);
+		return message.send('Config updated!');
 	}
 }
