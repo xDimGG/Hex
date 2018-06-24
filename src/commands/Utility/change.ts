@@ -33,18 +33,16 @@ export default class extends Command {
 		const { hexrole } = message.guild.configs as GuildSchema;
 		if (hexrole && !message.member.roles.has(hexrole)) return message.send('You do not have the hex role');
 
-		return this.randomColor(message, message, color, true);
+		return this.randomColor(message, color, true);
 	}
 
-	async randomColor(message: KlasaMessage, botMessage: KlasaMessage, color: string, react: boolean) {
-		const content = new MessageEmbed()
-		.addField('HEX', `#${color.toUpperCase()}`, true)
-		.setImage(`https://via.placeholder.com/165x100/${color}/${color}`)
-		.setFooter('Would you like to set this color?')
-		.setColor(color);
-
-		if (botMessage.id === message.id) botMessage = await message.channel.send(content) as KlasaMessage;
-		else botMessage = await botMessage.edit(content) as KlasaMessage;
+	async randomColor(message: KlasaMessage, color: string, react: boolean) {
+		const botMessage = await message.send(new MessageEmbed()
+			.addField('HEX', `#${color.toUpperCase()}`, true)
+			.setImage(`https://via.placeholder.com/165x100/${color}/${color}`)
+			.setFooter('Would you like to set this color?')
+			.setColor(color)
+		) as Message;
 
 		if (react) {
 			await botMessage.react('🔄');
@@ -60,7 +58,7 @@ export default class extends Command {
 			if (!reaction) return undefined;
 			await reaction.users.remove(message.author);
 
-			if (reaction.emoji.name === '🔄') return this.randomColor(message, botMessage, Math.random().toString(16).slice(2, 8), false);
+			if (reaction.emoji.name === '🔄') return this.randomColor(message, Math.random().toString(16).slice(2, 8), false);
 			await botMessage.reactions.removeAll();
 			if (reaction.emoji.name === '🇾') return this.setColor(message, color === '000000' ? '000001' : color);
 			if (reaction.emoji.name === '🇳') return message.send('Canceled', { embed: undefined });
