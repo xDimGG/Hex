@@ -1,3 +1,5 @@
 .vscode/
-build/
+build/*
+!build/bwd/
+!build/providers/
 node_modules/
