@@ -10,7 +10,7 @@ export default class extends Command {
 
 	public async exec(message: Message) {
 		await message.channel.send([
-			`Bot invite: <https://bot.shaybox.com/${this.client.user.id}/>`,
+			`Bot invite: <https://bot.shaybox.com/${this.client.user.id}>`,
 			'Support server invite: <https://discord.shaybox.com/>',
 		]);
 	}
