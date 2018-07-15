@@ -5,10 +5,10 @@
   "license": "MIT",
   "main": "build/index.js",
   "scripts": {
-		"prestart": "tsc",
-		"start": "node .",
-		"pretest": "tsc",
-		"test": "node --inspect build/client.js",
+    "prestart": "tsc",
+    "start": "node .",
+    "pretest": "tsc",
+    "test": "node --inspect build/client.js",
     "local": "nodemon -e ts --exec npm start",
     "debug": "nodemon -e ts --exec npm run test"
   },
@@ -21,6 +21,7 @@
     "@types/node-fetch": "^2.1.1",
     "@types/tinycolor2": "^1.4.0",
     "discord.js": "github:discordjs/discord.js",
+    "discord.js-typings": "github:discordjs/discord.js-typings",
     "klasa": "github:dirigeants/klasa",
     "node-fetch": "^2.1.2",
     "pg": "^7.4.3",
