@@ -83,7 +83,7 @@ export default class extends Command {
 					`The role ${colorRole.name} is blocking my ability`,
 					'Please move it below hex, remove it, it\'s color, or it from you',
 				]);
-				else await message.guild.roles.create({ data: { color, permissions, position } })
+				else await message.guild.roles.create({ data: { name: roleName, color, permissions, position } })
 					.then(async role => message.member.roles.add(role));
 			}
 		else
@@ -92,7 +92,7 @@ export default class extends Command {
 				'You are higher than me in the role list',
 				'Please move me above you or you below me',
 			]);
-			else await message.guild.roles.create({ data: { color, permissions, position } })
+			else await message.guild.roles.create({ data: { name: roleName, color, permissions, position } })
 				.then(async role => message.member.roles.add(role));
 
 		await botMessage.edit(new MessageEmbed()
