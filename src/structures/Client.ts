@@ -1,6 +1,5 @@
 import { AkairoClient, CommandHandler, ListenerHandler } from 'discord-akairo';
-import { Client, MessageAttachment, MessageEmbed, MessageOptions, StringResolvable, TextChannel } from 'discord.js';
-import { format } from 'util';
+import { Client } from 'discord.js';
 import Database from './Database';
 import Extensions from './Extensions';
 const { DATABASE } = process.env;
