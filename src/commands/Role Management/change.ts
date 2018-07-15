@@ -60,7 +60,8 @@ export default class extends Command {
 		}).catch(async (reason: any) => {
 			await botMessage.reactions.removeAll();
 
-			if (reason instanceof Collection && reason.size === 0) await botMessage.edit('You didn\'t react in time', { embed: undefined });
+			// @ts-ignore
+			if (reason instanceof Collection && reason.size === 0) await botMessage.edit('You didn\'t react in time', { embed: null });
 			else await botMessage.edit(reason);
 		});
 	}

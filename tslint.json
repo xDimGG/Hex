@@ -20,6 +20,7 @@
 		"no-inferred-empty-object-type": false,
 		"no-magic-numbers": false,
 		"no-non-null-assertion": false,
+		"no-null-keyword": false,
 		"no-shadowed-variable": false,
 		"no-submodule-imports": false,
 		"no-unsafe-any": false,
