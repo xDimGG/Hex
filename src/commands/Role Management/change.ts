@@ -48,7 +48,7 @@ export default class extends Command {
 
 		await botMessage.awaitReactions(
 			(r, u) => ['🔄', '🇾', '🇳'].includes(r.emoji.name) && u.id === message.author.id,
-			{ errors: ['time'], max: 1, time: 5000 }
+			{ errors: ['time'], max: 1, time: 30000 }
 		).then(async (reactions: Collection<string, MessageReaction>) => {
 			const reaction = reactions.first()!;
 			await reaction.users.remove(message.author);
@@ -77,24 +77,23 @@ export default class extends Command {
 
 		if (colorRole)
 			if (colorRole.name === roleName)
-				if (colorRole.position > botRole.position) return message.channel.send('I can not edit the role, too high');
-				else await colorRole.edit({ color, permissions, position });
-			else {
-				if (colorRole.position > position) return message.channel.send([
+				if (colorRole.position < botRole.position) await colorRole.edit({ color, permissions, position });
+				else return message.channel.send('I can not edit the role, too high');
+			else
+				if (colorRole.position < position) await message.guild.roles.create({ data: { name: roleName, color, permissions, position } })
+					.then(async role => message.member.roles.add(role));
+				else return message.channel.send([
 					`The role ${colorRole.name} is blocking my ability`,
 					'Please move it below hex, remove it, it\'s color, or it from you',
 				]);
-				else await message.guild.roles.create({ data: { name: roleName, color, permissions, position } })
-					.then(async role => message.member.roles.add(role));
-			}
 		else
-			if (message.member.roles.highest.position > botRole.position) return message.channel.send([
+			if (message.member.roles.highest.position < botRole.position) await message.guild.roles.create({ data: { name: roleName, color, permissions, position } })
+				.then(async role => message.member.roles.add(role));
+			else return message.channel.send([
 				'I do not have permission to give you a role',
 				'You are higher than me in the role list',
 				'Please move me above you or you below me',
 			]);
-			else await message.guild.roles.create({ data: { name: roleName, color, permissions, position } })
-				.then(async role => message.member.roles.add(role));
 
 		await botMessage.edit(new MessageEmbed()
 			.setTitle(`Updated to **#${color.toUpperCase()}**`)
