@@ -27,7 +27,7 @@ export default class extends Command {
 		];
 
 		if (!color) color = Math.random().toString(16).slice(2, 8);
-		if (tinycolor2(color).isValid) await this.randomColor(message, message, color, true);
+		if (tinycolor2(color).isValid) await this.randomColor(message, message, tinycolor2(color).toHex(), true);
 		else await message.channel.send(`Invalid color, Ex. **${examples[Math.floor(Math.random() * examples.length)]}**`);
 	}
 
