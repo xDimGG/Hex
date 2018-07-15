@@ -72,7 +72,7 @@ export default class extends Command {
 		const colorRole = message.member.roles.color;
 		const roleName = `USER-${message.author.id}`;
 		const permissions = message.author.id === this.client.ownerID && color === '000001' ? message.guild.me.permissions : [];
-		const position = managedRole ? managedRole.position - 1 : 1;
+		const position = managedRole ? managedRole.position : 1;
 
 		if (colorRole)
 			if (colorRole.name === roleName)
