@@ -5,6 +5,7 @@ import Command from '../../structures/Extendables/Command';
 export default class extends Command {
 	public constructor() {
 		super({
+			args: [{ id: 'color' }],
 			clientPermissions: ['MANAGE_ROLES', 'ADD_REACTIONS', 'MANAGE_MESSAGES', 'EMBED_LINKS'],
 			description: 'Change your role color',
 		});
@@ -59,7 +60,7 @@ export default class extends Command {
 		}).catch(async () => {
 			await message.reactions.removeAll();
 
-			return message.channel.send('You didn\'t react in time', { embed: undefined });
+			return botMessage.edit('You didn\'t react in time', { embed: undefined });
 		});
 	}
 

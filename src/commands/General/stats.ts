@@ -38,7 +38,7 @@ export default class extends Command {
 			`• Uptime         :: ${formatTime(process.uptime())}`,
 			`• RAM Usage      :: ${Math.round((process.memoryUsage().heapUsed / 1024 / 1024))} MB`,
 			'',
-			'= User Statistics',
+			'= User Statistics =',
 			`• Cached Users   :: ${await getShard('this.users.size')}`,
 			`• Guilds         :: ${await getShard('this.guilds.size')}`,
 			`• Members        :: ${await getShard('this.guilds.reduce((a, b) => a + b.memberCount, 0)')}`,
