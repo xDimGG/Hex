@@ -48,7 +48,7 @@ export default class extends Command {
 
 		await botMessage.awaitReactions(
 			(r, u) => ['🔄', '🇾', '🇳'].includes(r.emoji.name) && u.id === message.author.id,
-			{ errors: ['time'], max: 1, time: 30000 }
+			{ errors: ['time'], max: 1, time: 5000 }
 		).then(async (reactions: Collection<string, MessageReaction>) => {
 			const reaction = reactions.first()!;
 			await reaction.users.remove(message.author);
@@ -57,10 +57,11 @@ export default class extends Command {
 			await botMessage.reactions.removeAll();
 			if (reaction.emoji.name === '🇾') await this.setColor(message, botMessage, color === '000000' ? '000001' : color);
 			if (reaction.emoji.name === '🇳') await botMessage.edit('Canceled', { embed: undefined });
-		}).catch(async () => {
-			await message.reactions.removeAll();
+		}).catch(async (reason: any) => {
+			await botMessage.reactions.removeAll();
 
-			return botMessage.edit('You didn\'t react in time', { embed: undefined });
+			if (reason instanceof Collection && reason.size === 0) await botMessage.edit('You didn\'t react in time', { embed: undefined });
+			else await botMessage.edit(reason);
 		});
 	}
 

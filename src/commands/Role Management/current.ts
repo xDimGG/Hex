@@ -12,7 +12,7 @@ export default class extends Command {
 	public async exec(message: Message) {
 		const colorRole = message.member.roles.find(r => r.name === `USER-${message.member.id}`);
 
-		if (!colorRole) return message.channel.send('You don\'t a hex role');
+		if (!colorRole) return message.channel.send('You don\'t have a role');
 
 		return message.channel.send(new MessageEmbed()
 			.setTitle(`**Current value ${colorRole.hexColor.toUpperCase()}**`)
