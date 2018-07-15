@@ -12,15 +12,9 @@ export default class extends Listener {
 	public async exec(error: Error, message: Message, command: Command) {
 		await message.channel.send([
 			'// An error has occurred,',
-			'// It has been reported to the developer.',
-			'// But here is the error in-case you know how to fix it:',
+			'// Please report it to the developer.',
+			'// https://discord.shaybox.com/',
 			error.message,
 		], { code: 'js', split: { append: '```', prepend: '```js\n' } });
-
-		await this.client.error([
-			`Message Content: ${message.content}`,
-			`Command: ${command.id}`,
-			error.stack,
-		].join('\n'));
 	}
 }
