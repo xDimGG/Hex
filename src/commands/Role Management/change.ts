@@ -78,10 +78,14 @@ export default class extends Command {
 			if (colorRole.name === roleName)
 				if (colorRole.position > botRole.position) return message.channel.send('I can not edit the role, too high');
 				else await colorRole.edit({ color, permissions, position });
-			else return message.channel.send([
-				`The role ${colorRole.name} is blocking my ability`,
-				'Please remove it, it\'s color, or from yourself',
-			]);
+			else {
+				if (colorRole.position > position) return message.channel.send([
+					`The role ${colorRole.name} is blocking my ability`,
+					'Please move it below hex, remove it, it\'s color, or it from you',
+				]);
+				else await message.guild.roles.create({ data: { color, permissions, position } })
+					.then(async role => message.member.roles.add(role));
+			}
 		else
 			if (message.member.roles.highest.position > botRole.position) return message.channel.send([
 				'I do not have permission to give you a role',
