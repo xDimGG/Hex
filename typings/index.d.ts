@@ -23,8 +23,5 @@ declare module 'discord.js' {
 		commandHandler: CommandHandler;
 		database: Database;
 		listenerHandler: ListenerHandler;
-		error(data?: any, ...args: any[]): Promise<Message | Message[]>;
-		log(content?: StringResolvable, options?: MessageOptions | MessageEmbed | MessageAttachment): Promise<Message | Message[]>;
-		log(options?: MessageOptions | MessageEmbed | MessageAttachment): Promise<Message | Message[]>;
 	}
 }

@@ -29,21 +29,6 @@ export default class extends AkairoClient implements Client {
 		});
 	}
 
-	public async error(data: any, ...args: any[]) {
-		console.error(data, ...args);
-		const channel = this.channels.get('361533828520476684') as TextChannel;
-		if (!channel || channel.type !== 'text') throw new Error('Console channel either undefined or not a text channel');
-
-		return channel.send(format(data, ...args), { code: 'js', split: { append: '```', prepend: '```js\n' } });
-	}
-
-	public async log(content?: StringResolvable, options?: MessageOptions | MessageEmbed | MessageAttachment) {
-		const channel = this.channels.get('361533828520476684') as TextChannel;
-		if (!channel || channel.type !== 'text') throw new Error('Console channel either undefined or not a text channel');
-
-		return channel.send(content, options);
-	}
-
 	public async login(token?: string) {
 		this.database.sync({ alter: true });
 
