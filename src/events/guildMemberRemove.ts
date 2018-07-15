@@ -1,9 +1,9 @@
-import { Event } from 'klasa';
 import { GuildMember } from 'discord.js';
+import Listener from '../structures/Extendables/Listener';
 
-export default class extends Event {
-	async run(member: GuildMember) {
+export default class extends Listener {
+	public async exec(member: GuildMember) {
 		const role = member.guild.roles.find(r => r.name === `USER-${member.id}`);
-		if (role) role.delete().catch(() => {});
+		if (role) await role.delete();
 	}
 }

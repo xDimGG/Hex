@@ -1,9 +1,26 @@
-import { Event } from 'klasa';
-import { TextChannel } from 'discord.js';
+import { Command } from 'discord-akairo';
+import { Message } from 'discord.js';
+import Listener from '../structures/Extendables/Listener';
 
-export default class extends Event {
-	async run(error: Error) {
-		const consoleChannel = this.client.channels.get('361533828520476684') as TextChannel;
-		if (consoleChannel) await consoleChannel.send(error, { code: 'js' });
+export default class extends Listener {
+	public constructor() {
+		super({
+			emitter: 'commandHandler',
+		});
+	}
+
+	public async exec(error: Error, message: Message, command: Command) {
+		await message.channel.send([
+			'// An error has occurred,',
+			'// It has been reported to the developer.',
+			'// But here is the error in-case you know how to fix it:',
+			error.message,
+		], { code: 'js', split: { append: '```', prepend: '```js\n' } });
+
+		await this.client.error([
+			`Message Content: ${message.content}`,
+			`Command: ${command.id}`,
+			error.stack,
+		].join('\n'));
 	}
 }

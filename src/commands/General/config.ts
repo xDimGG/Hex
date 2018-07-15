@@ -1,45 +1,41 @@
-import { Command, KlasaClient, CommandStore, KlasaMessage } from 'klasa';
-import { MessageEmbed } from 'discord.js';
-import { GuildSchema } from '../../typings';
+import { Message } from 'discord.js';
+import Command from '../../structures/Extendables/Command';
 
 export default class extends Command {
-	constructor(client: KlasaClient, store: CommandStore, file: string[], core: boolean) {
-		super(client, store, file, core, {
-			description: 'Get/Set guild configuration values',
-			usage: '(Key:key) (Value:value)',
-			usageDelim: ' ',
-			permissionLevel: 6,
-		});
-
-		this.createCustomResolver('key', async (arg, possible, message, params) => {
-			if (!arg) return undefined;
-			if (!['prefix', 'hexrole'].includes(arg.toLowerCase())) return message.send('Invalid key');
-
-			return arg;
-		});
-		this.createCustomResolver('value', async (arg, possible, message, params) => {
-			if (params[0] && !arg) throw new Error('You must spesify a value');
-			if (!arg) return undefined;
-
-			return arg;
+	public constructor() {
+		super({
+			args: [
+				{ id: 'key' },
+				{ id: 'value' },
+			],
+			description: 'Shows guild configuration settings',
+			userPermissions: ['ADMINISTRATOR'],
 		});
 	}
 
-	async run(message: KlasaMessage, [key, value]: [KlasaMessage | string | undefined][]) {
-		if (key instanceof KlasaMessage || value instanceof KlasaMessage) return message;
-		if (typeof key !== 'string' || typeof value !== 'string') {
-			const { prefix, hexrole } = message.guild.configs as GuildSchema;
+	public async exec(message: Message, { key, value }: { key: string; value: string }) {
+		const { prefix, role } = await message.guild.getConfig();
+		const hexRole = message.guild.roles.get(role);
 
-			return message.send(new MessageEmbed()
-				.addField('Prefix', prefix, true)
-				.addField('HexRole', hexrole, true)
-				.setFooter(`Example: ${message.guildConfigs.get('prefix')}config prefix !`)
-				.setColor(0x00FF00)
-			);
+		if (!key) return message.channel.send([
+			`Prefix  :: ${prefix} (Guild specific bot prefix)`,
+			`Role    :: ${hexRole ? hexRole.name : 'none'} (Role to lock hex to)`,
+			'',
+			`Example: ${prefix}config prefix !`,
+		], { code: 'asciidoc' });
+
+		if (!['prefix', 'role'].includes(key.toLowerCase())) return message.channel.send(`${key.toLowerCase()} is not a valid option`);
+		if (!value) return message.channel.send('Please provide a value');
+		if (key.toLowerCase() === 'prefix') message.guild.prefix = value;
+		if (key.toLowerCase() === 'role') {
+			if (message.mentions.roles.size > 0) value = message.mentions.roles.firstKey()!;
+			if (!message.guild.roles.get(value)) return message.channel.send('Invalid role');
 		}
 
-		await message.guildConfigs.update(key, value, message.guild);
+		await message.guild.setConfig({ [key.toLowerCase()]: value });
 
-		return message.send('Config updated!');
+		if (key.toLowerCase() === 'role') value = message.guild.roles.get(value)!.toString();
+
+		await message.channel.send(`Updated ${key.toLowerCase()} to ${value}`);
 	}
 }

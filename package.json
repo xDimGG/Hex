@@ -1,37 +1,35 @@
 {
   "name": "hex",
   "version": "0.0.0",
-  "description": "Custom Hex Color Role",
+  "description": "Custom hex color role",
   "license": "MIT",
-  "main": "build/index.js",
+  "main": "src/sharding.ts",
   "scripts": {
-    "prestart": "tsc",
-    "start": "node .",
-    "pretest": "tsc",
-    "test": "node --inspect build/client.js",
-    "local": "nodemon -e ts --exec npm start",
-    "debug": "nodemon -e ts --exec npm run test"
-  },
-  "author": {
-    "name": "Shayne Hartford (ShayBox)",
-    "email": "ShayneEHartford@Gmail.Com"
+    "start": "node -r ts-node/register .",
+    "test": "nodemon -e ts --exec npm start",
+    "debug": "node -r ts-node/register --inspect src/index.ts"
   },
   "dependencies": {
-    "@types/node": "^10.5.1",
+    "@types/node": "^10.5.2",
     "@types/node-fetch": "^2.1.1",
     "@types/tinycolor2": "^1.4.0",
+    "discord-akairo": "github:1computer1/discord-akairo",
     "discord.js": "github:discordjs/discord.js",
     "discord.js-typings": "github:discordjs/discord.js-typings",
-    "klasa": "github:dirigeants/klasa",
     "node-fetch": "^2.1.2",
     "pg": "^7.4.3",
+    "sequelize": "^4.38.0",
     "tinycolor2": "^1.4.1",
     "ts-node": "^7.0.0",
     "typescript": "^2.9.2"
   },
   "devDependencies": {
-    "nodemon": "^1.17.5",
+    "nodemon": "^1.18.2",
     "tslint": "^5.10.0"
+  },
+  "author": {
+    "name": "Shayne Hartford (ShayBox)",
+    "email": "ShayneEHartford@Gmail.Com"
   },
   "repository": {
     "type": "git",

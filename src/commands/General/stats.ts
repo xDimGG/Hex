@@ -1,68 +1,51 @@
-import { Command, KlasaClient, CommandStore, KlasaMessage, version as klasaVersion } from 'klasa';
-import { Message, version as discordVersion } from 'discord.js';
 import { execSync } from 'child_process';
+import { version as akairoVersion } from 'discord-akairo';
+import { Message, version as discordVersion } from 'discord.js';
+import Command from '../../structures/Extendables/Command';
 
 export default class extends Command {
-	constructor(client: KlasaClient, store: CommandStore, file: string[], core: boolean) {
-		super(client, store, file, core, {
-			aliases: ['statistics'],
-			description: (message) => message.language.get('COMMAND_STATS_DESCRIPTION'),
+	public constructor() {
+		super({
+			description: 'Shows bot statistics',
 		});
 	}
 
-	async run(message: KlasaMessage) {
-		const m = await message.send('Loading...') as Message;
+	public async exec(message: Message) {
+		const getShard = async (command: string) => (await this.client.shard.broadcastEval(command)).reduce((a: number, b: number) => a + b, 0).toLocaleString();
+		const formatTime = (input: number) => {
+			const days = Math.floor(input / 86400);
+			const hours = Math.floor((input % 86400) / 3600);
+			const minutes = Math.floor(((input % 86400) % 3600) / 60);
+			const seconds = Math.floor(((input % 86400) % 3600) % 60);
 
-		return message.send([
-			'= Statistics =',
-			'',
-			'Versions',
+			return [
+				days ? `${days}d`  : '',
+				hours ? `${hours}h ` : '',
+				minutes ? `${minutes}m ` : '',
+				seconds ? `${seconds}s` : '',
+			].join('');
+		};
+
+		await message.channel.send([
+			'= Versions =',
 			`• Discord.js     :: ${discordVersion}`,
-			`• Klasa          :: ${klasaVersion}`,
+			`• Akairo         :: ${akairoVersion}`,
 			`• Node           :: ${process.version}`,
 			`• NPM            :: ${String(execSync('npm -v')).replace('\n', '')}`,
 			'',
-			'Bot',
-			`• Uptime         :: ${this.formatTime(process.uptime())}`,
+			'= Client Statistics =',
+			`• Ping           :: ${Math.round(this.client.ping)}ms`,
+			`• Uptime         :: ${formatTime(process.uptime())}`,
 			`• RAM Usage      :: ${Math.round((process.memoryUsage().heapUsed / 1024 / 1024))} MB`,
-			`• Heartbeat Ping :: ${Math.round(this.client.ping)}ms`,
-			`• Message Ping   :: ${Math.round(m.createdTimestamp - message.createdTimestamp)}ms`,
 			'',
-			'Bot Stats',
-			`• Cached Users   :: ${await this.getShard('this.users.size')}`,
-			`• Guilds         :: ${await this.getShard('this.guilds.size')}`,
-			`• Members        :: ${await this.getShard('this.guilds.reduce((a, b) => a + b.memberCount, 0)')}`,
-			`• Emojis         :: ${await this.getShard('this.emojis.size')}`,
-			`• Categories     :: ${await this.getShard('this.channels.filter(channel => channel.type === "category").size')}`,
-			`• Text Channels  :: ${await this.getShard('this.channels.filter(channel => channel.type === "text").size')}`,
-			`• Voice Channels :: ${await this.getShard('this.channels.filter(channel => channel.type === "voice").size')}`,
-			'',
-			'Shard Stats',
-			`• Cached Users   :: ${this.client.users.size.toLocaleString()}`,
-			`• Guilds         :: ${this.client.guilds.size.toLocaleString()}`,
-			`• Members        :: ${this.client.guilds.reduce((a: number, b) => a + b.memberCount, 0).toLocaleString()}`,
-			`• Emojis         :: ${this.client.emojis.size.toLocaleString()}`,
-			`• Categories     :: ${this.client.channels.filter(channel => channel.type === 'category').size.toLocaleString()}`,
-			`• Text Channels  :: ${this.client.channels.filter(channel => channel.type === 'text').size.toLocaleString()}`,
-			`• Voice Channels :: ${this.client.channels.filter(channel => channel.type === 'voice').size.toLocaleString()}`,
+			'= User Statistics',
+			`• Cached Users   :: ${await getShard('this.users.size')}`,
+			`• Guilds         :: ${await getShard('this.guilds.size')}`,
+			`• Members        :: ${await getShard('this.guilds.reduce((a, b) => a + b.memberCount, 0)')}`,
+			`• Emojis         :: ${await getShard('this.emojis.size')}`,
+			`• Categories     :: ${await getShard('this.channels.filter(channel => channel.type === "category").size')}`,
+			`• Text Channels  :: ${await getShard('this.channels.filter(channel => channel.type === "text").size')}`,
+			`• Voice Channels :: ${await getShard('this.channels.filter(channel => channel.type === "voice").size')}`,
 		], { code: 'asciidoc' });
-	}
-
-	async getShard(command: string) {
-		return (await this.client.shard.broadcastEval(command)).reduce((a: number, b: number) => a + b, 0).toLocaleString();
-	}
-
-	formatTime(input: number) {
-		const days = Math.floor(input / 86400);
-		const hours = Math.floor((input % 86400) / 3600);
-		const minutes = Math.floor(((input % 86400) % 3600) / 60);
-		const seconds = Math.floor(((input % 86400) % 3600) % 60);
-
-		return [
-			days ? `${days}d ` : '',
-			hours ? `${hours}h ` : '',
-			minutes ? `${minutes}m ` : '',
-			seconds ? `${seconds}s ` : '',
-		].join('');
 	}
 }
