@@ -30,6 +30,7 @@ export default class extends Command {
 		if (key.toLowerCase() === 'role') {
 			if (message.mentions.roles.size > 0) value = message.mentions.roles.firstKey()!;
 			if (!message.guild.roles.get(value)) return message.channel.send('Invalid role');
+			if (['remove', 'none'].includes(value.toLowerCase())) value = '0';
 		}
 
 		await message.guild.setConfig({ [key.toLowerCase()]: value });
