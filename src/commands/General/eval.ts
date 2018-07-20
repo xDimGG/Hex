@@ -23,7 +23,7 @@ export default class extends Command {
 		}
 
 		for (const env in process.env)
-			if (['TOKEN', 'DATABASE', 'CLEVERBOT_USER', 'CLEVERBOT_KEY'].includes(env)) output = output.replace(process.env[env], '[SECRET!]');
+			if (['TOKEN', 'DATABASE'].includes(env)) output = output.replace(process.env[env], '[SECRET!]');
 
 		await message.channel.send(
 			output.length > 2000 ? '' : output,
