@@ -15,7 +15,7 @@ export default class extends Command {
 		const { role } = await message.guild.getConfig();
 		if (role && !message.member.roles.has(role)) return message.channel.send([
 			'You do not have permission to use this command',
-			`Required role ${message.guild.roles.get(role)!.name}`,
+			'Missing required role',
 		]);
 
 		const examples = [
