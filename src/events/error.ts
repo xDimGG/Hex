@@ -14,7 +14,7 @@ export default class extends Listener {
 			'// An error has occurred,',
 			'// Please report it to the developer.',
 			'// https://discord.shaybox.com/',
-			error.message,
+			error,
 		], { code: 'js', split: { append: '```', prepend: '```js\n' } });
 	}
 }
