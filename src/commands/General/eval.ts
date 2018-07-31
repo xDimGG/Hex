@@ -5,7 +5,7 @@ import Command from '../../structures/Extendables/Command';
 export default class extends Command {
 	public constructor() {
 		super({
-			args: [{ id: 'code' }],
+			args: [{ id: 'code', match: 'rest' }],
 			description: 'Evaluates javascript code',
 			ownerOnly: true,
 		});
@@ -23,11 +23,11 @@ export default class extends Command {
 		}
 
 		for (const env in process.env)
-			if (['TOKEN', 'DATABASE'].includes(env)) output = output.replace(process.env[env], '[SECRET!]');
+			if (['TOKEN'].includes(env)) output = output.replace(process.env[env], '[SECRET!]');
 
 		await message.channel.send(
 			output.length > 2000 ? '' : output,
-			output.length > 2000 ? { files: [{ attachment: Buffer.from(output), name: 'output.txt' }] } : { code: 'js' },
+			output.length > 2000 ? { files: [{ attachment: Buffer.from(output), name: 'output.txt' }] } : { code: 'js' }
 		);
 	}
 }
