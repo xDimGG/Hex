@@ -29,7 +29,7 @@ export default class extends AkairoClient implements Client {
 	}
 
 	public async login(token?: string) {
-		this.database.sync({ alter: true });
+		await this.database.sync({ alter: true });
 
 		this.commandHandler.useListenerHandler(this.listenerHandler);
 		this.listenerHandler.setEmitters({
