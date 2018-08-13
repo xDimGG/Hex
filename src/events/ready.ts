@@ -8,12 +8,6 @@ export default class extends Listener {
 
 		if (process.env.DEV) return;
 
-		const channel = this.client.channels.get('361533828520476684') as TextChannel | undefined;
-		if (channel) await channel.send(new MessageEmbed()
-			.setAuthor(this.client.user.tag, this.client.user.displayAvatarURL())
-			.setTitle('Started')
-		);
-
 		await this.client.user.setPresence({
 			activity: {
 				name: `${this.client.guilds.size} ${this.client.guilds.size === 0 ? 'Guild' : 'Guilds'}`,
