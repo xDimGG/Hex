@@ -27,16 +27,14 @@ export default class extends Command {
 		if (!['prefix', 'role'].includes(key.toLowerCase())) return message.channel.send(`${key.toLowerCase()} is not a valid option`);
 		if (!value) return message.channel.send('Please provide a value');
 		if (key.toLowerCase() === 'prefix') message.guild.prefix = value;
+		let dbValue: string | null = value;
 		if (key.toLowerCase() === 'role') {
 			if (message.mentions.roles.size > 0) value = message.mentions.roles.firstKey()!;
 			if (!message.guild.roles.get(value)) return message.channel.send('Invalid role');
-			if (['remove', 'none'].includes(value.toLowerCase())) value = '0';
+			if (['remove', 'none'].includes(value.toLowerCase())) dbValue = null;
 		}
 
-		await message.guild.setConfig({ [key.toLowerCase()]: value });
-
-		if (key.toLowerCase() === 'role') value = message.guild.roles.get(value)!.toString();
-
-		await message.channel.send(`Updated ${key.toLowerCase()} to ${value}`);
+		await message.guild.setConfig({ [key.toLowerCase()]: dbValue });
+		await message.channel.send(`Updated ${key.toLowerCase()} to ${dbValue}`);
 	}
 }

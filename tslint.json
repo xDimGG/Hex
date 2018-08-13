@@ -7,6 +7,7 @@
 		"comment-format": false,
 		"completed-docs": false,
 		"curly": [true, "as-needed"],
+		"cyclomatic-complexity": false,
 		"eofline": false,
 		"indent": [true, "quotes"],
 		"interface-name": false,

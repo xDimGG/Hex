@@ -13,7 +13,7 @@ export default class extends Command {
 
 	public async exec(message: Message, { color }: { color: string }) {
 		const { role } = await message.guild.getConfig();
-		if (role && !message.member.roles.has(role)) return message.channel.send([
+		if (role && message.guild.roles.has(role) && !message.member.roles.has(role)) return message.channel.send([
 			'You do not have permission to use this command',
 			'Missing required role',
 		]);
