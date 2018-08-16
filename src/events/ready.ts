@@ -1,4 +1,3 @@
-import { MessageEmbed, TextChannel } from 'discord.js';
 import fetch from 'node-fetch';
 import Listener from '../structures/Extendables/Listener';
 

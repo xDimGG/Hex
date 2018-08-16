@@ -10,19 +10,19 @@
     "debug": "node -r ts-node/register --inspect src/index.ts"
   },
   "dependencies": {
-    "@types/node": "^10.5.2",
-    "@types/node-fetch": "^2.1.1",
+    "@types/node": "^10.7.1",
+    "@types/node-fetch": "^2.1.2",
     "@types/sequelize": "^4.27.24",
     "@types/tinycolor2": "^1.4.0",
     "discord-akairo": "github:1computer1/discord-akairo",
     "discord.js": "github:discordjs/discord.js",
     "discord.js-typings": "github:discordjs/discord.js-typings",
-    "node-fetch": "^2.1.2",
+    "node-fetch": "^2.2.0",
     "pg": "^7.4.3",
     "sequelize": "^4.38.0",
     "tinycolor2": "^1.4.1",
-    "ts-node": "^7.0.0",
-    "typescript": "^2.9.2"
+    "ts-node": "^7.0.1",
+    "typescript": "^3.0.1"
   },
   "devDependencies": {
     "nodemon": "^1.18.3",
