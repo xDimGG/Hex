@@ -8,9 +8,10 @@ export default class extends Listener {
 
 		if (process.env.DEV) return;
 
+		const guildCount = (await this.client.shard.broadcastEval('this.guilds.size')).reduce((a: number, b: number) => a + b, 0);
 		await this.client.user.setPresence({
 			activity: {
-				name: `${this.client.guilds.size} ${this.client.guilds.size === 0 ? 'Guild' : 'Guilds'}`,
+				name: `${guildCount} ${guildCount === 0 ? 'Guild' : 'Guilds'}`,
 				type: 'WATCHING',
 				url: 'https://twitch.tv/monstercat',
 			},
