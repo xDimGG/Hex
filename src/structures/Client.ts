@@ -11,6 +11,9 @@ export default class extends AkairoClient implements Client {
 		super({ ownerID: '358558305997684739' }, {
 			disableEveryone: true,
 			disabledEvents: ['TYPING_START'],
+			messageCacheLifetime: 60,
+			messageCacheMaxSize: Infinity,
+			messageSweepInterval: 60,
 		});
 
 		this.database = new Database(DATABASE!);
