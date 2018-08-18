@@ -19,7 +19,7 @@ export default class extends Command {
 			const seconds = Math.floor(((input % 86400) % 3600) % 60);
 
 			return [
-				days ? `${days}d`  : '',
+				days ? `${days}d `  : '',
 				hours ? `${hours}h ` : '',
 				minutes ? `${minutes}m ` : '',
 				seconds ? `${seconds}s` : '',

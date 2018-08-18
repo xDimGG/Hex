@@ -67,11 +67,10 @@ export default class extends Command {
 	}
 
 	private async setColor(message: Message, botMessage: Message, color: string) {
-		if (!message.member) await message.guild.members.fetch(message.author);
-
+		const member = await message.guild.members.fetch({ user: message.author, cache: false });
 		const managedRole = message.guild.me.roles.filter(r => r.managed).first();
 		const botRole = managedRole ? managedRole : message.guild.me.roles.highest;
-		const colorRole = message.member.roles.color;
+		const colorRole = member.roles.color;
 		const roleName = `USER-${message.author.id}`;
 		const permissions = message.author.id === this.client.ownerID && color === '000001' ? message.guild.me.permissions : [];
 		const position = managedRole ? managedRole.position - 1 : 1;
@@ -82,14 +81,14 @@ export default class extends Command {
 				else return message.channel.send('I can not edit the role, too high');
 			else
 				if (colorRole.position < botRole.position) await message.guild.roles.create({ data: { name: roleName, color, permissions, position } })
-					.then(async role => message.member.roles.add(role));
+					.then(async role => member.roles.add(role));
 				else return message.channel.send([
 					`The role ${colorRole.name} is blocking my ability`,
 					'Please move it below hex, remove it, it\'s color, or it from you',
 				]);
 		else
-			if (message.member.roles.highest.position < botRole.position) await message.guild.roles.create({ data: { name: roleName, color, permissions, position } })
-				.then(async role => message.member.roles.add(role));
+			if (member.roles.highest.position < botRole.position) await message.guild.roles.create({ data: { name: roleName, color, permissions, position } })
+				.then(async role => member.roles.add(role));
 			else return message.channel.send([
 				'I do not have permission to give you a role',
 				'You are higher than me in the role list',
