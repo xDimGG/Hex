@@ -29,9 +29,9 @@ export default class extends Command {
 		if (key.toLowerCase() === 'prefix') message.guild.prefix = value;
 		let dbValue: string | null = value;
 		if (key.toLowerCase() === 'role') {
-			if (message.mentions.roles.size > 0) value = message.mentions.roles.first()!.id;
-			if (!message.guild.roles.get(value)) return message.channel.send('Invalid role');
-			if (['remove', 'none'].includes(value.toLowerCase())) dbValue = null;
+			if (message.mentions.roles.size > 0) dbValue = message.mentions.roles.first()!.id;
+			if (!message.guild.roles.get(dbValue)) return message.channel.send('Invalid role');
+			if (['remove', 'none'].includes(dbValue.toLowerCase())) dbValue = null;
 		}
 
 		await message.guild.setConfig({ [key.toLowerCase()]: dbValue });
