@@ -43,13 +43,13 @@ export default class extends Command {
 			`• Shard/Total    :: ${this.client.shard.id + 1}/${this.client.shard.count}`,
 			'',
 			'= User Statistics =',
-			`• Cached Users   :: ${getShardReduceLocale('this.users.size')}`,
-			`• Total Users    :: ${getShardReduceLocale('this.guilds.reduce((a, b) => a + b.memberCount, 0)')}`,
-			`• Guilds         :: ${getShardReduceLocale('this.guilds.size')}`,
-			`• Emojis         :: ${getShardReduceLocale('this.emojis.size')}`,
-			`• Categories     :: ${getShardReduceLocale('this.channels.filter(channel => channel.type === "category").size')}`,
-			`• Text Channels  :: ${getShardReduceLocale('this.channels.filter(channel => channel.type === "text").size')}`,
-			`• Voice Channels :: ${getShardReduceLocale('this.channels.filter(channel => channel.type === "voice").size')}`,
+			`• Cached Users   :: ${await getShardReduceLocale('this.users.size')}`,
+			`• Total Users    :: ${await getShardReduceLocale('this.guilds.reduce((a, b) => a + b.memberCount, 0)')}`,
+			`• Guilds         :: ${await getShardReduceLocale('this.guilds.size')}`,
+			`• Emojis         :: ${await getShardReduceLocale('this.emojis.size')}`,
+			`• Categories     :: ${await getShardReduceLocale('this.channels.filter(channel => channel.type === "category").size')}`,
+			`• Text Channels  :: ${await getShardReduceLocale('this.channels.filter(channel => channel.type === "text").size')}`,
+			`• Voice Channels :: ${await getShardReduceLocale('this.channels.filter(channel => channel.type === "voice").size')}`,
 		], { code: 'asciidoc' });
 	}
 }
