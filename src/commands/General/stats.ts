@@ -12,9 +12,8 @@ export default class extends Command {
 
 	public async exec(message: Message) {
 		const ramCommand = 'Math.round((process.memoryUsage().heapTotal / 1024 / 1024))';
-		const getShard = async (command: string) => this.client.shard.broadcastEval(command);
-		const getShardReduce = async (command: string) => (await getShard(command)).reduce((a: number, b: number) => a + b, 0);
-		const getShardReduceLocale = async (command: string) => (await getShardReduce(command)).toLocaleString();
+		const runCommandReduce = async (command: string) => (await this.client.runCommand(command)).reduce((a: number, b: number) => a + b, 0);
+		const runCommandReduceLocale = async (command: string) => (await runCommandReduce(command)).toLocaleString();
 		const formatTime = (input: number) => {
 			const days = Math.floor(input / 86400);
 			const hours = Math.floor((input % 86400) / 3600);
@@ -39,17 +38,17 @@ export default class extends Command {
 			`= Client Stats =`,
 			`• Ping           :: ${Math.round(this.client.ping)}ms`,
 			`• Uptime         :: ${formatTime(process.uptime())}`,
-			`• RAM Usage      :: ${(await getShard(ramCommand)).map(r => `${r} MB`).join('|')} (${await getShardReduce(ramCommand)} MB Total)`,
+			`• RAM Usage      :: ${(await getShard(ramCommand)).map(r => `${r} MB`).join('|')} (${await runCommandReduce(ramCommand)} MB Total)`,
 			`• Shard/Total    :: ${this.client.shard.id + 1}/${this.client.shard.count}`,
 			'',
 			'= User Statistics =',
-			`• Cached Users   :: ${await getShardReduceLocale('this.users.size')}`,
-			`• Total Users    :: ${await getShardReduceLocale('this.guilds.reduce((a, b) => a + b.memberCount, 0)')}`,
-			`• Guilds         :: ${await getShardReduceLocale('this.guilds.size')}`,
-			`• Emojis         :: ${await getShardReduceLocale('this.emojis.size')}`,
-			`• Categories     :: ${await getShardReduceLocale('this.channels.filter(channel => channel.type === "category").size')}`,
-			`• Text Channels  :: ${await getShardReduceLocale('this.channels.filter(channel => channel.type === "text").size')}`,
-			`• Voice Channels :: ${await getShardReduceLocale('this.channels.filter(channel => channel.type === "voice").size')}`,
+			`• Cached Users   :: ${await runCommandReduceLocale('this.users.size')}`,
+			`• Total Users    :: ${await runCommandReduceLocale('this.guilds.reduce((a, b) => a + b.memberCount, 0)')}`,
+			`• Guilds         :: ${await runCommandReduceLocale('this.guilds.size')}`,
+			`• Emojis         :: ${await runCommandReduceLocale('this.emojis.size')}`,
+			`• Categories     :: ${await runCommandReduceLocale('this.channels.filter(channel => channel.type === "category").size')}`,
+			`• Text Channels  :: ${await runCommandReduceLocale('this.channels.filter(channel => channel.type === "text").size')}`,
+			`• Voice Channels :: ${await runCommandReduceLocale('this.channels.filter(channel => channel.type === "voice").size')}`,
 		], { code: 'asciidoc' });
 	}
 }

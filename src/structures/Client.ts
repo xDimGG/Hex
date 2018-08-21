@@ -44,4 +44,8 @@ export default class extends AkairoClient implements Client {
 
 		return super.login(token);
 	}
+
+	public async runCommand(command: string) {
+		return this.shard.broadcastEval(command);
+	}
 }

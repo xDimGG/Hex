@@ -23,5 +23,6 @@ declare module 'discord.js' {
 		commandHandler: CommandHandler;
 		database: Database;
 		listenerHandler: ListenerHandler;
+		runCommand(command: string): Promise<any[]>;
 	}
 }
