@@ -11,7 +11,10 @@ export default class extends Command {
 	}
 
 	public async exec(message: Message) {
-		const getShard = async (command: string) => (await this.client.shard.broadcastEval(command)).reduce((a: number, b: number) => a + b, 0).toLocaleString();
+		const ramCommand = 'Math.round((process.memoryUsage().heapTotal / 1024 / 1024))';
+		const getShard = async (command: string) => this.client.shard.broadcastEval(command);
+		const getShardReduce = async (command: string) => (await getShard(command)).reduce((a: number, b: number) => a + b, 0);
+		const getShardReduceLocale = async (command: string) => (await getShardReduce(command)).toLocaleString();
 		const formatTime = (input: number) => {
 			const days = Math.floor(input / 86400);
 			const hours = Math.floor((input % 86400) / 3600);
@@ -36,17 +39,17 @@ export default class extends Command {
 			`= Client Stats =`,
 			`• Ping           :: ${Math.round(this.client.ping)}ms`,
 			`• Uptime         :: ${formatTime(process.uptime())}`,
-			`• RAM Usage      :: ${(await this.client.shard.broadcastEval('Math.round((process.memoryUsage().heapTotal / 1024 / 1024))')).map(r => r + ' MB').join(' | ')}`,
+			`• RAM Usage      :: ${(await getShard(ramCommand)).map(r => `${r} MB`).join('|')} (${await getShardReduce(ramCommand)} MB Total)`,
 			`• Shard/Total    :: ${this.client.shard.id + 1}/${this.client.shard.count}`,
 			'',
-			'= User Statistics (All Shards) =',
-			`• Cached Users   :: ${await getShard('this.users.size')}`,
-			`• Total Users    :: ${await getShard('this.guilds.reduce((a, b) => a + b.memberCount, 0)')}`,
-			`• Guilds         :: ${await getShard('this.guilds.size')}`,
-			`• Emojis         :: ${await getShard('this.emojis.size')}`,
-			`• Categories     :: ${await getShard('this.channels.filter(channel => channel.type === "category").size')}`,
-			`• Text Channels  :: ${await getShard('this.channels.filter(channel => channel.type === "text").size')}`,
-			`• Voice Channels :: ${await getShard('this.channels.filter(channel => channel.type === "voice").size')}`,
+			'= User Statistics =',
+			`• Cached Users   :: ${getShardReduceLocale('this.users.size')}`,
+			`• Total Users    :: ${getShardReduceLocale('this.guilds.reduce((a, b) => a + b.memberCount, 0)')}`,
+			`• Guilds         :: ${getShardReduceLocale('this.guilds.size')}`,
+			`• Emojis         :: ${getShardReduceLocale('this.emojis.size')}`,
+			`• Categories     :: ${getShardReduceLocale('this.channels.filter(channel => channel.type === "category").size')}`,
+			`• Text Channels  :: ${getShardReduceLocale('this.channels.filter(channel => channel.type === "text").size')}`,
+			`• Voice Channels :: ${getShardReduceLocale('this.channels.filter(channel => channel.type === "voice").size')}`,
 		], { code: 'asciidoc' });
 	}
 }
