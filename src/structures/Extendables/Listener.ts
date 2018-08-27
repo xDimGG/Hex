@@ -1,4 +1,5 @@
-import { Listener, ListenerOptions } from 'discord-akairo';
+import { AkairoModuleOptions, Listener } from 'discord-akairo';
+import { EventEmitter } from 'events';
 import { parse } from 'path';
 
 const name = (module: NodeModule) => {
@@ -8,7 +9,10 @@ const name = (module: NodeModule) => {
 };
 
 export default class extends Listener {
-	public constructor(options: ListenerOptions) {
+	public constructor(options: {
+		emitter: string | EventEmitter;
+		type?: string;
+	} & AkairoModuleOptions) {
 		super(name(module), { ...options, event: name(module) });
 	}
 }
