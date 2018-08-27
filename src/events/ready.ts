@@ -2,6 +2,12 @@ import fetch from 'node-fetch';
 import Listener from '../structures/Extendables/Listener';
 
 export default class extends Listener {
+	public constructor() {
+		super({
+			emitter: 'client',
+		});
+	}
+
 	public async exec() {
 		console.log(this.client.user.tag);
 
