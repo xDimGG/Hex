@@ -19,6 +19,7 @@ export default class extends AkairoClient implements Client {
 		this.database = new Database(DATABASE!);
 		this.commandHandler = new CommandHandler(this, {
 			automateCategories: true,
+			commandUtilLifetime: 60,
 			directory: './src/commands',
 			extensions: ['.ts'],
 			handleEdits: true,
