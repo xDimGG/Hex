@@ -9,7 +9,7 @@ export default class extends Command {
 	}
 
 	public async exec(message: Message) {
-		const commandFilter = command => command.id !== 'help' && !command.ownerOnly;
+		const commandFilter = (command: Command) => command.id !== 'help' && !command.ownerOnly;
 		const allCommands = this.handler.modules.filter(commandFilter).sort();
 		const longest = allCommands.keyArray().reduce((long, str) => Math.max(long, str.length), 0);
 		const output: string[] = [];
