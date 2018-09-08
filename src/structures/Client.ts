@@ -2,7 +2,9 @@ import { AkairoClient, CommandHandler, ListenerHandler } from 'discord-akairo';
 import { Client } from 'discord.js';
 import Database from './Database';
 import Extensions from './Extensions';
+
 const { DATABASE } = process.env;
+if (!DATABASE) throw new Error('Database not provided');
 
 Extensions();
 
@@ -19,16 +21,13 @@ export default class extends AkairoClient implements Client {
 		this.database = new Database(DATABASE!);
 		this.commandHandler = new CommandHandler(this, {
 			automateCategories: true,
-			commandUtilLifetime: 60,
 			directory: './src/commands',
-			extensions: ['.ts'],
 			handleEdits: true,
 			prefix: async message => message.guild ? message.guild.prefix : 'h!',
 		});
 		this.listenerHandler = new ListenerHandler(this, {
 			automateCategories: true,
 			directory: './src/events',
-			extensions: ['.ts'],
 		});
 	}
 

@@ -7,11 +7,12 @@
 		"module": "commonjs",
 		"moduleResolution": "node",
 		"noImplicitAny": true,
+		"noUnusedParameters": true,
 		"outDir": "build",
 		"pretty": true,
 		"sourceMap": true,
 		"strict": true,
-		"target": "esnext",
+		"target": "esnext"
 	},
 	"exclude": [
 		"node_modules"
