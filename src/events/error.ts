@@ -9,7 +9,7 @@ export default class extends Listener {
 		});
 	}
 
-	public async exec(error: Error, message: Message, command: Command) {
+	public async exec(error: Error, message: Message) {
 		await message.channel.send([
 			'// An error has occurred,',
 			'// Please report it to the developer.',

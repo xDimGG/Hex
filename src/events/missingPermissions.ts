@@ -9,7 +9,7 @@ export default class extends Listener {
 		});
 	}
 
-	public async exec(message: Message, command: Command, type: string, missing: PermissionResolvable[]) {
+	public async exec(message: Message, _: Command, type: string, missing: PermissionResolvable[]) {
 		await message.channel.send(`${type === 'client' ? 'I am' : 'You are'} missing permissions: ${missing.join(' ')}`);
 	}
 }
