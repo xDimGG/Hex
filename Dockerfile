@@ -1,8 +1,6 @@
 FROM node:10-alpine
 
-LABEL maintainer "ShayBox <shayneehartford@gmail.com>"
-
-WORKDIR /src
+WORKDIR /hex
 
 COPY package.json ./
 
@@ -12,11 +10,5 @@ RUN apk add --update \
 && apk del .build-deps
 
 COPY . .
-
-ENV TS_NODE_FILES=TRUE \
-	TOKEN= \
-	DATABASE= \
-	DBL_API= \
-	DBOTS_API=
 
 CMD ["npm", "start"]
