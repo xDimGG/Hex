@@ -7,7 +7,7 @@ export default (guild: any) =>
 			super(client, data);
 
 			this.database = client.database;
-			this.prefix = client.database.guilds.findOrCreate({ where: { id: this.id } }).then(([config]: any[]) => (config.dataValues as GuildModel).prefix);
+			this.prefix = client.database.guilds.findOrCreate({ where: { id: this.id } }).then(([config]: any[]) => (config.dataValues as GuildModel).prefix).catch(() => 'h!');
 		}
 
 		public async getConfig() {
