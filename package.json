@@ -16,7 +16,6 @@
     "@types/tinycolor2": "^1.4.0",
     "discord-akairo": "github:1computer1/discord-akairo",
     "discord.js": "github:discordjs/discord.js",
-    "discord.js-typings": "github:discordjs/discord.js-typings",
     "node-fetch": "^2.2.0",
     "pg": "^7.4.3",
     "sequelize": "^4.38.0",
