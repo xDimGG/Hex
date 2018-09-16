@@ -19,7 +19,7 @@ export default class extends Listener {
 		[
 			[DBL_API, 'https://discordbots.org'],
 			[DBOTS_API, 'https://bots.discord.pw'],
-		].forEach(async ([key, url]) =>
+		].forEach(([key, url]) =>
 			fetch(`${url}/api/bots/${this.client.user.id}/stats`, {
 				body: JSON.stringify({
 					server_count: this.client.guilds.size,

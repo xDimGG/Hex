@@ -15,7 +15,7 @@ export default class extends Command {
 		if (!colorRole) return message.channel.send('You don\'t have a role');
 
 		await colorRole.delete()
-			.then(async () => message.channel.send(new MessageEmbed()
+			.then(() => message.channel.send(new MessageEmbed()
 				.setTitle(`**Removed ${colorRole.hexColor.toUpperCase()}**`)
 				.setImage(`https://via.placeholder.com/150x50/${colorRole.hexColor.replace('#', '')}/${colorRole.hexColor.replace('#', '')}`)
 				.setColor(colorRole.color)

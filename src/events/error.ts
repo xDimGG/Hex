@@ -1,4 +1,3 @@
-import { Command } from 'discord-akairo';
 import { Message } from 'discord.js';
 import Listener from '../structures/Extendables/Listener';
 
