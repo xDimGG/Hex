@@ -19,7 +19,7 @@ export default class extends EventEmitter {
 				if (req.headers.authorization !== DBL_AUTH) return res.end('Not authorized');
 
 				const userID = (req as any).params.id;
-				if (!this.users[userID])
+				if (this.users[userID] === undefined)
 					this.users[userID] = await this.fetch(`/bots/361796552165031936/check?userId=${userID}`)
 						.then(json => json.voted);
 
