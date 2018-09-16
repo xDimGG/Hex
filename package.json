@@ -3,21 +3,23 @@
   "version": "0.0.0",
   "description": "Custom hex color role",
   "license": "MIT",
-  "main": "src/sharding.ts",
+  "main": "src/index.ts",
   "scripts": {
     "start": "node -r ts-node/register .",
-    "test": "nodemon -e ts --exec npm start",
-    "debug": "node -r ts-node/register --inspect src/index.ts"
+    "test": "nodemon -e ts --exec npm start"
   },
   "dependencies": {
+    "@types/body-parser": "^1.17.0",
     "@types/node": "^10.9.2",
     "@types/node-fetch": "^2.1.2",
     "@types/sequelize": "^4.27.25",
     "@types/tinycolor2": "^1.4.0",
+    "body-parser": "^1.18.3",
     "discord-akairo": "github:1computer1/discord-akairo",
     "discord.js": "github:discordjs/discord.js",
     "node-fetch": "^2.2.0",
     "pg": "^7.4.3",
+    "polka": "^0.4.0",
     "sequelize": "^4.38.0",
     "tinycolor2": "^1.4.1",
     "ts-node": "^7.0.1",

@@ -14,7 +14,7 @@ export default class extends Listener {
 		if (process.env.DEV) return;
 
 		const { DBL_API, DBOTS_API } = process.env;
-		if (!DBL_API || !DBOTS_API) return console.error('API Keys not set');
+		if (!DBL_API || !DBOTS_API) return console.error('API Keys not provided');
 
 		[
 			[DBL_API, 'https://discordbots.org'],
@@ -33,10 +33,5 @@ export default class extends Listener {
 				method: 'POST',
 			})
 		);
-
-		if (this.client.shard.id !== this.client.shard.count) return;
-
-		const guildCount = (await this.client.runCommand('this.guilds.size')).reduce((a: number, b: number) => a + b, 0);
-		await this.client.runCommand(`this.user.setPresence({ activity: { name: "${guildCount} ${guildCount === 0 ? 'Guild' : 'Guilds'}", type: "WATCHING" } })`);
 	}
 }

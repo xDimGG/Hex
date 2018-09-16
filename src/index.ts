@@ -1,4 +1,10 @@
-import Client from './structures/Client';
+import { Shard, ShardingManager } from 'discord.js';
+import Server from './structures/Server';
 
-// tslint:disable-next-line no-floating-promises
-new Client().login(process.env.TOKEN);
+new Server()
+	.on('ready', port => console.log(`Launched server on port: ${port}`))
+	.spawn();
+
+new ShardingManager('./src/structures/Client.ts', { token: process.env.TOKEN, execArgv: process.execArgv })
+	.on('shardCreate', (shard: Shard) => console.log(`Launched shard ${shard.id}`))
+	.spawn();

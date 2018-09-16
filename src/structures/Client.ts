@@ -8,7 +8,7 @@ if (!DATABASE) throw new Error('Database not provided');
 
 Extensions();
 
-export default class extends AkairoClient implements Client {
+export default class CustomClient extends AkairoClient implements Client {
 	public constructor() {
 		super({ ownerID: '358558305997684739' }, {
 			disableEveryone: true,
@@ -51,3 +51,5 @@ export default class extends AkairoClient implements Client {
 		return this.shard.broadcastEval(command);
 	}
 }
+
+new CustomClient().login(process.env.TOKEN);

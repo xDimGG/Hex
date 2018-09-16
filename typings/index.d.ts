@@ -19,6 +19,11 @@ declare module 'discord.js' {
 		setConfig(data: object): Promise<GuildModel>;
 	}
 
+	export interface User {
+		upvoted: boolean | undefined;
+		hasUpvoted(): Promise<boolean>;
+	}
+
 	export interface Client {
 		commandHandler: CommandHandler;
 		database: Database;

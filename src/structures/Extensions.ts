@@ -6,6 +6,6 @@ export default () => {
 	readdirSync(join(__dirname, './Extensions'))
 		.forEach(file => {
 			const extension = require(join(__dirname, `./Extensions/${file}`));
-			Structures.extend('Guild', extension.default);
+			Structures.extend(file.split('.')[0], extension.default);
 		});
 };
