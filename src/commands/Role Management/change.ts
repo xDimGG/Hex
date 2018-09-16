@@ -27,7 +27,6 @@ export default class extends Command {
 		];
 
 		if (!color) color = Math.random().toString(16).slice(2, 8);
-		else if (!await message.author.hasUpvoted()) return message.channel.send('Setting custom name colors requires you to upvote, <https://discordbots.org/bot/361796552165031936/vote>');
 		if (tinycolor2(color).isValid) await this.randomColor(message, message, tinycolor2(color).toHex(), true);
 		else await message.channel.send(`Invalid color, Ex. **${examples[Math.floor(Math.random() * examples.length)]}**`);
 	}
@@ -100,5 +99,11 @@ export default class extends Command {
 			.setImage(`https://via.placeholder.com/150x50/${color}/${color}`)
 			.setColor(color)
 		);
+
+		if (!await message.author.hasUpvoted()) message.channel.send([
+			'It seems you haven\'t voted in the past 24 hours',
+			'I would appreciate it :D',
+			'<https://discordbots.org/bot/361796552165031936/vote>',
+		]);
 	}
 }
