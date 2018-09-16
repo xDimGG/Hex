@@ -37,6 +37,7 @@ export default class extends Command {
 			.setImage(`https://via.placeholder.com/165x100/${color}/${color}`)
 			.setFooter('Would you like to set this color?')
 			.setColor(color);
+		if (!await message.author.hasUpvoted()) embed.setDescription('[I would appreciate if you upvoted](https://discordbots.org/bot/361796552165031936/vote)');
 
 		botMessage = message.id === botMessage.id ? await message.channel.send(embed) as Message : botMessage = await botMessage.edit(embed);
 
@@ -94,16 +95,11 @@ export default class extends Command {
 				'Please move me above you or you below me',
 			]);
 
-		await botMessage.edit(new MessageEmbed()
+		const embed = new MessageEmbed()
 			.setTitle(`Updated to **#${color.toUpperCase()}**`)
 			.setImage(`https://via.placeholder.com/150x50/${color}/${color}`)
-			.setColor(color)
-		);
-
-		if (!await message.author.hasUpvoted()) message.channel.send([
-			'It seems you haven\'t voted in the past 24 hours',
-			'I would appreciate it :D',
-			'<https://discordbots.org/bot/361796552165031936/vote>',
-		]);
+			.setColor(color);
+		if (!await message.author.hasUpvoted()) embed.setDescription('[I would appreciate if you upvoted](https://discordbots.org/bot/361796552165031936/vote)');
+		await botMessage.edit(embed);
 	}
 }
