@@ -15,11 +15,13 @@ export default class extends Command {
 
 		if (!colorRole) return message.channel.send('You don\'t have a role');
 
-		await colorRole.delete()
-			.then(() => message.channel.send(new MessageEmbed()
-				.setTitle(`**Removed ${colorRole.hexColor.toUpperCase()}**`)
-				.setImage(`https://via.placeholder.com/150x50/${colorRole.hexColor.replace('#', '')}/${colorRole.hexColor.replace('#', '')}`)
-				.setColor(colorRole.color)
-			));
+		await colorRole.delete();
+
+		const embed = new MessageEmbed()
+			.setTitle(`**Removed ${colorRole.hexColor.toUpperCase()}**`)
+			.setImage(`https://via.placeholder.com/150x50/${colorRole.hexColor.replace('#', '')}/${colorRole.hexColor.replace('#', '')}`)
+			.setColor(colorRole.color);
+		if (!await message.author.hasUpvoted()) embed.setDescription('[I would appreciate if you upvoted](https://discordbots.org/bot/361796552165031936/vote)');
+		await message.channel.send(embed);
 	}
 }

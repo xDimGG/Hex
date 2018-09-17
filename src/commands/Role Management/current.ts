@@ -15,10 +15,11 @@ export default class extends Command {
 
 		if (!colorRole) return message.channel.send('You don\'t have a role');
 
-		return message.channel.send(new MessageEmbed()
+		const embed = new MessageEmbed()
 			.setTitle(`**Current value ${colorRole.hexColor.toUpperCase()}**`)
 			.setImage(`https://via.placeholder.com/150x50/${colorRole.hexColor.replace('#', '')}/${colorRole.hexColor.replace('#', '')}`)
-			.setColor(colorRole.color)
-		);
+			.setColor(colorRole.color);
+		if (!await message.author.hasUpvoted()) embed.setDescription('[I would appreciate if you upvoted](https://discordbots.org/bot/361796552165031936/vote)');
+		await message.channel.send(embed);
 	}
 }

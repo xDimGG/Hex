@@ -16,6 +16,12 @@ export default class CustomClient extends AkairoClient implements Client {
 			messageCacheLifetime: 60,
 			messageCacheMaxSize: Infinity,
 			messageSweepInterval: 60,
+			presence: {
+				activity: {
+					name: 'for @Hex help',
+					type: 'WATCHING',
+				},
+			},
 		});
 
 		this.database = new Database(DATABASE!);
