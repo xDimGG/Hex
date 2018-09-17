@@ -4,6 +4,7 @@ import Command from '../../structures/Extendables/Command';
 export default class extends Command {
 	public constructor() {
 		super({
+			channel: 'guild',
 			clientPermissions: ['SEND_MESSAGES', 'MANAGE_ROLES', 'EMBED_LINKS'],
 			description: 'Deletes the role that gives your name color, if you have one',
 		});

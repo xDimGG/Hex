@@ -4,6 +4,7 @@ import Command from '../../structures/Extendables/Command';
 export default class extends Command {
 	public constructor() {
 		super({
+			channel: 'guild',
 			clientPermissions: ['SEND_MESSAGES', 'EMBED_LINKS'],
 			description: 'Shows role color, if you have one',
 		});

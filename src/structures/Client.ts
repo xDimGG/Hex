@@ -47,8 +47,9 @@ export default class CustomClient extends AkairoClient implements Client {
 		return super.login(token);
 	}
 
-	public async runCommand(command: string) {
-		return this.shard.broadcastEval(command);
+	public upvote(userID: string) {
+		const user = this.users.get(userID);
+		if (user) user.send('Thank you for upvoting');
 	}
 }
 

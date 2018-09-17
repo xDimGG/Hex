@@ -1,10 +1,10 @@
 import { Shard, ShardingManager } from 'discord.js';
 import Server from './structures/Server';
 
-new Server()
-	.on('ready', port => console.log(`Launched server on port: ${port}`))
-	.spawn();
+const manager = new ShardingManager('./src/structures/Client.ts', { token: process.env.TOKEN, execArgv: process.execArgv })
+	.on('shardCreate', (shard: Shard) => console.log(`Launched shard ${shard.id}`));
 
-new ShardingManager('./src/structures/Client.ts', { token: process.env.TOKEN, execArgv: process.execArgv })
-	.on('shardCreate', (shard: Shard) => console.log(`Launched shard ${shard.id}`))
-	.spawn();
+const server = new Server(manager)
+	.on('ready', port => console.log(`Launched server on port: ${port}`));
+
+[manager, server].forEach(c => c.spawn());

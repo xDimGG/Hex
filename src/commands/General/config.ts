@@ -8,6 +8,7 @@ export default class extends Command {
 				{ id: 'key' },
 				{ id: 'value' },
 			],
+			channel: 'guild',
 			description: 'Shows guild configuration settings',
 			userPermissions: ['ADMINISTRATOR'],
 		});

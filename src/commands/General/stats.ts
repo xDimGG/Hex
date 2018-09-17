@@ -12,7 +12,7 @@ export default class extends Command {
 
 	public async exec(message: Message) {
 		const ramCommand = 'Math.round((process.memoryUsage().heapTotal / 1024 / 1024))';
-		const runCommandReduce = async (command: string) => (await this.client.runCommand(command)).reduce((a: number, b: number) => a + b, 0);
+		const runCommandReduce = async (command: string) => (await this.client.shard.broadcastEval(command)).reduce((a: number, b: number) => a + b, 0);
 		const runCommandReduceLocale = async (command: string) => (await runCommandReduce(command)).toLocaleString();
 		const formatTime = (input: number) => {
 			const days = Math.floor(input / 86400);
@@ -38,7 +38,7 @@ export default class extends Command {
 			`= Client Stats =`,
 			`• Ping           :: ${Math.round(this.client.ping)}ms`,
 			`• Uptime         :: ${formatTime(process.uptime())}`,
-			`• RAM Usage      :: ${(await this.client.runCommand(ramCommand)).map(r => `${r} MB`).join('|')} (${await runCommandReduce(ramCommand)} MB Total)`,
+			`• RAM Usage      :: ${(await this.client.shard.broadcastEval(ramCommand)).map(r => `${r} MB`).join('|')} (${await runCommandReduce(ramCommand)} MB Total)`,
 			`• Shard/Total    :: ${this.client.shard.id + 1}/${this.client.shard.count}`,
 			'',
 			'= User Statistics =',
