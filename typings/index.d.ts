@@ -20,7 +20,6 @@ declare module 'discord.js' {
 	}
 
 	export interface User {
-		upvoted: boolean | undefined;
 		hasUpvoted(): Promise<boolean>;
 	}
 

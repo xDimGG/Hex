@@ -8,12 +8,9 @@ export default (user: any) =>
 	class extends user {
 		public constructor(client: Client, data: any) {
 			super(client, data);
-			this.upvoted = undefined;
 		}
 
 		public async hasUpvoted() {
-			if (!this.upvoted) this.upvoted = await fetch(`http://localhost:${PORT}/user/${this.id}`, { headers: { Authorization: DBL_AUTH! } }).then(res => res.text()).then(text => parseInt(text, 10));
-
-			return this.upvoted;
+			return fetch(`http://localhost:${PORT}/user/${this.id}`, { headers: { Authorization: DBL_AUTH! } }).then(res => res.text()).then(text => parseInt(text, 10));
 		}
 	};
