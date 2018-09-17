@@ -39,7 +39,7 @@ export default class extends Command {
 			.setFooter('Would you like to set this color?')
 			.setColor(color);
 		if (!await message.author.hasUpvoted()) embed.setDescription('[I would appreciate if you upvoted](https://discordbots.org/bot/361796552165031936/vote)');
-
+		else embed.setDescription(null);
 		botMessage = message.id === botMessage.id ? await message.channel.send(embed) as Message : botMessage = await botMessage.edit(embed);
 
 		if (react) {
@@ -101,6 +101,7 @@ export default class extends Command {
 			.setImage(`https://via.placeholder.com/150x50/${color}/${color}`)
 			.setColor(color);
 		if (!await message.author.hasUpvoted()) embed.setDescription('[I would appreciate if you upvoted](https://discordbots.org/bot/361796552165031936/vote)');
+		else embed.setDescription(null);
 		await botMessage.edit(embed);
 	}
 }
