@@ -28,6 +28,7 @@ export default class extends Command {
 		if (!['prefix', 'role'].includes(key.toLowerCase())) return message.channel.send(`${key.toLowerCase()} is not a valid option`);
 		if (!value) return message.channel.send('Please provide a value');
 		let dbValue: string | null = value;
+		if (key.toLowerCase() === 'prefix') message.guild.prefix = value;
 		if (key.toLowerCase() === 'role') {
 			if (message.mentions.roles.size > 0) dbValue = message.mentions.roles.first()!.id;
 			if (['remove', 'none'].includes(dbValue.toLowerCase())) dbValue = null;
