@@ -1,8 +1,8 @@
 import { GuildModel } from '../../../typings';
 import Client from '../Client';
 
-export default (guild: any) =>
-	class extends guild {
+export default (extensionClass: any) =>
+	class extends extensionClass {
 		public constructor(client: Client, data: any) {
 			super(client, data);
 
