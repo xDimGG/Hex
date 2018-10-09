@@ -6,7 +6,7 @@ COPY . .
 
 RUN apk add --update \
 && apk add --no-cache --virtual .build-deps git \
-&& npm install --production=true \
+&& yarn install \
 && apk del .build-deps
 
 CMD ["npm", "start"]
