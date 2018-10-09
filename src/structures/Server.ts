@@ -1,7 +1,7 @@
 import * as bodyParser from 'body-parser';
 import { ShardingManager } from 'discord.js';
 import { EventEmitter } from 'events';
-import { ServerRequest, ServerResponse } from 'http';
+import { IncomingMessage, ServerResponse } from 'http';
 import fetch from 'node-fetch';
 import * as polka from 'polka';
 
@@ -16,7 +16,7 @@ export default class extends EventEmitter {
 		this.users = {};
 		this.server = polka()
 			.use(bodyParser.json())
-			.get('/user/:id', async (req: ServerRequest, res: ServerResponse) => {
+			.get('/user/:id', async (req: IncomingMessage, res: ServerResponse) => {
 				if (req.headers.authorization !== DBL_AUTH) return res.end('Not authorized');
 
 				const userID = (req as any).params.id;
@@ -28,7 +28,7 @@ export default class extends EventEmitter {
 				res.writeHead(200, { 'Content-Type': 'application/json' });
 				res.end(JSON.stringify(this.users[userID]));
 			})
-			.post('/webhook', (req: ServerRequest, res: ServerResponse) => {
+			.post('/webhook', (req: IncomingMessage, res: ServerResponse) => {
 				if (req.headers.authorization !== DBL_AUTH) return res.end();
 
 				const body = (req as any).body as { user: string };
