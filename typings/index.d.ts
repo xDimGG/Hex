@@ -15,12 +15,12 @@ declare module 'discord.js' {
 	export interface Guild {
 		database: Database;
 		prefix: Promise<string> | string;
-		getConfig(): Promise<GuildModel>;
-		setConfig(data: object): Promise<GuildModel>;
+		get(): Promise<GuildModel>;
+		set(data: object): Promise<GuildModel>;
 	}
 
 	export interface User {
-		hasUpvoted(): Promise<boolean>;
+		upvoted(): Promise<boolean>;
 	}
 
 	export interface Client {

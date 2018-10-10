@@ -10,7 +10,7 @@ export default (extensionClass: any) =>
 			super(client, data);
 		}
 
-		public async hasUpvoted() {
+		public async upvoted() {
 			return fetch(`http://localhost:${PORT}/user/${this.id}`, { headers: { Authorization: DBL_AUTH! } }).then(res => res.text()).then(text => parseInt(text, 10));
 		}
 	};

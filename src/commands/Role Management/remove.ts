@@ -21,7 +21,7 @@ export default class extends Command {
 			.setTitle(`**Removed ${colorRole.hexColor.toUpperCase()}**`)
 			.setImage(`https://via.placeholder.com/150x50/${colorRole.hexColor.replace('#', '')}/${colorRole.hexColor.replace('#', '')}`)
 			.setColor(colorRole.color);
-		if (!await message.author.hasUpvoted()) embed.setDescription('[I would appreciate if you upvoted](https://discordbots.org/bot/361796552165031936/vote)');
+		if (!await message.author.upvoted()) embed.setDescription('[I would appreciate if you upvoted](https://discordbots.org/bot/361796552165031936/vote)');
 		await message.channel.send(embed);
 	}
 }

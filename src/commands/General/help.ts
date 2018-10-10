@@ -4,6 +4,7 @@ import Command from '../../structures/Extendables/Command';
 export default class extends Command {
 	public constructor() {
 		super({
+			aliases: ['commands'],
 			description: 'Shows all available commands',
 		});
 	}

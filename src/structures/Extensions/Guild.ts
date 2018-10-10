@@ -10,13 +10,13 @@ export default (extensionClass: any) =>
 			this.prefix = client.database.guilds.findOrCreate({ where: { id: this.id } }).then(([config]: any[]) => (config.dataValues as GuildModel).prefix).catch(() => 'h!');
 		}
 
-		public async getConfig() {
+		public async get() {
 			const [config] = await this.database.guilds.findOrCreate({ where: { id: this.id } });
 
 			return config.dataValues;
 		}
 
-		public async setConfig(data: object) {
+		public async set(data: object) {
 			const config = await this.database.guilds.findById(this.id);
 
 			return config.update(data).dataValues;

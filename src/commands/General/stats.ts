@@ -6,6 +6,7 @@ import Command from '../../structures/Extendables/Command';
 export default class extends Command {
 	public constructor() {
 		super({
+			aliases: ['statistics', 'about', 'info', 'information', 'ping'],
 			description: 'Shows bot statistics',
 		});
 	}
@@ -38,7 +39,8 @@ export default class extends Command {
 			`= Client Stats =`,
 			`• Ping           :: ${Math.round(this.client.ping)}ms`,
 			`• Uptime         :: ${formatTime(process.uptime())}`,
-			`• RAM Usage      :: ${(await this.client.shard.broadcastEval(ramCommand)).map(r => `${r} MB`).join('|')} (${await runCommandReduce(ramCommand)} MB Total)`,
+			`• RAM Per Shard  :: ${(await this.client.shard.broadcastEval(ramCommand)).map(r => `${r} MB`).join(', ')}`,
+			`• RAM Total      :: ${await runCommandReduce(ramCommand)} MB Total`,
 			`• Shard/Total    :: ${this.client.shard.id + 1}/${this.client.shard.count}`,
 			'',
 			'= User Statistics =',
