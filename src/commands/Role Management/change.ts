@@ -34,7 +34,7 @@ export default class extends Command {
 
 	private async confirmColor(message: Message, botMessage: Message, color: string) {
 		const embed = new MessageEmbed()
-			.setDescription(await message.author.upvoted() ? null : '[I would appreciate if you upvoted](https://discordbots.org/bot/361796552165031936/vote)')
+			.setDescription((await message.author.upvoted()) ? null : '[I would appreciate if you upvoted](https://discordbots.org/bot/361796552165031936/vote)')
 			.addField('HEX', `#${color.toUpperCase()}`, true)
 			.setImage(`https://via.placeholder.com/165x100/${color}/${color}`)
 			.setFooter('Would you like to set this color?')
@@ -96,7 +96,7 @@ export default class extends Command {
 			]);
 
 		await botMessage.edit(new MessageEmbed()
-			.setDescription(await message.author.upvoted() ? null : '[I would appreciate if you upvoted](https://discordbots.org/bot/361796552165031936/vote)')
+			.setDescription((await message.author.upvoted()) ? null : '[I would appreciate if you upvoted](https://discordbots.org/bot/361796552165031936/vote)')
 			.setTitle(`Updated to **#${color.toUpperCase()}**`)
 			.setImage(`https://via.placeholder.com/150x50/${color}/${color}`)
 			.setColor(color));
