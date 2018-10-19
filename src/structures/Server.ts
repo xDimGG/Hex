@@ -20,10 +20,15 @@ export default class extends EventEmitter {
 				if (req.headers.authorization !== DBL_AUTH) return res.end('Not authorized');
 
 				const userID = (req as any).params.id;
-				if (this.users[userID] === undefined || (new Date().getTime() - this.users[userID].time) > 86400000) this.users[userID] = {
-					...await this.fetch(`/bots/361796552165031936/check?userId=${userID}`),
-					time: new Date().getTime() - 82800000,
-				};
+
+				if (
+					(!this.users[userID]) ||
+					(this.users[userID].voted === false && (new Date().getTime() - this.users[userID].time) > 300000) ||
+					(this.users[userID].voted === true && (new Date().getTime() - this.users[userID].time) > 86400000)
+				) this.users[userID] = {
+						...await this.fetch(`/bots/361796552165031936/check?userId=${userID}`),
+						time: new Date().getTime() - 82800000,
+					};
 
 				res.writeHead(200, { 'Content-Type': 'application/json' });
 				res.end(JSON.stringify(this.users[userID]));
