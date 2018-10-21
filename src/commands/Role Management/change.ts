@@ -14,10 +14,11 @@ export default class extends Command {
 
 	public async exec(message: Message, { color }: { color: string }) {
 		const { role } = await message.guild.get();
-		if (role && message.guild.roles.has(role) && !message.member.roles.has(role)) return message.channel.send([
-			'You do not have permission to use this command',
-			'Missing required role',
-		]);
+		if (role && message.guild.roles.has(role) && !message.member.roles.has(role))
+			return message.channel.send([
+				'You do not have permission to use this command',
+				'Missing required role',
+			]);
 
 		const examples = [
 			'#000', '000', '#369C', '369C', '#f0f0f6', 'f0f0f6', '#f0f0f688', 'f0f0f688',
@@ -27,16 +28,20 @@ export default class extends Command {
 			'RED', 'blanchedalmond', 'darkblue',
 		];
 
-		if (!color) color = tinycolor2.random().toHex();
-		if (tinycolor2(color).isValid) await this.confirmColor(message, message, color);
-		else await message.channel.send(`Invalid color, Ex. **${examples[Math.floor(Math.random() * examples.length)]}**`);
+		if (color && !tinycolor2(color).isValid) return message.channel.send([
+			'Invalid color, Example:',
+			examples[Math.floor(Math.random() * examples.length)],
+		]);
+		await this.confirmColor(message, message, color ? tinycolor2(color) : tinycolor2.random());
 	}
 
-	private async confirmColor(message: Message, botMessage: Message, color: string) {
+	private async confirmColor(message: Message, botMessage: Message, tinyColor: tinycolor2.Instance) {
+		const color = tinyColor.toHex();
+		const { r, g, b } = tinyColor.toRgb();
+		const textColor = (r * 0.299) + (g * 0.587) + (b * 0.114) > 186 ? '000000' : 'FFFFFF';
 		const embed = new MessageEmbed()
-			.setDescription((await message.author.upvoted()) ? null : '[I would appreciate if you upvoted](https://discordbots.org/bot/361796552165031936/vote)')
-			.addField('HEX', `#${color.toUpperCase()}`, true)
-			.setImage(`https://via.placeholder.com/165x100/${color}/${color}`)
+			.setDescription((await message.author.upvoted()) ? null : '[Please Upvote](https://discordbots.org/bot/361796552165031936/vote)')
+			.setImage(`https://via.placeholder.com/165x100/${color}/${textColor}?text=${color.toUpperCase()}`)
 			.setFooter('Would you like to set this color?')
 			.setColor(color);
 
@@ -52,9 +57,9 @@ export default class extends Command {
 			const reaction = reactions.first()!;
 			await reaction.users.remove(message.author);
 
-			if (reaction.emoji.name === '🔄') return this.confirmColor(message, botMessage, tinycolor2.random().toHex());
+			if (reaction.emoji.name === '🔄') return this.confirmColor(message, botMessage, tinycolor2.random());
 			await botMessage.reactions.removeAll();
-			if (reaction.emoji.name === '🇾') await this.setColor(message, botMessage, color === '000000' ? '000001' : color);
+			if (reaction.emoji.name === '🇾') await this.setColor(message, botMessage, tinyColor);
 			if (reaction.emoji.name === '🇳') await botMessage.edit('Canceled', { embed: undefined });
 		}).catch(async (reason: any) => {
 			await botMessage.reactions.removeAll();
@@ -64,22 +69,24 @@ export default class extends Command {
 		});
 	}
 
-	private async setColor(message: Message, botMessage: Message, color: string) {
+	private async setColor(message: Message, botMessage: Message, tinyColor: tinycolor2.Instance) {
 		const member = await message.guild.members.fetch({ user: message.author, cache: false });
 		const managedRole = message.guild.me.roles.filter(r => r.managed).first();
 		const botRole = managedRole ? managedRole : message.guild.me.roles.highest;
 		const colorRole = member.roles.color;
 		const roleName = `USER-${message.author.id}`;
-		const permissions = message.author.id === this.client.ownerID && color === '000001' ? message.guild.me.permissions : [];
 		const position = managedRole ? managedRole.position - 1 : 1;
+
+		let color = tinyColor.toHex();
+		if (color === '000000') color = '000001';
 
 		if (colorRole)
 			if (colorRole.name === roleName)
-				if (colorRole.position < botRole.position) await colorRole.edit({ color, permissions, position });
+				if (colorRole.position < botRole.position) await colorRole.edit({ color, permissions: [], position });
 				else return message.channel.send('I can not edit the role, too high');
 			else
 				if (colorRole.position < botRole.position)
-					await message.guild.roles.create({ data: { name: roleName, color, permissions, position } })
+					await message.guild.roles.create({ data: { name: roleName, color, permissions: [], position } })
 						.then((role: Role) => member.roles.add(role));
 				else return message.channel.send([
 					`The role ${colorRole.name} is blocking my ability`,
@@ -87,7 +94,7 @@ export default class extends Command {
 				]);
 		else
 			if (member.roles.highest.position < botRole.position)
-				await message.guild.roles.create({ data: { name: roleName, color, permissions, position } })
+				await message.guild.roles.create({ data: { name: roleName, color, permissions: [], position } })
 					.then((role: Role) => member.roles.add(role));
 			else return message.channel.send([
 				'I do not have permission to give you a role',
@@ -95,10 +102,6 @@ export default class extends Command {
 				'Please move me above you or you below me',
 			]);
 
-		await botMessage.edit(new MessageEmbed()
-			.setDescription((await message.author.upvoted()) ? null : '[I would appreciate if you upvoted](https://discordbots.org/bot/361796552165031936/vote)')
-			.setTitle(`Updated to **#${color.toUpperCase()}**`)
-			.setImage(`https://via.placeholder.com/150x50/${color}/${color}`)
-			.setColor(color));
+		await botMessage.edit(`Updated to **#${color.toUpperCase()}**`, { embed: null });
 	}
 }

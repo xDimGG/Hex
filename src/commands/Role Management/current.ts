@@ -11,15 +11,14 @@ export default class extends Command {
 	}
 
 	public async exec(message: Message) {
-		const colorRole = message.member.roles.find(r => r.name === `USER-${message.member.id}`);
-
+		const colorRole = message.member.roles.color;
 		if (!colorRole) return message.channel.send('You don\'t have a role');
+		if (colorRole.name !== `USER-${message.member.id}`) return message.channel.send('Your color role is not from Hex');
 
-		const embed = new MessageEmbed()
+		await message.channel.send(new MessageEmbed()
+			.setDescription((await message.author.upvoted()) ? null : '[Please Upvote](https://discordbots.org/bot/361796552165031936/vote)')
 			.setTitle(`**Current value ${colorRole.hexColor.toUpperCase()}**`)
 			.setImage(`https://via.placeholder.com/150x50/${colorRole.hexColor.replace('#', '')}/${colorRole.hexColor.replace('#', '')}`)
-			.setColor(colorRole.color);
-		if (!await message.author.upvoted()) embed.setDescription('[I would appreciate if you upvoted](https://discordbots.org/bot/361796552165031936/vote)');
-		await message.channel.send(embed);
+			.setColor(colorRole.color));
 	}
 }

@@ -12,7 +12,7 @@
 		"file-name-casing": false,
 		"indent": [true, "tabs"],
 		"interface-name": false,
-		"linebreak-style": [true, "CRLF"],
+		"linebreak-style": [true, "LF"],
 		"max-line-length": false,
 		"newline-per-chained-call": false,
 		"no-any": false,
