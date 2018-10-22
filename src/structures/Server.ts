@@ -16,29 +16,25 @@ export default class extends EventEmitter {
 		this.users = {};
 		this.server = polka()
 			.use(bodyParser.json())
-			.get('/user/:id', async (req: IncomingMessage, res: ServerResponse) => {
-				if (req.headers.authorization !== DBL_AUTH) return res.end('Not authorized');
-
+			.get('/user/:id', this.authorized, async (req: IncomingMessage, res: ServerResponse) => {
 				const userID = (req as any).params.id;
 
 				if (
 					(!this.users[userID]) ||
-					(this.users[userID].voted === false && (new Date().getTime() - this.users[userID].time) > 300000) ||
-					(this.users[userID].voted === true && (new Date().getTime() - this.users[userID].time) > 86400000)
+					(!this.users[userID].voted && (Date.now() - this.users[userID].time) > 300000) ||
+					(this.users[userID].voted && (Date.now() - this.users[userID].time) > 86400000)
 				) this.users[userID] = {
 					...await this.fetch(`/bots/361796552165031936/check?userId=${userID}`),
-					time: new Date().getTime() - 82800000,
+					time: Date.now() - 82800000,
 				};
 
 				res.writeHead(200, { 'Content-Type': 'application/json' });
 				res.end(JSON.stringify(this.users[userID]));
 			})
-			.post('/webhook', (req: IncomingMessage, res: ServerResponse) => {
-				if (req.headers.authorization !== DBL_AUTH) return res.end();
-
+			.post('/webhook', this.authorized, (req: IncomingMessage, res: ServerResponse) => {
 				const body = (req as any).body as { user: string };
-				this.users[body.user] = { voted: true, time: new Date().getTime() };
-				manager.broadcastEval(`if (this.shard.id === 0) { this.upvote('${body.user}') }`);
+				this.users[body.user] = { voted: true, time: Date.now() };
+				manager.shards.first().eval(`this.upvote('${body.user}')`);
 
 				res.end();
 			});
@@ -47,6 +43,11 @@ export default class extends EventEmitter {
 	public async spawn() {
 		await this.server.listen(PORT);
 		this.emit('ready', PORT);
+	}
+
+	private authorized(req: IncomingMessage, res: ServerResponse, next: () => void) {
+		if (req.headers.authorization === DBL_AUTH) return next();
+		res.status(401).end('Not authorized');
 	}
 
 	private fetch(endpoint: string) {
